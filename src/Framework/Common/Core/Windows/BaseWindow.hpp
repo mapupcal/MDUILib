@@ -4,9 +4,10 @@
 
 #include"IWindow.hpp"
 #include"Common\Utils\Utils.hpp"
+#include"Common\Core\Object.hpp"
 namespace MDUILib
 {
-	class BaseWindow : implements IWindow
+	class BaseWindow : m_extends Object, m_implements IWindow
 	{
 	public:
 		/*

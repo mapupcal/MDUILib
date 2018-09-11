@@ -7,7 +7,7 @@
 
 namespace MDUILib
 {
-	class WindowXXApplication : extends BaseApplication
+	class WindowXXApplication : m_extends BaseApplication
 	{
 	public:
 		int Initialize() override;

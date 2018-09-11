@@ -58,7 +58,7 @@ namespace MDUILib
 		}
 
 		Any(const Any &other)
-			: m_pHolder(other.m_pHolder ? other.m_pHolder->Clone() : nullptr)
+			: m_pHolder( (!other.Empty()) ? other.m_pHolder->Clone() : nullptr)
 		{
 
 		}
@@ -70,7 +70,7 @@ namespace MDUILib
 
 		~Any()
 		{
-			if(m_pHolder)
+			if(!Empty())
 				delete m_pHolder;
 			m_pHolder = nullptr;
 		}
@@ -79,7 +79,7 @@ namespace MDUILib
 		template<typename ValueType>
 		bool CanCast() const
 		{
-			return m_pHolder &&
+			return (!Empty()) &&
 				typeid(ValueType) == m_pHolder->GetType();
 		}
 		
@@ -95,7 +95,7 @@ namespace MDUILib
 		template<typename ValueType>
 		ValueType* CastTo() const
 		{
-			if(m_pHolder && typeid(ValueType) == m_pHolder->GetType())
+			if((!Empty()) && typeid(ValueType) == m_pHolder->GetType())
 			{
 				return &(static_cast<PlaceHolder<ValueType>*>(m_pHolder))->m_value;
 			}
@@ -119,13 +119,18 @@ namespace MDUILib
 		template<typename ValueType>
 		ValueType* ForceCastTo() const
 		{
-			return m_pHolder ? &(static_cast<PlaceHolder<ValueType>*>(m_pHolder))->m_value
+			return (!Empty()) ? &(static_cast<PlaceHolder<ValueType>*>(m_pHolder))->m_value
 				: nullptr;
 		}
 
 		void Swap(Any &other)
 		{
 			std::swap(m_pHolder,other.m_pHolder);
+		}
+
+		bool Empty() const
+		{
+			return m_pHolder == nullptr;
 		}
 
 		template<typename ValueType>
@@ -138,8 +143,13 @@ namespace MDUILib
 		Any& operator=(Any &&other)
 		{
 			Any(other).Swap(*this);
+			return *this;
 		}
-
+		Any& operator=(const Any& other)
+		{
+			Any(other).Swap(*this);
+			return *this;
+		}
 	private:
 		PlaceHolderBase *m_pHolder;
 	};

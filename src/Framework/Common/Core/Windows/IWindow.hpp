@@ -9,9 +9,14 @@
 #include"Common\Core\Geometries/MRect.hpp"
 #include"Common\Core\Events.hpp"
 #include"Interface\Interface.hpp"
+#include"Common\Core\IUnknown.hpp"
+
+#define CRTII_NAME_IWINDOW "CRTII_WINDOW"
+
 namespace MDUILib
 {
-	interface IWindow
+	m_interface IWindow :
+		m_implements IUnknown
 	{
 	public:
 
@@ -41,6 +46,14 @@ namespace MDUILib
 		*/
 		virtual void SetTimer(int timerID, MUINT uElapse) = 0;
 		virtual void KillTimer(int timerID) = 0;
+
+		virtual AString GetInterfaceName() const override;
+		virtual IUnknown* GetInterface(const AString& riiName) override
+		{
+			if (riiName.Compare(CRTII_NAME_IWINDOW) == 0)
+				return this;
+			return IUnknown::GetInterface(riiName);
+		}
 	};
 }
 #endif // !MDUILIB_FRAMEWORK_COMMON_CORE_WINDOWS_IWINDOW_H

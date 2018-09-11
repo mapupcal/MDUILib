@@ -14,6 +14,9 @@ set(	COMMON_SOURCES
 #	Common/Core
 set(	COMMON_CORE_HEADERS
 	Common/Core/Events.hpp
+	Common/Core/Object.hpp
+	Common/Core/Object.cpp
+	Common/Core/IUnknown.hpp
 )
 set(	COMMON_CORE_SOURCES
 )
@@ -38,6 +41,7 @@ set(	COMMON_UTILS_SOURCES
 
 #	Common/Core/Controls
 set(	COMMON_CORE_CONTROLS_HEADERS
+	Common/Core/Controls/IControl.hpp
 )
 set(	COMMON_CORE_CONTROLS_SOURCES
 )

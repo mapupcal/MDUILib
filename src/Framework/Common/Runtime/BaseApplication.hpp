@@ -1,12 +1,12 @@
-
 #ifndef MDUILIB_FRAMEWORK_COMMON_BASEAPPLICATION_H
 #define MDUILIB_FRAMEWORK_COMMON_BASEAPPLICATION_H
 
 #include "Framework\Interface\IApplication.hpp"
+#include "Framework\Common\Core\Object.hpp"
 
 namespace MDUILib
 {
-    class BaseApplication : implements IApplication
+    class BaseApplication : m_extends Object, m_implements IApplication
     {
 	public:
 		void Run();
