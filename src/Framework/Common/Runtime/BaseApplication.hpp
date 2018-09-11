@@ -2,7 +2,7 @@
 #ifndef MDUILIB_FRAMEWORK_COMMON_BASEAPPLICATION_H
 #define MDUILIB_FRAMEWORK_COMMON_BASEAPPLICATION_H
 
-#include "IApplication.hpp"
+#include "Framework\Interface\IApplication.hpp"
 
 namespace MDUILib
 {

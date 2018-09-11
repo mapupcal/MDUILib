@@ -2,7 +2,8 @@
 #ifndef MDUILIB_WINDOWXX_WINDOWXXAPPLICATION_H
 #define MDUILIB_WINDOWXX_WINDOWXXAPPLICATION_H
 
-#include "BaseApplication.hpp"
+#include "Framework\Interface\Interface.hpp"
+#include "Framework\Common\Runtime\BaseApplication.hpp"
 
 namespace MDUILib
 {

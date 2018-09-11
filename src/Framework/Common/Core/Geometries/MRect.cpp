@@ -1,5 +1,5 @@
 #include"MRect.hpp"
-#include"Utils.hpp"
+#include"Common\Utils\Utils.hpp"
 
 namespace MDUILib
 {
@@ -34,30 +34,30 @@ namespace MDUILib
 		result.bottom = bottom;
 		result.left = left;
 		result.right = right;
-		MDUILib_ASSERT(IsValidRect(result));
+		MDUILIB_ASSERT(IsValidRect(result));
 		return result;
 	}
 
 	MRect UnionRect(const MRect& opRect1, const MRect& opRect2)
 	{
-		MDUILib_ASSERT(IsValidRect(opRect1) && IsValidRect(opRect2));
+		MDUILIB_ASSERT(IsValidRect(opRect1) && IsValidRect(opRect2));
 		MRect result;
-		result.top = MDUILib_MIN(opRect1.top, opRect2.top);
-		result.bottom = MDUILib_MAX(opRect1.bottom, opRect2.bottom);
-		result.left = MDUILib_MIN(opRect1.left, opRect2.left);
-		result.right = MDUILib_MAX(opRect1.right, opRect2.right);
+		result.top = MDUILIB_MIN(opRect1.top, opRect2.top);
+		result.bottom = MDUILIB_MAX(opRect1.bottom, opRect2.bottom);
+		result.left = MDUILIB_MIN(opRect1.left, opRect2.left);
+		result.right = MDUILIB_MAX(opRect1.right, opRect2.right);
 		return result;
 	}
 
 	MRect IntersectRect(const MRect& opRect1, const MRect& opRect2)
 	{
-		MDUILib_ASSERT(IsValidRect(opRect1) && IsValidRect(opRect2));
+		MDUILIB_ASSERT(IsValidRect(opRect1) && IsValidRect(opRect2));
 		MRect result;
-		result.top = MDUILib_MAX(opRect1.top, opRect2.top);
-		result.bottom = MDUILib_MIN(opRect1.bottom, opRect2.bottom);
-		result.left = MDUILib_MAX(opRect1.left, opRect2.left);
-		result.right = MDUILib_MIN(opRect1.right, opRect2.right);
-		/*	MDUILib_ASSERT(IsValidRect(result));
+		result.top = MDUILIB_MAX(opRect1.top, opRect2.top);
+		result.bottom = MDUILIB_MIN(opRect1.bottom, opRect2.bottom);
+		result.left = MDUILIB_MAX(opRect1.left, opRect2.left);
+		result.right = MDUILIB_MIN(opRect1.right, opRect2.right);
+		/*	MDUILIB_ASSERT(IsValidRect(result));
 		*	It is the Caller's Duty to Check whether the result is valid or not.		*/
 		return result;
 	}

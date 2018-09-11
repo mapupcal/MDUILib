@@ -1,7 +1,7 @@
-#include "BaseApplication.hpp"
+#include "Framework\Common\Runtime\BaseApplication.hpp"
 #include "WindowXXApplication.hpp"
 #include <Windows.h>
-#include "Any.hpp"
+#include "Framework\Common\Utils\Any.hpp"
 namespace MDUILib
 {
     WindowXXApplication g_App;

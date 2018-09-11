@@ -2,7 +2,7 @@
 #ifndef MDUILIB_FRAMEWORK_COMMON_MDUILIBAFX_H
 #define MDUILIB_FRAMEWORK_COMMON_MDUILIBAFX_H
 
-#include"BaseApplication.hpp"
+#include"Common\Runtime\BaseApplication.hpp"
 
 namespace MDUILib
 {

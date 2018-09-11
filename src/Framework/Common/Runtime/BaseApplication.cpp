@@ -1,33 +1,36 @@
 #include "BaseApplication.hpp"
 
-int MDUILib::BaseApplication::Initialize()
+namespace MDUILib
 {
-    m_bQuit = false;
-    return 0;
-}
+	int BaseApplication::Initialize()
+	{
+		m_bQuit = false;
+		return 0;
+	}
 
-void MDUILib::BaseApplication::Finalize()
-{
+	void BaseApplication::Finalize()
+	{
 
-}
+	}
 
-void MDUILib::BaseApplication::Quit()
-{
-	m_bQuit = true;
-}
+	void BaseApplication::Quit()
+	{
+		m_bQuit = true;
+	}
 
-void MDUILib::BaseApplication::Run()
-{
-	while (!IsQuit())
-		Tick();
-}
+	void BaseApplication::Run()
+	{
+		while (!IsQuit())
+			Tick();
+	}
 
-void MDUILib::BaseApplication::Tick()
-{
+	void BaseApplication::Tick()
+	{
 
-}
+	}
 
-bool MDUILib::BaseApplication::IsQuit() const
-{
-    return m_bQuit;
+	bool BaseApplication::IsQuit() const
+	{
+		return m_bQuit;
+	}
 }

@@ -59,7 +59,8 @@ namespace MDUILib
 	using MCHAR = wchar_t;
 
 #endif // _UNICODE
-
+	//@Remark:HandleType,与平台无关的句柄类型，为void*
+	using MHandleType = void*;
 }
 
 #endif // !MDUILIB_FRAMEWORK_COMMON_UTILS_UTILS_H

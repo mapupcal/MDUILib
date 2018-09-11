@@ -4,20 +4,15 @@
 /*
 *	@Remark:定义与平台无关的窗口接口
 */
-#include"MString.hpp"
-#include"MDelegate.hpp"
-#include"Geometries/MRect.hpp"
-#include"Events.hpp"
-#include"Interface.hpp"
+#include"Common\Utils\MString.hpp"
+#include"Common\Utils\MDelegate.hpp"
+#include"Common\Core\Geometries/MRect.hpp"
+#include"Common\Core\Events.hpp"
+#include"Interface\Interface.hpp"
 namespace MDUILib
 {
 	interface IWindow
 	{
-	public:
-		/*
-		*	@Attribute:HandleType,与平台无关的句柄类型，为void*
-		*/
-		using HandleType = void*;
 	public:
 
 		virtual ~IWindow() {}
@@ -33,8 +28,8 @@ namespace MDUILib
 		virtual void CenterWindow() = 0;
 		virtual void Close() = 0;
 		virtual void Move(MUINT pX, MUINT pY) = 0;
-		virtual HandleType GetNativeWindowHandle() const = 0;
-		virtual HandleType GetNativeRenderTarget() const = 0;
+		virtual MHandleType GetNativeWindowHandle() const = 0;
+		virtual MHandleType GetNativeRenderTarget() const = 0;
 		/*
 		*	@Remarks:与平台相关的参数MNativeEvent，不同的系统其底层实现不同。
 		*/

@@ -1,5 +1,5 @@
 #include"BaseWindow.hpp"
-#include"Utils.hpp"
+#include"Common\Utils\Utils.hpp"
 
 namespace MDUILib
 {
@@ -7,7 +7,7 @@ namespace MDUILib
 	{
 		MDUILIB_ASSERT_MSG(false,"Not Impl.");
 	}
-	IWindow * BaseWindow::CreateSubWindow(const String & subWndTittleName, const MRect & relativePositionRect, bool bModal = false)
+	IWindow * BaseWindow::CreateSubWindow(const String & subWndTittleName, const MRect & relativePositionRect, bool bModal /*= false*/)
 	{
 		MDUILIB_ASSERT_MSG(false, "Not Impl.");
 		return nullptr;
@@ -49,12 +49,12 @@ namespace MDUILib
 	{
 		MDUILIB_ASSERT_MSG(false, "Not Impl.");
 	}
-	IWindow::HandleType BaseWindow::GetNativeWindowHandle() const
+	MHandleType BaseWindow::GetNativeWindowHandle() const
 	{
 		MDUILIB_ASSERT_MSG(false, "Not Impl.");
 		return nullptr;
 	}
-	IWindow::HandleType BaseWindow::GetNativeRenderTarget() const
+	MHandleType BaseWindow::GetNativeRenderTarget() const
 	{
 		MDUILIB_ASSERT_MSG(false, "Not Impl.");
 		return nullptr;

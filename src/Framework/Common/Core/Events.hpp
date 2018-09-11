@@ -5,9 +5,9 @@
 /*
 *	@Remarks:定义事件消息类型。
 */
-#include"Geometries/MRect.hpp"
-#include"Utils.hpp"
-#include"MDelegate.hpp"
+#include"Geometries\MRect.hpp"
+#include"Common\Utils\Utils.hpp"
+#include"Common\Utils\MDelegate.hpp"
 #ifdef _WIN32
 	#include <Windows.h>
 #endif //_WIN32

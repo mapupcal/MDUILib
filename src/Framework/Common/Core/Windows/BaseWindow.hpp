@@ -2,9 +2,8 @@
 #ifndef MDUILIB_FRAMEWORK_COMMON_CORE_WINDOWS_BASEWINDOW_H
 #define MDUILIB_FRAMEWORK_COMMON_CORE_WINDOWS_BASEWINDOW_H
 
-#include"Interface.hpp"
 #include"IWindow.hpp"
-#include"MDelegate.hpp"
+#include"Common\Utils\Utils.hpp"
 namespace MDUILib
 {
 	class BaseWindow : implements IWindow
@@ -29,8 +28,8 @@ namespace MDUILib
 		virtual void CenterWindow() override;
 		virtual void Close() override;
 		virtual void Move(MUINT pX, MUINT pY) override;
-		virtual HandleType GetNativeWindowHandle() const override;
-		virtual HandleType GetNativeRenderTarget() const override;
+		virtual MHandleType GetNativeWindowHandle() const override;
+		virtual MHandleType GetNativeRenderTarget() const override;
 		virtual bool PreNativeEventFilter(const MNativeEvent & e) override;
 		virtual bool PostNativeEventFilter(const MNativeEvent & e) override;
 		virtual bool IsModal() const override;

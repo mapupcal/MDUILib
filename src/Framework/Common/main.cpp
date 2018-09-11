@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "IApplication.hpp"
 #include "MDUILibAfx.hpp"
 
 using namespace MDUILib;
