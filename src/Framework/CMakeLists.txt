@@ -64,6 +64,7 @@ set(	COMMON_CORE_GRAPHICS_SOURCES
 set(	COMMON_CORE_WINDOWS_HEADERS
 	Common/Core/Windows/IWindow.hpp
 	Common/Core/Windows/BaseWindow.hpp
+	Common/Core/Windows/IWindowFactory.hpp
 )
 set(	COMMON_CORE_WINDOWS_SOURCES
 	Common/Core/Windows/BaseWindow.cpp

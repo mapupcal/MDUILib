@@ -3,6 +3,7 @@
 
 #include "Framework\Interface\IApplication.hpp"
 #include "Framework\Common\Core\Object.hpp"
+#include "Framework\Common\Core\Windows\BaseWindow.hpp"
 
 namespace MDUILib
 {
@@ -19,6 +20,7 @@ namespace MDUILib
         virtual bool IsQuit() const override;
     protected:
         //@Remark:是否需要退出应用主循环的标识。
+		BaseWindow *m_pMainWindow;
         bool m_bQuit;
 	};
 }

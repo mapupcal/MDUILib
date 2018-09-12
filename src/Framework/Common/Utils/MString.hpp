@@ -1,9 +1,9 @@
 ﻿
 #ifndef MDUILIB_FRAMEWORK_COMMON_UTILS_MSTRING_H
 #define MDUILIB_FRAMEWORK_COMMON_UTILS_MSTRING_H
+
 #include"Utils.hpp"
 #include<vector>
-#include<locale>
 #include<codecvt>
 /*
 *	@Remark:重新写一个字符串类（模板），添加处理字符串方便的辅助函数。

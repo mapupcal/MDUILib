@@ -138,4 +138,13 @@ namespace MDUILib
 	} MSize;
 }
 
+#ifdef _WIN32
+#include<Windows.h>
+namespace MDUILib
+{
+	MRect FromWinRect(const RECT &rect);
+}
+#endif // _WIN32
+
+
 #endif // !MDUILIB_FRAMEWORK_COMMON_CORE_GEOMETRIES_MRECT_H

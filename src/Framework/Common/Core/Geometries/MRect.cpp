@@ -90,3 +90,20 @@ namespace MDUILib
 	{
 	}
 }
+
+#ifdef _WIN32
+#include<Windows.h>
+namespace MDUILib
+{
+	MRect FromWinRect(const RECT &rect)
+	{
+		MRect r;
+		r.left = rect.left;
+		r.right = rect.right;
+		r.top = rect.top;
+		r.right = rect.right;
+		return r;
+	}
+}
+#endif // _WIN32
+

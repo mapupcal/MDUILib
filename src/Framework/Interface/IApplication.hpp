@@ -1,11 +1,10 @@
+
 #ifndef MDUILIB_FRAMEWORK_INTERFACE_IAPPLICATION_H
 #define MDUILIB_FRAMEWORK_INTERFACE_IAPPLICATION_H
 
 #include "Interface.hpp"
 #include "IRuntime.hpp"
 #include "Framework\Common\Core\IUnknown.hpp"
-
-#define CRTII_NAME_IAPPLICATION "CRTII_IAPPLICATION"
 
 namespace MDUILib
 {
@@ -25,11 +24,11 @@ namespace MDUILib
 
 		virtual AString GetInterfaceName() const override
 		{
-			return CRTII_NAME_IAPPLICATION;
+			return m_interface_name(IApplication);
 		}
 		virtual IUnknown* GetInterface(const AString& riiName) override
 		{
-			if (riiName.Compare(CRTII_NAME_IAPPLICATION) == 0)
+			if (riiName.Compare(m_interface_name(IApplication)) == 0)
 				return this;
 			return IRuntimeModule::GetInterface(riiName);
 		}

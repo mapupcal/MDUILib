@@ -2,6 +2,8 @@
 #include "WindowXXApplication.hpp"
 #include <Windows.h>
 #include "Framework\Common\Utils\Any.hpp"
+#include "Windows\WinXXWindow.hpp"
+
 namespace MDUILib
 {
     WindowXXApplication g_App;
@@ -12,6 +14,9 @@ namespace MDUILib
 {
 	int WindowXXApplication::Initialize()
 	{
+		auto pWindow = new WinXXWindow();
+		pWindow->InitWindow("ABC", CreateRect(0, 100, 0, 100));
+		pWindow->Show();
 		return 0;
 	}
 

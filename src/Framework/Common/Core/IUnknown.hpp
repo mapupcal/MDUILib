@@ -4,8 +4,6 @@
 
 #include"Framework\Common\Utils\MString.hpp"
 
-#define CRTII_NAME_IUNKNOWN "CRTII_IUNKNOWN"
-
 namespace MDUILib
 {
 	struct IUnknown
@@ -16,7 +14,7 @@ namespace MDUILib
 		*/
 		virtual AString GetInterfaceName() const
 		{
-			return CRTII_NAME_IUNKNOWN;
+			return m_interface_name(IUnknown);
 		}
 		/*
 		*	@Remark:查询该对象是否具备输入类名的接口。用于指针向下转型，配合GetClassName，使用者必须知道继承链。
@@ -28,7 +26,7 @@ namespace MDUILib
 		*/
 		virtual IUnknown* GetInterface(const AString& riiName)
 		{
-			if (riiName.Compare(CRTII_NAME_IUNKNOWN) == 0)
+			if (riiName.Compare(m_interface_name(IUnknown)) == 0)
 				return this;
 			return nullptr;
 		}

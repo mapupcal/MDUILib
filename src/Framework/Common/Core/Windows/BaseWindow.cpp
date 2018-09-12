@@ -1,8 +1,8 @@
 #include"BaseWindow.hpp"
-#include"Common\Utils\Utils.hpp"
 
 namespace MDUILib
 {
+	BaseWindow::BaseWindow(){}
 	void BaseWindow::InitWindow(const String & wndTittleName, const MRect & positionRect)
 	{
 		MDUILIB_ASSERT_MSG(false,"Not Impl.");
@@ -12,14 +12,13 @@ namespace MDUILib
 		MDUILIB_ASSERT_MSG(false, "Not Impl.");
 		return nullptr;
 	}
-	void BaseWindow::SetTittle(const String & wndTittleName)
+	void BaseWindow::SetTitle(const String & wndTittleName)
 	{
-		MDUILIB_ASSERT(false);
+		MDUILIB_ASSERT_MSG(false,"Not Impl.");
 	}
-	String BaseWindow::GetTittle() const
+	String BaseWindow::GetTitle() const
 	{
-		MDUILIB_ASSERT_MSG(false, "Not Impl.");
-		return String();
+		return m_WndTitle;
 	}
 	void BaseWindow::Show()
 	{
@@ -64,15 +63,9 @@ namespace MDUILib
 		MDUILIB_ASSERT_MSG(false, "Not Impl.");
 		return false;
 	}
-	bool BaseWindow::PostNativeEventFilter(const MNativeEvent & e)
-	{
-		MDUILIB_ASSERT_MSG(false, "Not Impl.");
-		return false;
-	}
 	bool BaseWindow::IsModal() const
 	{
-		MDUILIB_ASSERT_MSG(false, "Not Impl.");
-		return false;
+		return m_bModal;
 	}
 	void BaseWindow::SetTimer(int timerID, MUINT uElapse)
 	{

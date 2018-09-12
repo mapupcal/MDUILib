@@ -10,7 +10,6 @@ int main(int argc,char** argv)
     {
         printf("Failed!");
     }
-	g_pApp->Initialize();
 
 	g_pApp->Run();
 
