@@ -27,7 +27,7 @@ namespace MDUILib
 		virtual void KillTimer(int timerID) override;
 
 	private:
-		static HRESULT CALLBACK __WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+		static LRESULT CALLBACK __WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 		virtual HRESULT __Initialize(HWND hParent, const String &owndTitleName,const MRect& positionRect);
 	protected:
 		HWND m_hWnd;

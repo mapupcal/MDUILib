@@ -14,6 +14,9 @@ namespace MDUILib
 {
 	int WindowXXApplication::Initialize()
 	{
+		WinXXWindow *pWindow = new WinXXWindow();
+		pWindow->InitWindow("???", { 0,0,100,100 });
+		pWindow->Show();
 		return 0;
 	}
 

@@ -125,7 +125,7 @@ namespace MDUILib
 			MDUILIB_OUT_ERROR("WARNNING:WinXXWindow has not been initialized.");
 		}
 	}
-	HRESULT WinXXWindow::__WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+	LRESULT WinXXWindow::__WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		LRESULT hr = 0;
 
@@ -140,10 +140,10 @@ namespace MDUILib
 			//	@Commit:将IWindow与hWnd相关联。
 			LPCREATESTRUCTA pcs = (LPCREATESTRUCTA)lParam;
 			WinXXWindow *pWindow = static_cast<WinXXWindow*>(pcs->lpCreateParams);
-			::SetWindowLong(
+			::SetWindowLongPtr(
 				hWnd,
 				GWLP_USERDATA,
-				PtrToLong(pWindow)
+				reinterpret_cast<long long>(pWindow)
 			);
 			hr = 1;
 		}
@@ -152,7 +152,7 @@ namespace MDUILib
 			//	@Commit:获取和hWnd相关联的IWindow指针。
 			WinXXWindow * pWindow = reinterpret_cast<WinXXWindow*>(
 				static_cast<LONG_PTR>(
-					::GetWindowLong(
+					::GetWindowLongPtr(
 						hWnd,
 						GWLP_USERDATA
 					)
@@ -373,7 +373,7 @@ namespace MDUILib
 		//	@Commit:注册Win平台的 window class.
 		WNDCLASSEXA wcex = { sizeof(WNDCLASSEXA) };
 		wcex.style = CS_HREDRAW | CS_VREDRAW;
-		wcex.lpfnWndProc = WinXXWindow::__WinProc;
+		wcex.lpfnWndProc = &WinXXWindow::__WinProc;
 		wcex.cbClsExtra = 0;
 		wcex.cbWndExtra = sizeof(LONG_PTR);
 		wcex.hInstance = NULL;
