@@ -8,6 +8,7 @@
 #include"Geometries\MRect.hpp"
 #include"Framework\Common\Utils\Utils.hpp"
 #include"FrameWork\Common\Utils\MDelegate.hpp"
+
 #ifdef _WIN32
 	#include <Windows.h>
 #endif //_WIN32
@@ -57,10 +58,8 @@ namespace MDUILib
 	};
 
 	/*
-	*	@Remark:MDUILib内部使用的事件结构。
 	*	@Remark:IControl负责处理解析相应的事件。
 	*/
-
 	typedef struct tagMEvent
 	{
 		MEventType Type;

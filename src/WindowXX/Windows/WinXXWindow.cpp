@@ -19,6 +19,7 @@ namespace MDUILib
 	IWindow * WinXXWindow::CreateSubWindow(const String & subWndTittleName, \
 		const MRect & relativePositionRect, bool bModal /*= false*/)
 	{
+		MDUILIB_ASSERT_MSG(true, "Not impl.");
 		return nullptr;
 	}
 	void WinXXWindow::SetTitle(const String & wndTitleName)
@@ -146,10 +147,10 @@ namespace MDUILib
 		auto title = owndTitleName.ToStdString();
 
 		m_hWnd = CreateWindowEx(
-			WS_EX_APPWINDOW,
+			0,
 			"MDUILIB_WINDOW",
 			title.c_str(),
-			WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+			WS_OVERLAPPEDWINDOW,
 			static_cast<UINT>(positionRect.left),
 			static_cast<UINT>(positionRect.top),
 			static_cast<UINT>(GetRectWidth(positionRect)),
@@ -159,7 +160,6 @@ namespace MDUILib
 			NULL,
 			this
 		);
-		
 		auto hr = m_hWnd ? S_OK : E_FAIL;
 		MDUILIB_ASSERT_MSG(SUCCEEDED(hr), "Failed Create Window Platform Windows.");
 		return hr;

@@ -22,7 +22,7 @@ namespace MDUILib
 		virtual void Move(MUINT pX, MUINT pY) override;
 		virtual MHandleType GetNativeWindowHandle() const override;
 		virtual MHandleType GetNativeRenderTarget() const override;
-		virtual bool PreNativeEventFilter(const MNativeEvent & e) override;
+		virtual bool PreNativeEventFilter(const MNativeEvent &e) override;
 		virtual void SetTimer(int timerID, MUINT uElapse) override;
 		virtual void KillTimer(int timerID) override;
 

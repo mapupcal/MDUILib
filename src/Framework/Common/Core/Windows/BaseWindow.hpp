@@ -20,8 +20,8 @@ namespace MDUILib
 		*	@Remark:向相应的事件注册Notifyer，窗口发生相应事件时，将通知Notifyer。
 		*	@Noted:注册的Notifyer必须具备Callable接口void(IWindows*,MEvent&),See Also class MEvent.
 		*/
-		using WindowProcNotifyers = DelegateNotifyers<IWindow*, MEvent&>;
-
+		typedef DelegateNotifyers<IWindow*, MEvent&> WindowProcNotifyers;
+		typedef std::vector<IWindow*> WindowListType;
 		BaseWindow();
 		// Inherited via IWindow
 		virtual void InitWindow(const String & wndTitleName, const MRect & positionRect) override;
@@ -69,6 +69,10 @@ namespace MDUILib
 		MRect m_ClientRect;
 		bool m_bModal;
 		String m_WndTitle;
+
+
+		WindowListType m_ModalSubWnds;
+		WindowListType m_ModalessSubWnds;
 	};
 }
 

@@ -10,6 +10,8 @@ namespace MDUILib
 	m_interface IControl : m_implements IUnknown
 	{
 		//TODO:控件的公共接口
+		virtual void SetText(const String& text) = 0;
+		virtual void GetText() const = 0;
 
 		AString GetInterfaceName() const override
 		{
