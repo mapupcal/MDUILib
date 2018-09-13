@@ -29,7 +29,7 @@ namespace MDUILib
 	private:
 		static HRESULT CALLBACK __WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 		virtual HRESULT __Initialize(HWND hParent, const String &owndTitleName,const MRect& positionRect);
-	private:
+	protected:
 		HWND m_hWnd;
 	};
 }

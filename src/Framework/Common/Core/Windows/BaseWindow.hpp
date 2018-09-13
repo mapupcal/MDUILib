@@ -20,7 +20,7 @@ namespace MDUILib
 		*	@Remark:向相应的事件注册Notifyer，窗口发生相应事件时，将通知Notifyer。
 		*	@Noted:注册的Notifyer必须具备Callable接口void(IWindows*,MEvent&),See Also class MEvent.
 		*/
-		typedef DelegateNotifyers<IWindow*, MEvent&> WindowProcNotifyers;
+		typedef DelegateNotifyers<IWindow*, MEvent*> WindowProcNotifyers;
 		typedef std::vector<IWindow*> WindowListType;
 		BaseWindow();
 		// Inherited via IWindow

@@ -14,10 +14,10 @@ namespace MDUILib
     public:
         virtual int Initialize() override;
         virtual void Finalize() override;
-		virtual void Quit() override;
+		virtual void Quit();
 	private:
         virtual void Tick() override;
-        virtual bool IsQuit() const override;
+        virtual bool IsQuit() const;
     protected:
         //@Remark:是否需要退出应用主循环的标识。
 		BaseWindow *m_pMainWindow;
