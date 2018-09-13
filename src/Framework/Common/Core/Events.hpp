@@ -109,10 +109,10 @@ namespace MDUILib
 			KET_CHAR,
 			KET_SYSCHAR
 		};
-		KeyboardEvent(KeyboardEventType ket, MCHAR chKey)
+		KeyboardEvent(KeyboardEventType ket, WCHAR chKey)
 			: MEvent(MEventType::ET_KEYBOARD,nullptr),
 			m_KBEventType(ket), m_ChKey(chKey){}
-		MCHAR GetInputKey() const
+		WCHAR GetInputKey() const
 		{
 			return m_ChKey;
 		}
@@ -121,7 +121,7 @@ namespace MDUILib
 			return m_KBEventType;
 		}
 	private:
-		MCHAR m_ChKey;
+		WCHAR m_ChKey;//Remarks:如果是用户输入的字符，此字符为UTF_16编码的正常字符。
 		KeyboardEventType m_KBEventType;
 	};
 
@@ -161,27 +161,23 @@ namespace MDUILib
 		{
 			CNET_PAINT,
 			CNET_MOVE,
-			CNET_SIZE
+			CNET_SIZE,
+			CNET_WINDOW_CLOSE
 		};
-		ControlNotifyEvent(ControlNotifyEventType cnet, int xWidth, int yHeight)
+		ControlNotifyEvent(ControlNotifyEventType cnet, MRect rect)
 			: MEvent(MEventType::ET_CONTROL_NOTIFY, nullptr), m_cnet(cnet),
-			m_xWidth(xWidth), m_yHeight(yHeight){}
+			m_rect(rect){}
 		ControlNotifyEventType GetControlNotifyEventType() const
 		{
 			return m_cnet;
 		}
-		int GetXWidth() const
+		MRect GetRect() const
 		{
-			return m_xWidth;
-		}
-		int GetYHeight() const
-		{
-			return m_yHeight;
+			return m_rect;
 		}
 	private:
 		ControlNotifyEventType m_cnet;
-		int m_xWidth;
-		int m_yHeight;
+		MRect m_rect;
 	};
 
 	class IControl;
