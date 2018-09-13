@@ -8,6 +8,8 @@
 #include"Geometries\MRect.hpp"
 #include"Framework\Common\Utils\Utils.hpp"
 #include"FrameWork\Common\Utils\MDelegate.hpp"
+#include"Framework\Common\Core\Object.hpp"
+#include"Framework\Interface\Interface.hpp"
 
 #ifdef _WIN32
 	#include <Windows.h>
@@ -17,6 +19,7 @@ namespace MDUILib
 	namespace MKeyState
 	{
 		//MouseMove
+		const MWORD kMK_NORMAL = 0x0000;		//正常状态
 		const MWORD kMK_LBUTTON		= 0x0001;	//左键按下
 		const MWORD kMK_RBUTTON		= 0x0002;	//右键按下
 		const MWORD kMK_SHIFT		= 0x0004;	//shift
@@ -27,49 +30,159 @@ namespace MDUILib
 	}
 	enum class MEventType : int
 	{
-		//Keyboard
-		EVENT_KEY_DOWN = 1,
-		EVENT_KEY_UP,
-		EVENT_CHAR,
-		EVENT_SYSKEY,
-		//mouse
-		EVENT_MOUSE_MOVE,
-		EVENT_MOUSE_LEAVE,
-		EVENT_MOUSE_ENTER,
-		EVENT_MOUSE_HOVER,
-		EVENT_LBUTTON_UP,
-		EVENT_LBUTTON_DOWN,
-		EVENT_RBUTTON_UP,
-		EVENT_RBUTTON_DOWN,
-		EVENT_L_DOUBLE_CLICK,
-		EVENT_CONTEX_MENU,
-		EVENT_SCROLL_WHEEL,
-		//Window Event
-		EVENT_WINDOW_PAINT,
-		EVENT_WINDOW_SIZE,
-		EVENT_WINDOW_MOVE,
-		//other notifier event
-		EVENT_SETFOCUS,
-		EVENT_KILLFOCUS,
-		EVENT_SETCURSOR,
-		EVENT_TIMER,
-		EVENT_NOTIFY,
-		EVENT_COMMAND
+		ET_MOUSE,
+		ET_KEYBOARD,
+		ET_NOTIFY,
+		ET_CONTROL_NOTIFY
 	};
 
 	/*
 	*	@Remark:IControl负责处理解析相应的事件。
 	*/
-	typedef struct tagMEvent
+
+	class MEvent : m_extends Object
 	{
-		MEventType Type;
-		MDWORD dwTimestamp;
-		MPoint ptMouse;
-		MCHAR chKey;
-		MWORD wKeyState;
-		MWPARAM wParam;
-		MLPARAM lParam;
-	} MEvent;
+	public:
+		MEvent(MEventType et, Object* sender)
+			:m_eventType(et),m_pSender(sender)	{}
+		MEventType GetType() const
+		{
+			return m_eventType;
+		}
+		Object *GetSender() const
+		{
+			return m_pSender;
+		}
+	private:
+		MEventType m_eventType;
+		Object* m_pSender;
+	};
+
+	class MouseEvent : m_extends MEvent
+	{
+	public:
+		enum class MouseEventType
+		{
+			MET_MOVE,
+			MET_LEAVE,
+			MET_ENTER,
+			MET_HOVER,
+			MET_LBUTTON_UP,
+			MET_LBUTTON_DOWN,
+			MET_RBUTTON_UP,
+			MET_RBUTTON_DOWN,
+			MET_SCROLL_WHEEL
+		};
+
+		MouseEvent(MPoint ptMouse, MouseEventType met, \
+			MWORD wKeyState = MKeyState::kMK_NORMAL)
+			:	MEvent(MEventType::ET_MOUSE,nullptr),
+				m_ptMouse(ptMouse), m_wKeyState(wKeyState), m_MouseEventType(met)
+		{
+
+		}
+		MPoint GetMousePos() const
+		{
+			return m_ptMouse;
+		}
+		MouseEventType GetMouseEventType() const
+		{
+			return m_MouseEventType;
+		}
+		MWORD GetKeyState() const
+		{
+			return m_wKeyState;
+		}
+	private:
+		MPoint m_ptMouse;
+		MWORD m_wKeyState;
+		MouseEventType m_MouseEventType;
+	};
+
+	class KeyboardEvent : m_extends MEvent
+	{
+	public:
+		enum class KeyboardEventType
+		{
+			KET_KEY_DOWN,
+			KET_KEY_UP,
+			KET_CHAR,
+			KET_SYSCHAR
+		};
+		KeyboardEvent(KeyboardEventType ket, MCHAR chKey)
+			: MEvent(MEventType::ET_KEYBOARD,nullptr),
+			m_KBEventType(ket), m_ChKey(chKey){}
+		MCHAR GetInputKey() const
+		{
+			return m_ChKey;
+		}
+		KeyboardEventType GetKeyboardEventType() const
+		{
+			return m_KBEventType;
+		}
+	private:
+		MCHAR m_ChKey;
+		KeyboardEventType m_KBEventType;
+	};
+
+	class NotifyEvent : m_extends MEvent
+	{
+	public:
+		enum class NotifyEventType
+		{
+			NET_SETFOCUS,
+			NET_KILLFOCUS,
+			NET_TIMER,
+			NET_NOTIFY,
+			NET_COMMAND 
+		};
+
+		//@Remark:dwParam means that the param related with the NET.
+		//		  extra params could pass by Object::SetProperty("XXXX",XXXX)
+		NotifyEvent(NotifyEventType net, Object *sender, MDWORD dwParam)
+			: MEvent(MEventType::ET_NOTIFY, sender), m_dwParam(dwParam),m_NotifyEventType(net){}
+		NotifyEventType GetNotifyEventType() const
+		{
+			return m_NotifyEventType;
+		}
+		MDWORD GetParam() const
+		{
+			return m_dwParam;
+		}
+	private:
+		MDWORD m_dwParam;
+		NotifyEventType m_NotifyEventType;
+	};
+
+	class ControlNotifyEvent : m_extends MEvent
+	{
+	public:
+		enum class ControlNotifyEventType
+		{
+			CNET_PAINT,
+			CNET_MOVE,
+			CNET_SIZE
+		};
+		ControlNotifyEvent(ControlNotifyEventType cnet, int xWidth, int yHeight)
+			: MEvent(MEventType::ET_CONTROL_NOTIFY, nullptr), m_cnet(cnet),
+			m_xWidth(xWidth), m_yHeight(yHeight){}
+		ControlNotifyEventType GetControlNotifyEventType() const
+		{
+			return m_cnet;
+		}
+		int GetXWidth() const
+		{
+			return m_xWidth;
+		}
+		int GetYHeight() const
+		{
+			return m_yHeight;
+		}
+	private:
+		ControlNotifyEventType m_cnet;
+		int m_xWidth;
+		int m_yHeight;
+	};
 
 	class IControl;
 

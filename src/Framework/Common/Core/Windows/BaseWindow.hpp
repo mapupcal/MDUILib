@@ -70,7 +70,6 @@ namespace MDUILib
 		bool m_bModal;
 		String m_WndTitle;
 
-
 		WindowListType m_ModalSubWnds;
 		WindowListType m_ModalessSubWnds;
 	};
