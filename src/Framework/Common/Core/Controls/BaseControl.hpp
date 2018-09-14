@@ -148,15 +148,15 @@ namespace MDUILib
 		//			};
 		template<typename EventArgs>
 		void RaiseEvent(
-			const DelegateNotifyers<IControl*, EventArgs*> &notifyers,
-			EventArgs *pEventArgs)
+			DelegateNotifyers<IControl*, EventArgs> &notifyers,
+			EventArgs &eventArgs)
 		{
-			for (const auto handler : notifyers)
-				handler(this, pEventArgs);
+			for (const auto& handler : notifyers)
+				handler(this, eventArgs);
 		}
 	private:
 		//Internal Method.
-		IControlList __FindChildren_IF(const std::function<bool(IControl*)>& Preb);
+		IControlList __FindChildren_IF(const std::function<bool(IControl*)> &Preb);
 	protected:
 		MRect m_rcContent;
 		MRect m_rcPadding;

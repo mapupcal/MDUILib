@@ -159,13 +159,13 @@ namespace MDUILib
 			break;
 		}
 	}
-	BaseControl::IControlList BaseControl::__FindChildren_IF(const std::function<bool(IControl*)>& Preb)
+	BaseControl::IControlList BaseControl::__FindChildren_IF(const std::function<bool(IControl*)> &Preb)
 	{
 		IControlList matchedChildren;
 		auto iter = m_lstpChildren.cbegin();
 		while (iter != m_lstpChildren.cend())
 		{
-			iter = std::find(m_lstpChildren.cbegin(), m_lstpChildren.cend(), Preb);
+			iter = std::find_if(m_lstpChildren.cbegin(), m_lstpChildren.cend(), Preb);
 			if (iter != m_lstpChildren.cend())
 			{
 				matchedChildren.push_back(*iter);
@@ -304,7 +304,7 @@ namespace MDUILib
 	BaseControl::IControlList BaseControl::FindChildren(const String & name)
 	{
 		return __FindChildren_IF(
-			[=](const IControl* p) -> bool
+			[=](IControl* p) -> bool
 			{
 				return (name.Compare(p->GetName()) == 0);
 			});
@@ -324,7 +324,7 @@ namespace MDUILib
 	BaseControl::IControlList BaseControl::FindChildren(const MPoint & pt)
 	{
 		return __FindChildren_IF(
-			[=](const IControl* p)
+			[=](IControl* p)
 			{
 				return IsPointInRect(pt, (static_cast<const BaseControl*>(p))->GetBorderRc());
 			});

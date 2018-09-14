@@ -59,6 +59,7 @@ set(	COMMON_CORE_GEOMETRIES_SOURCES
 #	Common/Core/Graphics
 set(	COMMON_CORE_GRAPHICS_HEADERS
 		Common/Core/Graphics/MColor.hpp
+		Common/Core/Graphics/IRenderSystem.hpp
 )
 set(	COMMON_CORE_GRAPHICS_SOURCES
 		Common/Core/Graphics/MColor.cpp

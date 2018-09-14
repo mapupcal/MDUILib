@@ -237,9 +237,7 @@ namespace MDUILib
 				{
 					auto mouseX = GET_X_LPARAM(lParam);
 					auto mouseY = GET_Y_LPARAM(lParam);
-					MPoint ptMouse;
-					ptMouse.x = mouseX;
-					ptMouse.y = mouseX;
+					MPoint ptMouse(mouseX,mouseY);
 					MouseEvent::MouseEventType t;
 					//	@Commit:see MSDN WM_MOUSEMOVE\WM_MOUSEHOVER wParam
 					MDWORD keyState = static_cast<MWORD>(wParam);
