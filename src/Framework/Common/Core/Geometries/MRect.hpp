@@ -9,6 +9,7 @@
 
 namespace MDUILib
 {
+	struct MPOINT;
 	/*
 	*	@ClassName:MRect
 	*	@Remark:表示矩形的数据结构。
@@ -33,6 +34,8 @@ namespace MDUILib
 		data_type bottom;
 		data_type left;
 		data_type right;
+
+		void MoveToPos(MPOINT pt);
 	} MRect;
 
 	const static MRect DEFAULT_RECT = { 0, 480, 0, 640 };
@@ -70,7 +73,11 @@ namespace MDUILib
 		using data_type = short;
 		data_type x;
 		data_type y;
-	} MPoint;
+		MPOINT(data_type X, data_type Y);
+		friend MPOINT operator-(const MPOINT& lhs, const MPOINT &rhs);
+		friend MPOINT operator+(const MPOINT& lhs, const MPOINT &rhs);
+		friend float operator*(const MPOINT& lhs, const MPOINT& rhs);
+	} MPoint,MVector;
 
 	/*
 	*	@FunctionName:CreateRect

@@ -42,8 +42,10 @@ set(	COMMON_UTILS_SOURCES
 #	Common/Core/Controls
 set(	COMMON_CORE_CONTROLS_HEADERS
 	Common/Core/Controls/IControl.hpp
+	Common/Core/Controls/BaseControl.hpp
 )
 set(	COMMON_CORE_CONTROLS_SOURCES
+	Common/Core/Controls/BaseControl.cpp
 )
 
 #	Common/Core/Geometries
@@ -56,8 +58,10 @@ set(	COMMON_CORE_GEOMETRIES_SOURCES
 
 #	Common/Core/Graphics
 set(	COMMON_CORE_GRAPHICS_HEADERS
+		Common/Core/Graphics/MColor.hpp
 )
 set(	COMMON_CORE_GRAPHICS_SOURCES
+		Common/Core/Graphics/MColor.cpp
 )
 
 #	Common/Core/Windows

@@ -26,6 +26,18 @@ namespace MDUILib
 	{
 		return Translate(rect, 0, yOffset);
 	}
+	MPOINT operator-(const MPOINT & lhs, const MPOINT & rhs)
+	{
+		return MPOINT(lhs.x - rhs.x, lhs.y - rhs.y);
+	}
+	MPOINT operator+(const MPOINT & lhs, const MPOINT & rhs)
+	{
+		return MPOINT(lhs.x + rhs.x, lhs.y + lhs.y);
+	}
+	float operator*(const MPOINT & lhs, const MPOINT & rhs)
+	{
+		return lhs.x * rhs.x * 1.0 + lhs.y * rhs.y * 1.0;
+	}
 	MRect CreateRect(MRect::data_type top, MRect::data_type bottom,\
 		MRect::data_type left, MRect::data_type right)
 	{
@@ -89,6 +101,17 @@ namespace MDUILib
 		:top(t),bottom(b),left(l),right(r)
 	{
 	}
+	void MRECT::MoveToPos(MPoint pt)
+	{
+		auto w = GetRectWidth(*this);
+		auto h = GetRectHeight(*this);
+		left = pt.x;
+		top = pt.y;
+		right = w + left;
+		bottom = h + top;
+	}
+	MPOINT::MPOINT(data_type X, data_type Y)
+		:x(X),y(Y){}
 }
 
 #ifdef _WIN32
