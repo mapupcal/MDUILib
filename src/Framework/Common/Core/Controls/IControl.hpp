@@ -21,9 +21,13 @@ namespace MDUILib
 		virtual String GetName() const = 0;
 		virtual void SetTooltip(const String& tooltip) = 0;
 		virtual String GetToolTip() const = 0;
+		virtual void SetImageName(const String& imageName) = 0;
+		virtual String GetImageName() const = 0;
 		virtual void SetFocus() = 0;
 		virtual void KillFocus() = 0;
 		virtual bool IsFocus() const = 0;
+		virtual void SetUseContextMenu(bool bUseContextMenu) = 0;
+		virtual bool IsUseContextMenu() const = 0;
 		//Attributs
 		virtual void SetVisible(bool bVisible) = 0;
 		virtual bool GetVisible() const = 0;
@@ -48,6 +52,7 @@ namespace MDUILib
 		virtual void Invalidate() = 0;
 		virtual bool IsValidated() const = 0;
 		virtual void NeedUpdate() = 0;
+		virtual void NeedParentUpdate() = 0;
 		virtual bool IsUpdateNeeded() const = 0;
 		//@Remark:将强制更新由该控件为root的所有控件树上的节点。
 		virtual void Update() = 0;

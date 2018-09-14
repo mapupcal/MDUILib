@@ -10,8 +10,27 @@
 
 namespace MDUILib
 {
-	//@Remark:Box Modal.
-
+	/*
+	*	@Remark:盒子模型
+	*	-------------------------------------
+	*	|				 M					|
+	*	|	-------------B---------------	|
+	*	|	|			 P				|	|
+	*	|	|	---------------------	|	|
+	*	|	|	|					|	|	|
+	*	| M	B P |		 C			| P	B M |
+	*	|	|	|					|	|	|
+	*	|	|	---------------------	|	|
+	*	|	|			 P				|	|
+	*	|	-------------B---------------	|
+	*	|				 M					|
+	*	-------------------------------------
+	*	@Noted:	M Margin	外边界，由父控件负责绘制。
+	*			B Border	边界
+	*			P Padding	内边界
+	*			C Content	内容，可以是图片，文本....
+	*	@Noted:	这些Rect都是位于Client区域当中的位置
+	*/
 	class BaseControl : m_extends Object, m_implements IControl
 	{
 	public:
@@ -36,8 +55,11 @@ namespace MDUILib
 		void SetBorderColor(MColor color);
 		MColor GetBorderColor() const;
 		void SetMarginColor(MColor color);
-		MColor GetMarginColor()const;
+		MColor GetMarginColor() const;
+		void SetFocusMaskColor(MColor color);
+		MColor GetFocusMaskColor() const;
 
+		
 		//@Remark:获取相对于主窗口的相对位置，坐标轴为主窗口的左上角。
 		MPoint GetPos() const;
 		//@Remark:获取相对与父控件的相对位置,坐标轴为父控件盒子Content的左上角（ContentRc.left,ContentRc.top）.
@@ -59,9 +81,13 @@ namespace MDUILib
 		virtual String GetName() const override;
 		virtual void SetTooltip(const String& tooltip) override;
 		virtual String GetToolTip() const override;
+		virtual void SetImageName(const String& imageName) override;
+		virtual String GetImageName() const override;
 		virtual void SetFocus() override;
 		virtual void KillFocus() override;
 		virtual bool IsFocus() const override;
+		virtual void SetUseContextMenu(bool bUseContextMenu) override;
+		virtual bool IsUseContextMenu() const override;
 		//Attributs
 		virtual void SetVisible(bool bVisible) override;
 		virtual bool GetVisible() const override;
@@ -85,6 +111,7 @@ namespace MDUILib
 		virtual void Invalidate() override;
 		virtual bool IsValidated() const override;
 		virtual void NeedUpdate() override;
+		virtual void NeedParentUpdate() override;
 		virtual bool IsUpdateNeeded() const override;
 		virtual void Update() override;
 	protected:
@@ -139,17 +166,21 @@ namespace MDUILib
 		MColor m_BorderColor;
 		MColor m_MarginColor;
 
+		MColor m_FocusMaskColor;
+
 		IControl* m_pParent;
 		IControlList m_lstpChildren;
 		String m_szName;
 		String m_szText;
 		String m_szTooltip;
+		String m_szImageName;
 
 		bool m_bVisible;
 		bool m_bEnable;
 		bool m_bValidate;
 		bool m_bUpdateNeeded;
 		bool m_bFocus;
+		bool m_bUseContextMenu;
 	};
 
 }

@@ -75,9 +75,17 @@ namespace MDUILib
 	{
 		return m_MarginColor;
 	}
+	void BaseControl::SetFocusMaskColor(MColor color)
+	{
+		m_FocusMaskColor = color;
+	}
+	MColor BaseControl::GetFocusMaskColor() const
+	{
+		return m_FocusMaskColor;
+	}
 	MPoint BaseControl::GetPos() const
 	{
-		return MPoint(m_rcContent.left, m_rcContent.top);
+		return MPoint(GetContetnRc().left, GetContetnRc().top);
 	}
 	MPoint BaseControl::GetRelativePos() const
 	{
@@ -190,6 +198,14 @@ namespace MDUILib
 	{
 		return m_szTooltip;
 	}
+	void BaseControl::SetImageName(const String & imageName)
+	{
+		m_szImageName = imageName;
+	}
+	String BaseControl::GetImageName() const
+	{
+		return m_szImageName;
+	}
 	void BaseControl::SetFocus()
 	{
 		m_bFocus = true;
@@ -201,6 +217,14 @@ namespace MDUILib
 	bool BaseControl::IsFocus() const
 	{
 		return m_bFocus;
+	}
+	void BaseControl::SetUseContextMenu(bool bUseContextMenu)
+	{
+		m_bUseContextMenu = bUseContextMenu;
+	}
+	bool BaseControl::IsUseContextMenu() const
+	{
+		return m_bUseContextMenu;
 	}
 	void BaseControl::SetVisible(bool bVisible)
 	{
@@ -317,6 +341,13 @@ namespace MDUILib
 	void BaseControl::NeedUpdate()
 	{
 		m_bUpdateNeeded = true;
+	}
+	void BaseControl::NeedParentUpdate()
+	{
+		if (m_pParent)
+		{
+			m_pParent->NeedUpdate();
+		}
 	}
 	bool BaseControl::IsUpdateNeeded() const
 	{
