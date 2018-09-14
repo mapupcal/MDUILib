@@ -11,6 +11,14 @@ namespace MDUILib
 			m_pParent = pParent;
 		}
 	}
+	BaseControl::~BaseControl()
+	{
+		//@Remark:It's the Parent responsibility to release the child's shit.
+		for (auto child : m_lstpChildren)
+		{
+			delete child;
+		}
+	}
 	void BaseControl::SetContentRc(const MRect & rcContent)
 	{
 		m_rcContent = rcContent;

@@ -35,6 +35,7 @@ namespace MDUILib
 	{
 	public:
 		BaseControl(IControl *pParent);
+		virtual ~BaseControl();
 		typedef IControl::IControlList IControlList;
 		typedef DelegateNotifyers<IControl*,MEvent*> EventNotifyerType;
 		//Box Modal
