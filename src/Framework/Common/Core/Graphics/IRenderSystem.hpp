@@ -16,12 +16,18 @@ namespace MDUILib
 	{
 		virtual ~IRenderSystem(){}
 		virtual void BindTargetWindow(IWindow *pWindow) = 0;
-		virtual void DrawLine(MPoint startPt, MPoint endPt, MWORD wStrokeStyle) = 0;
-		virtual void DrawRect(MRect rect, MColor color, MWORD wStrokeStyle) = 0;
-		virtual void DrawRoundedRect(MRect rect, short radiusX, short radiusY, MColor color, MWORD wStrokeStyle) = 0;
+		virtual void DrawBegin() = 0;
+		virtual void DrawEnd() = 0;
+		virtual void Clear(MColor color) = 0;
+		virtual void DrawLine(MPoint startPt, MPoint endPt, MColor color, \
+			int lineWidth,MWORD wStrokeStyle) = 0;
+		virtual void DrawRect(MRect rect, MColor color, \
+			int lineWidth, MWORD wStrokeStyle) = 0;
+		virtual void DrawRoundedRect(MRect rect, short radiusX, short radiusY, MColor color, \
+			int lineWidth , MWORD wStrokeStyle ) = 0;
 		virtual void FillRect(MRect rect, MColor color) = 0;
 		virtual void FillRoundedRect(MRect rect, short radiusX, short radiusY, MColor color) = 0;
-		virtual void DrawTextString(MRect rect, const String &text, const Font &font, short size, MWORD wStyle) = 0;
+		virtual void DrawTextString(MRect rect, const String &text, const Font &font, MColor color, short size, MWORD wStyle) = 0;
 		virtual void DrawImage(MRect rect, const String& imageFullPath) = 0; 
 		virtual MHandleType GetNativeRenderHandle() const = 0;
 		//Via IUnknow

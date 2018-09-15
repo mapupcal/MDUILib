@@ -25,12 +25,19 @@ namespace MDUILib
 	public:
 		virtual ~Win7OrPlusRenderSystem();
 		virtual void BindTargetWindow(IWindow *pWindow) override;
-		virtual void DrawLine(MPoint startPt, MPoint endPt, MWORD wStrokeStyle) override;
-		virtual void DrawRect(MRect rect, MColor color, MWORD wStrokeStyle) override;
-		virtual void DrawRoundedRect(MRect rect, short radiusX, short radiusY, MColor color, MWORD wStrokeStyle) override;
+		virtual void DrawBegin() override;
+		virtual void DrawEnd()override;
+		virtual void Clear(MColor color) override;
+		virtual void DrawLine(MPoint startPt, MPoint endPt, MColor color, \
+			int lineWidth, MWORD wStrokeStyle) override;
+		virtual void DrawRect(MRect rect, MColor color, \
+			int lineWidth, MWORD wStrokeStyle) override;
+		virtual void DrawRoundedRect(MRect rect, short radiusX, short radiusY, MColor color, \
+			int lineWidth, MWORD wStrokeStyle) override;
 		virtual void FillRect(MRect rect, MColor color) override;
 		virtual void FillRoundedRect(MRect rect, short radiusX, short radiusY, MColor color) override;
-		virtual void DrawTextString(MRect rect, const String &text, const Font &font, short size, MWORD wStyle) override;
+		virtual void DrawTextString(MRect rect, const String &text,const Font &font, \
+			MColor color, short size, MWORD wStyle) override;
 		virtual void DrawImage(MRect rect, const String& imageFullPath) override;
 		virtual MHandleType GetNativeRenderHandle() const override;
 	private:
@@ -41,6 +48,8 @@ namespace MDUILib
 		HRESULT __CreateD2DDeviceIndependentResources();
 		HRESULT __CreateD2DDeviceResources();
 		void __ReleaseResources();
+
+		ID2D1SolidColorBrush* m_pSolidColorBrush;
 	};
 }
 
