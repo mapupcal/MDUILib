@@ -129,7 +129,7 @@ namespace MDUILib
 			);
 			MDUILIB_ASSERT_MSG(SUCCEEDED(hr), "Failed to CreateSolidColorBrush");
 			ID2D1StrokeStyle *m_pStyle;
-			float dashes[] = { 1.0f, 3.0f, 3.0f, 1.0f, 3.0f, 3.0f };
+			float dashes[] = { 2.0f, 2.0f, 2.0f};
 			hr = m_pD2d1Factory->CreateStrokeStyle(
 				D2D1::StrokeStyleProperties(
 					D2D1_CAP_STYLE_FLAT,

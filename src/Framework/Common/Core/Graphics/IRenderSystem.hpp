@@ -12,6 +12,12 @@ namespace MDUILib
 {
 	struct Font;
 
+	enum class MStrokeStyle : MWORD
+	{
+		STD_SOLID = 0,
+		STD_DASH
+	};
+
 	m_interface IRenderSystem : m_extends IUnknown
 	{
 		virtual ~IRenderSystem(){}
