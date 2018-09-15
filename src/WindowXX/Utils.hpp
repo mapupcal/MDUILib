@@ -17,10 +17,11 @@ namespace MDUILib
 				m_pComInterface->AddRef();
 		}
 		ComPtr(const ComPtr &other)
+			:m_pComInterface(nullptr)
 		{
-			if (other->m_pComInterface)
+			if (other.m_pComInterface)
 			{
-				m_pComInterface = other->m_pComInterface;
+				m_pComInterface = other.m_pComInterface;
 				m_pComInterface->AddRef();
 			}
 		}
@@ -42,9 +43,10 @@ namespace MDUILib
 		//=
 		ComPtr& operator=(const ComPtr& other)
 		{
-			ComPtr(other).Swap(*this);
+			this->Swap(ComPtr(other));
+			return *this;
 		}
-		operator ComInterface*()
+		operator ComInterface*&()
 		{
 			return m_pComInterface;
 		}

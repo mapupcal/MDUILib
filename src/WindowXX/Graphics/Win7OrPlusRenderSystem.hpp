@@ -32,11 +32,11 @@ namespace MDUILib
 		virtual void DrawEnd()override;
 		virtual void Clear(MColor color) override;
 		virtual void DrawLine(MPoint startPt, MPoint endPt, MColor color, \
-			int lineWidth, MWORD wStrokeStyle) override;
+			int lineWidth, MStrokeStyle wStrokeStyle) override;
 		virtual void DrawRect(MRect rect, MColor color, \
-			int lineWidth, MWORD wStrokeStyle) override;
+			int lineWidth, MStrokeStyle wStrokeStyle) override;
 		virtual void DrawRoundedRect(MRect rect, short radiusX, short radiusY, MColor color, \
-			int lineWidth, MWORD wStrokeStyle) override;
+			int lineWidth, MStrokeStyle wStrokeStyle) override;
 		virtual void FillRect(MRect rect, MColor color) override;
 		virtual void FillRoundedRect(MRect rect, short radiusX, short radiusY, MColor color) override;
 		virtual void DrawTextString(MRect rect, const String &text,const Font &font, \
@@ -44,15 +44,16 @@ namespace MDUILib
 		virtual void DrawImage(MRect rect, const String& imageFullPath) override;
 		virtual MHandleType GetNativeRenderHandle() const override;
 	private:
+		HRESULT __CreateD2DDeviceIndependentResources();
+		HRESULT __CreateD2DDeviceResources();
+		ComPtr<ID2D1StrokeStyle> __CreateStrokeStyle(MStrokeStyle wStyle);
+		ComPtr<ID2D1SolidColorBrush> __CreateSolidColorBrush(MColor color);
+	private:
 		IWindow* m_pRenderTargetWindow;
 		
 		ComPtr<ID2D1HwndRenderTarget> m_pHwndRenderTarget;
 		ComPtr<ID2D1Factory> m_pD2d1Factory;
 		ComPtr<IDWriteFactory> m_pDWriteFactory;
-		HRESULT __CreateD2DDeviceIndependentResources();
-		HRESULT __CreateD2DDeviceResources();
-
-		ComPtr<ID2D1SolidColorBrush> m_pSolidColorBrush;
 	};
 }
 

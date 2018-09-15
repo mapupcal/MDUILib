@@ -26,11 +26,11 @@ namespace MDUILib
 		virtual void DrawEnd() = 0;
 		virtual void Clear(MColor color) = 0;
 		virtual void DrawLine(MPoint startPt, MPoint endPt, MColor color, \
-			int lineWidth,MWORD wStrokeStyle) = 0;
+			int lineWidth,MStrokeStyle wStrokeStyle) = 0;
 		virtual void DrawRect(MRect rect, MColor color, \
-			int lineWidth, MWORD wStrokeStyle) = 0;
+			int lineWidth, MStrokeStyle wStrokeStyle) = 0;
 		virtual void DrawRoundedRect(MRect rect, short radiusX, short radiusY, MColor color, \
-			int lineWidth , MWORD wStrokeStyle ) = 0;
+			int lineWidth , MStrokeStyle wStrokeStyle ) = 0;
 		virtual void FillRect(MRect rect, MColor color) = 0;
 		virtual void FillRoundedRect(MRect rect, short radiusX, short radiusY, MColor color) = 0;
 		virtual void DrawTextString(MRect rect, const String &text, const Font &font, MColor color, short size, MWORD wStyle) = 0;

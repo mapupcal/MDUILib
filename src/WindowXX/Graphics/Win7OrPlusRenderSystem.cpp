@@ -15,6 +15,20 @@ namespace MDUILib
 		return D2D1::Point2F(pt.x, pt.y);
 	}
 
+	inline D2D1_RECT_F D2DRectF_FromMRect(MRect rect)
+	{
+		return D2D1::RectF(rect.left, rect.top, rect.right, rect.bottom);
+	}
+
+	inline D2D1_ROUNDED_RECT D2D1RoundedRect_FromMRect(MRect rect, int radiusX, int radiusY)
+	{
+		return D2D1::RoundedRect(
+			D2DRectF_FromMRect(rect),
+			radiusX,
+			radiusY
+		);
+	}
+
 	HRESULT Win7OrPlusRenderSystem::__CreateD2DDeviceIndependentResources()
 	{
 		HRESULT hr = S_OK;
@@ -49,6 +63,38 @@ namespace MDUILib
 		}
 		return hr;
 	}
+	ComPtr<ID2D1StrokeStyle> Win7OrPlusRenderSystem::__CreateStrokeStyle(MStrokeStyle wStyle)
+	{
+		ComPtr<ID2D1StrokeStyle> pStyle(0);
+		if (wStyle == MStrokeStyle::STD_DASH)
+		{
+			float dashes[] = { 2.0f, 2.0f, 2.0f };
+			HRESULT hr = m_pD2d1Factory->CreateStrokeStyle(
+				D2D1::StrokeStyleProperties(
+					D2D1_CAP_STYLE_FLAT,
+					D2D1_CAP_STYLE_FLAT,
+					D2D1_CAP_STYLE_ROUND,
+					D2D1_LINE_JOIN_MITER,
+					10.0f,
+					D2D1_DASH_STYLE_CUSTOM,
+					0.0f),
+				dashes,
+				ARRAYSIZE(dashes),
+				&pStyle
+			);
+		}
+		return pStyle;
+	}
+	ComPtr<ID2D1SolidColorBrush> Win7OrPlusRenderSystem::__CreateSolidColorBrush(MColor color)
+	{
+		ComPtr<ID2D1SolidColorBrush> pSolidColorBrush;
+		HRESULT hr = m_pHwndRenderTarget->CreateSolidColorBrush(
+			D2DColorF_FromMColor(color),
+			&pSolidColorBrush
+		);
+		MDUILIB_ASSERT_MSG(SUCCEEDED(hr), "Failed to CreateSolidColorBrush");
+		return pSolidColorBrush;
+	}
 	Win7OrPlusRenderSystem::~Win7OrPlusRenderSystem()
 	{
 
@@ -77,11 +123,16 @@ namespace MDUILib
 				printf("Client Rect (%d,%d,%d,%d)\n", rc.left, rc.right, rc.top, rc.bottom);
 				MPoint ptS(0, targetRc.height / 2);
 				MPoint ptE(targetRc.width, targetRc.height / 2);
-				this->DrawLine(ptS, ptE, MColor::RED, 2, 0);
+				this->DrawLine(ptS, ptE, MColor::RED, 2, MStrokeStyle::STD_DASH);
 				ptS.x = ptE.x = targetRc.width / 2;
 				ptS.y = 0;
 				ptE.y = targetRc.height;
-				this->DrawLine(ptS, ptE, MColor::BLUE, 2, 0);
+				this->DrawLine(ptS, ptE, MColor::BLUE, 2, MStrokeStyle::STD_SOLID);
+
+				this->DrawRect(CreateRect(50,100,50,100), MColor::RED, 2, MStrokeStyle::STD_DASH);
+				this->FillRect(CreateRect(100, 150, 100, 150), MColor::BLUE);
+				this->DrawRoundedRect(CreateRect(200, 300, 200, 300), 10, 10, MColor::GREEN, 2, MStrokeStyle::STD_SOLID);
+				this->FillRoundedRect(CreateRect(400, 550, 500, 600), 20, 20, MColor::BLUE);
 				this->DrawEnd();
 			}
 		};
@@ -99,6 +150,7 @@ namespace MDUILib
 	{
 		MDUILIB_ASSERT(m_pHwndRenderTarget);
 		m_pHwndRenderTarget->EndDraw();
+		m_pHwndRenderTarget->Flush();
 	}
 
 	void Win7OrPlusRenderSystem::Clear(MColor color)
@@ -111,63 +163,84 @@ namespace MDUILib
 		DrawEnd();
 	}
 
-	void Win7OrPlusRenderSystem::DrawLine(MPoint startPt, MPoint endPt, MColor color, int lineWidth, MWORD wStrokeStyle)
+	void Win7OrPlusRenderSystem::DrawLine(MPoint startPt, MPoint endPt, MColor color, int lineWidth, MStrokeStyle wStrokeStyle)
 	{
-		HRESULT hr = S_OK;
-		if (m_pHwndRenderTarget && m_pD2d1Factory)
+		if (m_pHwndRenderTarget.Get() && m_pD2d1Factory.Get())
 		{
-			hr = m_pHwndRenderTarget->CreateSolidColorBrush(
-				D2DColorF_FromMColor(color),
-				&m_pSolidColorBrush
-			);
-			MDUILIB_ASSERT_MSG(SUCCEEDED(hr), "Failed to CreateSolidColorBrush");
-			ComPtr<ID2D1StrokeStyle> pStyle;
-			float dashes[] = { 2.0f, 2.0f, 2.0f};
-			hr = m_pD2d1Factory->CreateStrokeStyle(
-				D2D1::StrokeStyleProperties(
-					D2D1_CAP_STYLE_FLAT,
-					D2D1_CAP_STYLE_FLAT,
-					D2D1_CAP_STYLE_ROUND,
-					D2D1_LINE_JOIN_MITER,
-					10.0f,
-					D2D1_DASH_STYLE_CUSTOM,
-					0.0f),
-				dashes,
-				ARRAYSIZE(dashes),
-				&pStyle
-			);
+			auto pSolidColorBrush = __CreateSolidColorBrush(color);
+			ComPtr<ID2D1StrokeStyle> pStyle = __CreateStrokeStyle(wStrokeStyle);
 			m_pHwndRenderTarget->DrawLine(
 				D2DPoint2F_FromMPoint(startPt),
 				D2DPoint2F_FromMPoint(endPt),
-				m_pSolidColorBrush,
+				pSolidColorBrush,
 				lineWidth,
 				pStyle
 			);
 		}
 	}
 
-	void Win7OrPlusRenderSystem::DrawRect(MRect rect, MColor color, int lineWidth, MWORD wStrokeStyle)
+	void Win7OrPlusRenderSystem::DrawRect(MRect rect, MColor color, int lineWidth, MStrokeStyle wStrokeStyle)
 	{
+		if (m_pHwndRenderTarget.Get() && m_pD2d1Factory.Get())
+		{
+			auto pSolidColorBrush = __CreateSolidColorBrush(color);
+			auto pStyle = __CreateStrokeStyle(wStrokeStyle);
+			m_pHwndRenderTarget->DrawRectangle(
+				D2DRectF_FromMRect(rect),
+				pSolidColorBrush,
+				lineWidth,
+				pStyle
+			);
+		}
 	}
 
-	void Win7OrPlusRenderSystem::DrawRoundedRect(MRect rect, short radiusX, short radiusY, MColor color, int lineWidth, MWORD wStrokeStyle)
+	void Win7OrPlusRenderSystem::DrawRoundedRect(MRect rect, short radiusX, short radiusY, MColor color, int lineWidth, MStrokeStyle wStrokeStyle)
 	{
+		if (m_pHwndRenderTarget.Get() && m_pD2d1Factory.Get())
+		{
+			auto pSolidColorBrush = __CreateSolidColorBrush(color);
+			auto pStyle = __CreateStrokeStyle(wStrokeStyle);
+			m_pHwndRenderTarget->DrawRoundedRectangle(
+				D2D1RoundedRect_FromMRect(rect, radiusX, radiusY),
+				pSolidColorBrush,
+				lineWidth,
+				pStyle
+			);
+		}
 	}
 
 	void Win7OrPlusRenderSystem::FillRect(MRect rect, MColor color)
 	{
+		if (m_pHwndRenderTarget.Get() && m_pD2d1Factory.Get())
+		{
+			auto pSolidColorBrush = __CreateSolidColorBrush(color);
+			m_pHwndRenderTarget->FillRectangle(
+				D2DRectF_FromMRect(rect),
+				pSolidColorBrush
+			);
+		}
 	}
 
 	void Win7OrPlusRenderSystem::FillRoundedRect(MRect rect, short radiusX, short radiusY, MColor color)
 	{
+		if (m_pHwndRenderTarget.Get() && m_pD2d1Factory.Get())
+		{
+			auto pSolidColorBrush = __CreateSolidColorBrush(color);
+			m_pHwndRenderTarget->FillRoundedRectangle(
+				D2D1RoundedRect_FromMRect(rect, radiusX, radiusY),
+				pSolidColorBrush
+			);
+		}
 	}
 
 	void Win7OrPlusRenderSystem::DrawTextString(MRect rect, const String & text, const Font & font, MColor color, short size, MWORD wStyle)
 	{
+		//TODO:
 	}
 
 	void Win7OrPlusRenderSystem::DrawImage(MRect rect, const String & imageFullPath)
 	{
+		//TODO:
 	}
 
 	MHandleType Win7OrPlusRenderSystem::GetNativeRenderHandle() const
