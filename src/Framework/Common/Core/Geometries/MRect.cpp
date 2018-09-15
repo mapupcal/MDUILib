@@ -36,7 +36,7 @@ namespace MDUILib
 	}
 	float operator*(const MPOINT & lhs, const MPOINT & rhs)
 	{
-		return lhs.x * rhs.x * 1.0 + lhs.y * rhs.y * 1.0;
+		return lhs.x * rhs.x * 1.0f + lhs.y * rhs.y * 1.0f;
 	}
 	MRect CreateRect(MRect::data_type top, MRect::data_type bottom,\
 		MRect::data_type left, MRect::data_type right)
@@ -126,10 +126,10 @@ namespace MDUILib
 	MRect FromWinRect(const RECT &rect)
 	{
 		MRect r;
-		r.left = rect.left;
-		r.right = rect.right;
-		r.top = rect.top;
-		r.right = rect.right;
+		r.left = static_cast<MRect::data_type>(rect.left);
+		r.right = static_cast<MRect::data_type>(rect.right);
+		r.top = static_cast<MRect::data_type>(rect.top);
+		r.right = static_cast<MRect::data_type>(rect.right);
 		return r;
 	}
 }

@@ -234,7 +234,7 @@ namespace MDUILib
 					MPoint ptMouse(mouseX,mouseY);
 					MouseEvent::MouseEventType t;
 					//	@Commit:see MSDN WM_MOUSEMOVE\WM_MOUSEHOVER wParam
-					MDWORD keyState = static_cast<MWORD>(wParam);
+					MWORD keyState = static_cast<MWORD>(wParam);
 					if (message == WM_MOUSEMOVE)
 					{
 						t = MouseEvent::MouseEventType::MET_MOVE;
@@ -323,8 +323,8 @@ namespace MDUILib
 				case WM_TIMER:
 				{
 
-					MWORD mwParam = wParam;	//TimerID;
-					NotifyEvent e(NotifyEvent::NotifyEventType::NET_TIMER, pWindow, wParam);
+					MWORD mwParam = static_cast<MWORD>(wParam);	//TimerID;
+					NotifyEvent e(NotifyEvent::NotifyEventType::NET_TIMER, pWindow, mwParam);
 					for (const auto &handler : pWindow->OnTimer)
 						handler(pWindow, &e);
 					wasHandled = true;

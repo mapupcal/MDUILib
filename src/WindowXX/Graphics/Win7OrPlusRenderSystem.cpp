@@ -24,8 +24,8 @@ namespace MDUILib
 	{
 		return D2D1::RoundedRect(
 			D2DRectF_FromMRect(rect),
-			radiusX,
-			radiusY
+			static_cast<float>(radiusX),
+			static_cast<float>(radiusY)
 		);
 	}
 
@@ -173,7 +173,7 @@ namespace MDUILib
 				D2DPoint2F_FromMPoint(startPt),
 				D2DPoint2F_FromMPoint(endPt),
 				pSolidColorBrush,
-				lineWidth,
+				static_cast<float>(lineWidth),
 				pStyle
 			);
 		}
@@ -188,7 +188,7 @@ namespace MDUILib
 			m_pHwndRenderTarget->DrawRectangle(
 				D2DRectF_FromMRect(rect),
 				pSolidColorBrush,
-				lineWidth,
+				static_cast<float>(lineWidth),
 				pStyle
 			);
 		}
@@ -203,7 +203,7 @@ namespace MDUILib
 			m_pHwndRenderTarget->DrawRoundedRectangle(
 				D2D1RoundedRect_FromMRect(rect, radiusX, radiusY),
 				pSolidColorBrush,
-				lineWidth,
+				static_cast<float>(lineWidth),
 				pStyle
 			);
 		}

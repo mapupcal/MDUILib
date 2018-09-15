@@ -180,7 +180,7 @@ namespace MDUILib
 		MRect m_rect;
 	};
 
-	class IControl;
+	struct IControl;
 
 	/*
 	*	@TemplateClassName:NotifyEvents<EventArgs>

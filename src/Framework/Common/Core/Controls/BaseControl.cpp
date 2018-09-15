@@ -319,6 +319,7 @@ namespace MDUILib
 				return p;
 			}
 		}
+		return nullptr;
 	}
 
 	BaseControl::IControlList BaseControl::FindChildren(const MPoint & pt)
