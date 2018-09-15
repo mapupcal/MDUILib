@@ -150,7 +150,6 @@ namespace MDUILib
 	{
 		MDUILIB_ASSERT(m_pHwndRenderTarget);
 		m_pHwndRenderTarget->EndDraw();
-		m_pHwndRenderTarget->Flush();
 	}
 
 	void Win7OrPlusRenderSystem::Clear(MColor color)
