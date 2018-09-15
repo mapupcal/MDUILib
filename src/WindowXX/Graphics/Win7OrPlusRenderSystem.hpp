@@ -3,6 +3,8 @@
 
 #include "Framework\Common\Core\Graphics\IRenderSystem.hpp"
 #include "Framework\Common\Core\Object.hpp"
+#include "WindowXX/Utils.hpp"
+
 #include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
@@ -18,6 +20,7 @@
 	EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 	#define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
 #endif //HINST_THISCOMPONENT
+
 namespace MDUILib
 {
 	class Win7OrPlusRenderSystem : m_extends Object, m_implements IRenderSystem
@@ -42,14 +45,14 @@ namespace MDUILib
 		virtual MHandleType GetNativeRenderHandle() const override;
 	private:
 		IWindow* m_pRenderTargetWindow;
-		ID2D1HwndRenderTarget *m_pHwndRenderTarget;
-		ID2D1Factory *m_pD2d1Factory;
-		IDWriteFactory *m_pDWriteFactory;
+		
+		ComPtr<ID2D1HwndRenderTarget> m_pHwndRenderTarget;
+		ComPtr<ID2D1Factory> m_pD2d1Factory;
+		ComPtr<IDWriteFactory> m_pDWriteFactory;
 		HRESULT __CreateD2DDeviceIndependentResources();
 		HRESULT __CreateD2DDeviceResources();
-		void __ReleaseResources();
 
-		ID2D1SolidColorBrush* m_pSolidColorBrush;
+		ComPtr<ID2D1SolidColorBrush> m_pSolidColorBrush;
 	};
 }
 

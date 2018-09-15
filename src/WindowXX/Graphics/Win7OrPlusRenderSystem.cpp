@@ -1,7 +1,6 @@
 #include "Win7OrPlusRenderSystem.hpp"
-#include"WindowXX\Utils.hpp"
 #include"WindowXX\Windows\WinXXWindow.hpp"
-#include<memory>
+
 namespace MDUILib
 {
 
@@ -50,15 +49,9 @@ namespace MDUILib
 		}
 		return hr;
 	}
-	void Win7OrPlusRenderSystem::__ReleaseResources()
-	{
-		SafeRelease(&m_pHwndRenderTarget);
-		SafeRelease(&m_pD2d1Factory);
-		SafeRelease(&m_pDWriteFactory);
-	}
 	Win7OrPlusRenderSystem::~Win7OrPlusRenderSystem()
 	{
-		__ReleaseResources();
+
 	}
 	void Win7OrPlusRenderSystem::BindTargetWindow(IWindow * pWindow)
 	{
@@ -128,7 +121,7 @@ namespace MDUILib
 				&m_pSolidColorBrush
 			);
 			MDUILIB_ASSERT_MSG(SUCCEEDED(hr), "Failed to CreateSolidColorBrush");
-			ID2D1StrokeStyle *m_pStyle;
+			ComPtr<ID2D1StrokeStyle> pStyle;
 			float dashes[] = { 2.0f, 2.0f, 2.0f};
 			hr = m_pD2d1Factory->CreateStrokeStyle(
 				D2D1::StrokeStyleProperties(
@@ -141,17 +134,15 @@ namespace MDUILib
 					0.0f),
 				dashes,
 				ARRAYSIZE(dashes),
-				&m_pStyle
+				&pStyle
 			);
 			m_pHwndRenderTarget->DrawLine(
 				D2DPoint2F_FromMPoint(startPt),
 				D2DPoint2F_FromMPoint(endPt),
 				m_pSolidColorBrush,
 				lineWidth,
-				m_pStyle
+				pStyle
 			);
-			SafeRelease(&m_pStyle);
-			SafeRelease(&m_pSolidColorBrush);
 		}
 	}
 
@@ -181,6 +172,6 @@ namespace MDUILib
 
 	MHandleType Win7OrPlusRenderSystem::GetNativeRenderHandle() const
 	{
-		return m_pHwndRenderTarget;
+		return m_pHwndRenderTarget.Get();
 	}
 }
