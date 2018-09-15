@@ -78,23 +78,18 @@ namespace MDUILib
 				D2D1_SIZE_U targetRc;
 				targetRc.height = GetRectHeight(rc);
 				targetRc.width = GetRectWidth(rc);
-				this->__CreateD2DDeviceResources();
 				this->m_pHwndRenderTarget->Resize(targetRc);
-				this->m_pHwndRenderTarget->BeginDraw();
-				this->m_pHwndRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-				this->m_pHwndRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
-				this->m_pHwndRenderTarget->EndDraw();
+				this->Clear(MColor::WHITE);
+				this->DrawBegin();
 				printf("Client Rect (%d,%d,%d,%d)\n", rc.left, rc.right, rc.top, rc.bottom);
 				MPoint ptS(0, targetRc.height / 2);
 				MPoint ptE(targetRc.width, targetRc.height / 2);
-				MColor red;
-				red.a = red.r = 255;
-				red.b = red.g = 0;
-				this->DrawLine(ptS, ptE, red, 2, 0);
+				this->DrawLine(ptS, ptE, MColor::RED, 2, 0);
 				ptS.x = ptE.x = targetRc.width / 2;
 				ptS.y = 0;
 				ptE.y = targetRc.height;
-				this->DrawLine(ptS, ptE, red, 2, 0);
+				this->DrawLine(ptS, ptE, MColor::BLUE, 2, 0);
+				this->DrawEnd();
 			}
 		};
 	}
@@ -102,6 +97,7 @@ namespace MDUILib
 	void Win7OrPlusRenderSystem::DrawBegin()
 	{
 		MDUILIB_ASSERT(m_pHwndRenderTarget);
+		this->__CreateD2DDeviceResources();
 		m_pHwndRenderTarget->BeginDraw();
 		m_pHwndRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	}
@@ -115,11 +111,11 @@ namespace MDUILib
 	void Win7OrPlusRenderSystem::Clear(MColor color)
 	{
 		MDUILIB_ASSERT(m_pHwndRenderTarget);
-		m_pHwndRenderTarget->BeginDraw();
+		DrawBegin();
 		m_pHwndRenderTarget->Clear(
 			D2DColorF_FromMColor(color)
 		);
-		m_pHwndRenderTarget->EndDraw();
+		DrawEnd();
 	}
 
 	void Win7OrPlusRenderSystem::DrawLine(MPoint startPt, MPoint endPt, MColor color, int lineWidth, MWORD wStrokeStyle)
@@ -133,7 +129,7 @@ namespace MDUILib
 			);
 			MDUILIB_ASSERT_MSG(SUCCEEDED(hr), "Failed to CreateSolidColorBrush");
 			ID2D1StrokeStyle *m_pStyle;
-			float dashes[] = { 1.0f, 2.0f, 2.0f, 3.0f, 2.0f, 2.0f };
+			float dashes[] = { 1.0f, 3.0f, 3.0f, 1.0f, 3.0f, 3.0f };
 			hr = m_pD2d1Factory->CreateStrokeStyle(
 				D2D1::StrokeStyleProperties(
 					D2D1_CAP_STYLE_FLAT,
@@ -147,7 +143,6 @@ namespace MDUILib
 				ARRAYSIZE(dashes),
 				&m_pStyle
 			);
-			m_pHwndRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 			m_pHwndRenderTarget->DrawLine(
 				D2DPoint2F_FromMPoint(startPt),
 				D2DPoint2F_FromMPoint(endPt),

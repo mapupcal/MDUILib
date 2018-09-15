@@ -11,4 +11,14 @@ namespace MDUILib
 		ret.b = static_cast<unsigned char>((start.b*t + finish.b*(1.0f - t)));
 		return ret;
 	}
+
+	MColor const MColor::WHITE = MColor{ 255, 255, 255, 255 };
+	MColor const MColor::RED = MColor{ 255,255,0,0 };
+	MColor const MColor::BLUE = MColor{ 255,0,0,255 };
+	MColor const MColor::GREEN = MColor{ 255,0,255,0 };
+
+	tagMColorARGB::tagMColorARGB()
+		:a(0),r(0),g(0),b(0){}
+	tagMColorARGB::tagMColorARGB(unsigned char A, unsigned char R, unsigned char G, unsigned char B)
+		:a(A),r(R),g(G),b(B){}
 }
