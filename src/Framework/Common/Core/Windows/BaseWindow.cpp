@@ -2,10 +2,10 @@
 
 namespace MDUILib
 {
-	BaseWindow::BaseWindow(){}
+	BaseWindow::BaseWindow() {}
 	void BaseWindow::InitWindow(const String & wndTittleName, const MRect & positionRect)
 	{
-		MDUILIB_ASSERT_MSG(false,"Not Impl.");
+		MDUILIB_ASSERT_MSG(false, "Not Impl.");
 	}
 	IWindow * BaseWindow::CreateSubWindow(const String & subWndTittleName, const MRect & relativePositionRect, bool bModal /*= false*/)
 	{
@@ -14,7 +14,7 @@ namespace MDUILib
 	}
 	void BaseWindow::SetTitle(const String & wndTittleName)
 	{
-		MDUILIB_ASSERT_MSG(false,"Not Impl.");
+		MDUILIB_ASSERT_MSG(false, "Not Impl.");
 	}
 	String BaseWindow::GetTitle() const
 	{
@@ -76,44 +76,44 @@ namespace MDUILib
 		MDUILIB_ASSERT_MSG(false, "Not Impl.");
 	}
 
-	inline const MRect::data_type BaseWindow::GetX() const
+	const MRect::data_type BaseWindow::GetX() const
 	{
 		return GetWndRect().left;
 	}
-	inline const MRect::data_type BaseWindow::GetY() const
+	const MRect::data_type BaseWindow::GetY() const
 	{
 		return GetWndRect().top;
 	}
-	inline const MRect::data_type BaseWindow::GetClientX() const
+	const MRect::data_type BaseWindow::GetClientX() const
 	{
 		return GetClientRect().left;
 	}
-	inline const MRect::data_type BaseWindow::GetClientY() const
+	const MRect::data_type BaseWindow::GetClientY() const
 	{
 		return GetClientRect().top;
 	}
 
-	inline const MRect BaseWindow::GetWndRect() const
+	const MRect BaseWindow::GetWndRect() const
 	{
 		return m_WindowRect;
 	}
-	inline const MRect BaseWindow::GetClientRect() const
+	const MRect BaseWindow::GetClientRect() const
 	{
 		return m_ClientRect;
 	}
-	inline MRect::data_type BaseWindow::GetWidth() const
+	MRect::data_type BaseWindow::GetWidth() const
 	{
 		return GetRectWidth(GetWndRect());
 	}
-	inline MRect::data_type BaseWindow::GetHeigth() const
+	MRect::data_type BaseWindow::GetHeigth() const
 	{
 		return GetRectHeight(GetWndRect());
 	}
-	inline MRect::data_type BaseWindow::GetClientWidth() const
+	MRect::data_type BaseWindow::GetClientWidth() const
 	{
 		return GetRectWidth(GetClientRect());
 	}
-	inline MRect::data_type BaseWindow::GetClientHeight() const
+	MRect::data_type BaseWindow::GetClientHeight() const
 	{
 		return GetRectHeight(GetClientRect());
 	}

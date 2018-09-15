@@ -36,6 +36,7 @@ namespace MDUILib
 		data_type right;
 
 		void MoveToPos(MPOINT pt);
+		void Resize(data_type width, data_type height);
 	} MRect;
 
 	const static MRect DEFAULT_RECT = { 0, 480, 0, 640 };

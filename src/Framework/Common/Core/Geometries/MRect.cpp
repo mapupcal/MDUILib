@@ -101,7 +101,7 @@ namespace MDUILib
 		:top(t),bottom(b),left(l),right(r)
 	{
 	}
-	void MRECT::MoveToPos(MPoint pt)
+	void MRECT::MoveToPos(MPOINT pt)
 	{
 		auto w = GetRectWidth(*this);
 		auto h = GetRectHeight(*this);
@@ -109,6 +109,11 @@ namespace MDUILib
 		top = pt.y;
 		right = w + left;
 		bottom = h + top;
+	}
+	void MRECT::Resize(data_type width, data_type height)
+	{
+		right = left + width;
+		bottom = top + height;
 	}
 	MPOINT::MPOINT(data_type X, data_type Y)
 		:x(X),y(Y){}

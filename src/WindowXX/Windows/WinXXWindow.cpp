@@ -192,18 +192,12 @@ namespace MDUILib
 				//	@Commit:窗口缩放
 				case WM_SIZE:
 				{
-					RECT rc;
-					//	@Commit:获取当前Window位置。
-					::GetWindowRect(hWnd, &rc);
-					//	@Commit:修改m_WindowRect。
-					MRect& rect = pWindow->m_WindowRect;
-					rect = FromWinRect(rc);
-					//	@Commit:获取Client的区域。
-					::GetClientRect(hWnd, &rc);
-					pWindow->m_ClientRect = FromWinRect(rc);
+					auto width = LOWORD(lParam);
+					auto height = HIWORD(lParam);
+					pWindow->m_ClientRect.Resize(width, height);
 					//	@Commit:通知OnSize注册的Notifyers
 					ControlNotifyEvent e(ControlNotifyEvent::ControlNotifyEventType::CNET_SIZE,
-						rect);
+						pWindow->GetClientRect());
 					for (const auto& handler : pWindow->OnSize)
 						handler(pWindow, &e);
 					wasHandled = true;

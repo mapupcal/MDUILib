@@ -56,7 +56,7 @@ namespace MDUILib
 		__CreateD2DDeviceIndependentResources();
 		__CreateD2DDeviceResources();
 		WinXXWindow* pWinXXWindow = static_cast<WinXXWindow*>(pWindow);
-		pWinXXWindow->OnSize += [=](IWindow*pW, MEvent*e)
+		pWinXXWindow->OnSize += [&](IWindow*pW, MEvent*e)
 		{
 			ControlNotifyEvent *pNe = static_cast<ControlNotifyEvent*>(e);
 			if (pNe->GetControlNotifyEventType()
@@ -66,7 +66,13 @@ namespace MDUILib
 				D2D1_SIZE_U targetRc;
 				targetRc.height = GetRectHeight(rc);
 				targetRc.width = GetRectWidth(rc);
+				this->__CreateD2DDeviceResources();
 				this->m_pHwndRenderTarget->Resize(targetRc);
+				this->m_pHwndRenderTarget->BeginDraw();
+				this->m_pHwndRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+				this->m_pHwndRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+				this->m_pHwndRenderTarget->EndDraw();
+				printf("Client Rect (%d,%d,%d,%d)\n", rc.left, rc.right, rc.top, rc.bottom);
 			}
 		};
 	}
