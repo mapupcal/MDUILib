@@ -33,6 +33,13 @@ namespace MDUILib
 		virtual HRESULT __Initialize(HWND hParent, const String &owndTitleName,const MRect& positionRect);
 	protected:
 		HWND m_hWnd;
+
+		//@Remark:为了产生WM_MOUSELEVE\WM_MOUSEHOVER消息，然后利用这两个消息生成自定义的Enter事件
+	private:
+		bool m_bMouseNowInClientRect;
+		bool m_bIsMouseTracking;
+
+		void __StartMouseTracking();
 	};
 }
 

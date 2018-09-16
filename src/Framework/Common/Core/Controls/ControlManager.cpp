@@ -103,7 +103,7 @@ namespace MDUILib
 					m_pControlMouseCurrentHitted->OnMouseLeave();
 				}
 				IControl* pControl = m_pControlWindow;
-				while (pControl->FindChild(ptMouse) != nullptr)
+				while ((pControl = pControl->FindChild(ptMouse)) != nullptr)
 				{
 					m_pControlMouseCurrentHitted = pControl;
 				}

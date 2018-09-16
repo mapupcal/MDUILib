@@ -288,8 +288,8 @@ namespace MDUILib
 		if (pChild && pChild->GetParent() != this)
 		{
 			pChild->SetParent(this);
+			m_lstpChildren.push_back(pChild);
 		}
-		m_lstpChildren.push_back(pChild);
 	}
 	void BaseControl::RemoveChild(IControl * pChild)
 	{

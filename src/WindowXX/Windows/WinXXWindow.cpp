@@ -6,6 +6,8 @@ namespace MDUILib
 {
 	WinXXWindow::WinXXWindow()
 		:m_hWnd(NULL)
+		,m_bMouseNowInClientRect(false)
+		,m_bIsMouseTracking(false)
 	{
 	}
 	WinXXWindow::~WinXXWindow()
@@ -241,6 +243,7 @@ namespace MDUILib
 				case WM_RBUTTONDOWN:
 					//	@Commit:鼠标右键松开
 				case WM_RBUTTONUP:
+				case WM_MOUSELEAVE:
 				{
 					auto mouseX = GET_X_LPARAM(lParam);
 					auto mouseY = GET_Y_LPARAM(lParam);
@@ -251,10 +254,28 @@ namespace MDUILib
 					if (message == WM_MOUSEMOVE)
 					{
 						t = MouseEvent::MouseEventType::MET_MOVE;
+						//@Commit：如果此时鼠标不在客户区内，就是一个WM_MOUSEENTER事件。
+						if (!pWindow->m_bMouseNowInClientRect)
+						{
+							t = MouseEvent::MouseEventType::MET_ENTER;
+							pWindow->m_bMouseNowInClientRect = true;
+						}
+						if (!pWindow->m_bIsMouseTracking)
+						{
+							pWindow->__StartMouseTracking();
+							pWindow->m_bIsMouseTracking = true;
+						}
+					}
+					else if (message == WM_MOUSELEAVE)
+					{
+						t = MouseEvent::MouseEventType::MET_LEAVE;
+						pWindow->m_bIsMouseTracking = false;
+						pWindow->m_bMouseNowInClientRect = false;
 					}
 					else if (message == WM_MOUSEHOVER)
 					{
 						t = MouseEvent::MouseEventType::MET_HOVER;
+						pWindow->m_bIsMouseTracking = false;
 					}
 					else if (message == WM_LBUTTONDOWN)
 					{
@@ -408,5 +429,15 @@ namespace MDUILib
 		auto hr = m_hWnd ? S_OK : E_FAIL;
 		MDUILIB_ASSERT_MSG(SUCCEEDED(hr), "Failed Create Window Platform Windows.");
 		return hr;
+	}
+
+	void WinXXWindow::__StartMouseTracking()
+	{
+		TRACKMOUSEEVENT tme = { 0 };
+		tme.cbSize = sizeof(tme);
+		tme.hwndTrack = m_hWnd;
+		tme.dwFlags = TME_HOVER | TME_LEAVE;
+		tme.dwHoverTime = HOVER_DEFAULT;
+		TrackMouseEvent(&tme);
 	}
 }
