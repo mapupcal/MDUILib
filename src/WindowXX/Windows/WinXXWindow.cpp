@@ -1,8 +1,20 @@
 #include "WinXXWindow.hpp"
 #include <Windows.h>
 #include <Windowsx.h>
+#include "Framework\Common\Core\Graphics\IRenderSystem.hpp"
 namespace MDUILib
 {
+	WinXXWindow::WinXXWindow()
+		:m_hWnd(NULL)
+	{
+	}
+	WinXXWindow::~WinXXWindow()
+	{
+		if (m_hWnd)
+		{
+			::DestroyWindow(m_hWnd);
+		}
+	}
 	void WinXXWindow::InitWindow(const String & wndTitleName, const MRect & positionRect)
 	{
 		MDUILIB_ASSERT_MSG(
@@ -16,6 +28,7 @@ namespace MDUILib
 		m_ClientRect = FromWinRect(rect);
 		::GetWindowRect(m_hWnd, &rect);
 		m_WindowRect = FromWinRect(rect);
+		m_pRenderSystem->BindTargetWindow(this);
 	}
 	IWindow * WinXXWindow::CreateSubWindow(const String & subWndTittleName, \
 		const MRect & relativePositionRect, bool bModal /*= false*/)

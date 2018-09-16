@@ -13,6 +13,9 @@
 
 namespace MDUILib
 {
+	class ControlManager;
+	m_interface IRenderSystem;
+
 	m_interface IWindow :
 		m_implements IUnknown
 	{
@@ -44,6 +47,8 @@ namespace MDUILib
 		virtual void SetTimer(int timerID, MUINT uElapse) = 0;
 		virtual void KillTimer(int timerID) = 0;
 
+		virtual ControlManager* GetControlManager() const = 0;
+		virtual IRenderSystem* GetRenderSystem() const = 0;
 		virtual AString GetInterfaceName() const override
 		{
 			return m_interface_name(IWindow);

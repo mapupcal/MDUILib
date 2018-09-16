@@ -7,9 +7,11 @@ INCLUDE_DIRECTORIES(
 #	Windows
 set(	WINDOWS_HEADERS
 	Windows/WinXXWindow.hpp
+	Windows/Win7OrPlusWindow.hpp
 )
 set(	WINDOWS_SOURCES
 	Windows/WinXXWindow.cpp
+	Windows/Win7OrPlusWindow.cpp
 )
 
 SOURCE_GROUP("Windows" FILES

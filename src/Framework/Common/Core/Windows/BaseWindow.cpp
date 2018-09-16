@@ -1,8 +1,28 @@
 #include"BaseWindow.hpp"
+#include"Framework\Common\Core\Controls\ControlManager.hpp"
+#include"Framework\Common\Core\Graphics\IRenderSystem.hpp"
 
 namespace MDUILib
 {
-	BaseWindow::BaseWindow() {}
+	BaseWindow::BaseWindow() {
+		m_pControlManager = new ControlManager(this);
+		OnMessage += [=](IWindow*, MEvent *e)
+		{
+			this->GetControlManager()->TranslateEvent(e);
+		};
+	}
+	BaseWindow::~BaseWindow()
+	{
+		for (auto pW : m_ModalSubWnds)
+		{
+			delete pW;
+		}
+
+		for (auto pW : m_ModalessSubWnds)
+		{
+			delete pW;
+		}
+	}
 	void BaseWindow::InitWindow(const String & wndTittleName, const MRect & positionRect)
 	{
 		MDUILIB_ASSERT_MSG(false, "Not Impl.");
@@ -74,6 +94,16 @@ namespace MDUILib
 	void BaseWindow::KillTimer(int timerID)
 	{
 		MDUILIB_ASSERT_MSG(false, "Not Impl.");
+	}
+
+	ControlManager * BaseWindow::GetControlManager() const
+	{
+		return m_pControlManager;
+	}
+
+	IRenderSystem* BaseWindow::GetRenderSystem() const
+	{
+		return m_pRenderSystem;
 	}
 
 	const MRect::data_type BaseWindow::GetX() const

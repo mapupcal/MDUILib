@@ -12,6 +12,8 @@
 
 namespace MDUILib
 {
+	class ControlManager;
+
 	class BaseWindow : m_extends Object, m_implements IWindow
 	{
 	public:
@@ -23,6 +25,7 @@ namespace MDUILib
 		typedef DelegateNotifyers<IWindow*, MEvent*> WindowProcNotifyers;
 		typedef std::vector<IWindow*> WindowListType;
 		BaseWindow();
+		~BaseWindow();
 		// Inherited via IWindow
 		virtual void InitWindow(const String & wndTitleName, const MRect & positionRect) override;
 		virtual IWindow * CreateSubWindow(const String & subWndTitleName, const MRect & relativePositionRect, bool bModal = false) override;
@@ -42,6 +45,8 @@ namespace MDUILib
 		virtual void SetTimer(int timerID, MUINT uElapse) override;
 		virtual void KillTimer(int timerID) override;
 
+		virtual ControlManager* GetControlManager() const override;
+		virtual IRenderSystem* GetRenderSystem() const override;
 		/*
 		*	@Remark:获取矩形位置
 		*/
@@ -72,6 +77,9 @@ namespace MDUILib
 
 		WindowListType m_ModalSubWnds;
 		WindowListType m_ModalessSubWnds;
+
+		ControlManager *m_pControlManager;
+		IRenderSystem *m_pRenderSystem;
 	};
 }
 

@@ -118,22 +118,7 @@ namespace MDUILib
 				targetRc.height = GetRectHeight(rc);
 				targetRc.width = GetRectWidth(rc);
 				this->m_pHwndRenderTarget->Resize(targetRc);
-				this->Clear(MColor::WHITE);
-				this->DrawBegin();
-				printf("Client Rect (%d,%d,%d,%d)\n", rc.left, rc.right, rc.top, rc.bottom);
-				MPoint ptS(0, targetRc.height / 2);
-				MPoint ptE(targetRc.width, targetRc.height / 2);
-				this->DrawLine(ptS, ptE, MColor::RED, 2, MStrokeStyle::STD_DASH);
-				ptS.x = ptE.x = targetRc.width / 2;
-				ptS.y = 0;
-				ptE.y = targetRc.height;
-				this->DrawLine(ptS, ptE, MColor::BLUE, 2, MStrokeStyle::STD_SOLID);
-
-				this->DrawRect(CreateRect(50,100,50,100), MColor::RED, 2, MStrokeStyle::STD_DASH);
-				this->FillRect(CreateRect(100, 150, 100, 150), MColor::BLUE);
-				this->DrawRoundedRect(CreateRect(200, 300, 200, 300), 10, 10, MColor::GREEN, 2, MStrokeStyle::STD_SOLID);
-				this->FillRoundedRect(CreateRect(400, 550, 500, 600), 20, 20, MColor::BLUE);
-				this->DrawEnd();
+				this->Clear(MColor::RED);
 			}
 		};
 	}

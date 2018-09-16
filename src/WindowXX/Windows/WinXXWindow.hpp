@@ -10,6 +10,8 @@ namespace MDUILib
 	class WinXXWindow : m_extends BaseWindow
 	{
 	public:
+		WinXXWindow();
+		~WinXXWindow();
 		virtual void InitWindow(const String & wndTitleName, const MRect & positionRect) override;
 		virtual IWindow * CreateSubWindow(const String & subWndTittleName, const MRect & relativePositionRect, bool bModal = false) override;
 		virtual void SetTitle(const String & wndTittleName) override;
