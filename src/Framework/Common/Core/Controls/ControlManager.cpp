@@ -14,6 +14,7 @@ namespace MDUILib
 			m_pControlWindow(nullptr)
 	{
 		m_pControlWindow = new BaseControl(nullptr);
+		m_pControlWindow->SetControlManager(this);
 		static_cast<BaseWindow*>(pWindow)->OnSize += [=](IWindow *pWindow, MEvent *e)
 		{
 			static_cast<BaseControl*>(this->m_pControlWindow)
@@ -22,6 +23,7 @@ namespace MDUILib
 	}
 	ControlManager::~ControlManager()
 	{
+		delete m_pControlWindow;
 	}
 	IWindow* ControlManager::GetHostWindow() const
 	{

@@ -168,12 +168,14 @@ namespace MDUILib
 	void BaseControl::OnMouseEnter()
 	{
 		printf("MouseEnter!");
-		m_BorderColor = MColor::RED;
+		m_BorderColor = MColor::WHITE;
+		Update();
 	}
 	void BaseControl::OnMouseLeave()
 	{
-		m_BorderColor = MColor::BLUE;
 		printf("MouseLeave!");
+		m_BorderColor = MColor::BLUE;
+		Update();
 	}
 	BaseControl::IControlList BaseControl::__FindChildren_IF(const std::function<bool(IControl*)> &Preb)
 	{
