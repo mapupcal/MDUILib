@@ -60,6 +60,7 @@ namespace MDUILib
 		void SetFocusMaskColor(MColor color);
 		MColor GetFocusMaskColor() const;
 
+		bool IsMousePointerHitted(MPoint pt) const;
 		
 		//@Remark:获取相对于主窗口的相对位置，坐标轴为主窗口的左上角。
 		MPoint GetPos() const;
@@ -106,6 +107,8 @@ namespace MDUILib
 		virtual IControl *FindChild(const MPoint &pt) override;
 		virtual IControlList FindChildren(const MPoint &pt) override;
 
+		virtual void SetControlManager(ControlManager *pControlMgr) override;
+		virtual ControlManager* GetControlManager() const override;
 		//Draw
 		virtual void OnPaint() override;
 		virtual void Validate() override;
@@ -118,7 +121,8 @@ namespace MDUILib
 	protected:
 		virtual bool EventFilter(MEvent *e) override;
 		virtual void DoAcceptEvent(MEvent *e) override;
-
+		virtual void OnMouseEnter() override;
+		virtual void OnMouseLeave() override;
 	protected:
 		//Template Method.
 		void AcceptEvent(MEvent *pEvent)
@@ -182,6 +186,8 @@ namespace MDUILib
 		bool m_bUpdateNeeded;
 		bool m_bFocus;
 		bool m_bUseContextMenu;
+
+		ControlManager *m_pControlMgr;
 	};
 
 }

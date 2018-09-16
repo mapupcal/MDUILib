@@ -3,11 +3,13 @@
 #define MDUILIB_FRAMEWORK_COMMON_CORE_CONTROLS_ICONTROL_H
 
 #include"Framework\Interface\Interface.hpp"
-#include"Common\Core\IUnknown.hpp"
+#include"Framework/Common/Core/IUnknown.hpp"
 #include"Framework/Common/Core/Events.hpp"
 
 namespace MDUILib
 {
+	class ControlManager;
+
 	m_interface IControl : m_implements IUnknown
 	{
 		typedef std::vector<IControl*> IControlList;
@@ -44,7 +46,9 @@ namespace MDUILib
 		virtual IControlList FindChildren(const String& name) = 0;
 		virtual IControl *FindChild(const MPoint &pt) = 0;
 		virtual IControlList FindChildren(const MPoint &pt) = 0;
-
+		//@Remarks:与ControlManager交互
+		virtual void SetControlManager(ControlManager *pControlMgr) = 0;
+		virtual ControlManager* GetControlManager() const = 0;
 		//Draw
 		//@Remark:描述这个控件应该被如何绘制。底层渲染模块的交互在此。
 		virtual void OnPaint() = 0;
@@ -63,6 +67,10 @@ namespace MDUILib
 		virtual bool EventFilter(MEvent *e) = 0;
 		//@Remark:框架传递给该控件时，必须正确解析该事件。
 		virtual void DoAcceptEvent(MEvent *e) = 0;
+		//Aux Method.
+		virtual void OnMouseEnter() = 0;
+		virtual void OnMouseLeave() = 0;
+
 	public:
 		AString GetInterfaceName() const override
 		{
@@ -74,6 +82,8 @@ namespace MDUILib
 				return this;
 			return IUnknown::GetInterface(riiName);
 		}
+
+		friend class ControlManager;
 	};
 }
 

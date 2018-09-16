@@ -43,9 +43,11 @@ set(	COMMON_UTILS_SOURCES
 set(	COMMON_CORE_CONTROLS_HEADERS
 	Common/Core/Controls/IControl.hpp
 	Common/Core/Controls/BaseControl.hpp
+	Common/Core/Controls/ControlManager.hpp
 )
 set(	COMMON_CORE_CONTROLS_SOURCES
 	Common/Core/Controls/BaseControl.cpp
+	Common/Core/Controls/ControlManager.cpp
 )
 
 #	Common/Core/Geometries

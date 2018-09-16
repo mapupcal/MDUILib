@@ -1,9 +1,11 @@
 #include"BaseControl.hpp"
 #include<algorithm>
+#include "Framework/Common/Core/Controls/ControlManager.hpp"
 
 namespace MDUILib
 {
 	BaseControl::BaseControl(IControl * pParent)
+		:m_pParent(nullptr)
 	{
 		if (pParent)
 		{
@@ -91,6 +93,10 @@ namespace MDUILib
 	{
 		return m_FocusMaskColor;
 	}
+	bool BaseControl::IsMousePointerHitted(MPoint pt) const
+	{
+		return IsPointInRect(pt, GetBorderRc());
+	}
 	MPoint BaseControl::GetPos() const
 	{
 		return MPoint(GetContetnRc().left, GetContetnRc().top);
@@ -158,6 +164,16 @@ namespace MDUILib
 		default:
 			break;
 		}
+	}
+	void BaseControl::OnMouseEnter()
+	{
+		printf("MouseEnter!");
+		m_BorderColor = MColor::RED;
+	}
+	void BaseControl::OnMouseLeave()
+	{
+		m_BorderColor = MColor::BLUE;
+		printf("MouseLeave!");
 	}
 	BaseControl::IControlList BaseControl::__FindChildren_IF(const std::function<bool(IControl*)> &Preb)
 	{
@@ -259,6 +275,7 @@ namespace MDUILib
 		}
 		m_pParent = pParent;
 		m_pParent->AddChild(this);
+		SetControlManager(pParent->GetControlManager());
 	}
 	IControl * BaseControl::GetParent() const
 	{
@@ -266,12 +283,9 @@ namespace MDUILib
 	}
 	void BaseControl::AddChild(IControl * pChild)
 	{
-		for (auto p : m_lstpChildren)
+		if (pChild && pChild->GetParent() != this)
 		{
-			if (p == pChild)
-			{
-				return;
-			}
+			pChild->SetParent(this);
 		}
 		m_lstpChildren.push_back(pChild);
 	}
@@ -314,7 +328,7 @@ namespace MDUILib
 	{
 		for (auto p : m_lstpChildren)
 		{
-			if (IsPointInRect(pt, (static_cast<BaseControl*>(p))->GetBorderRc()))
+			if (static_cast<const BaseControl*>(p)->IsMousePointerHitted(pt))
 			{
 				return p;
 			}
@@ -327,13 +341,27 @@ namespace MDUILib
 		return __FindChildren_IF(
 			[=](IControl* p)
 			{
-				return IsPointInRect(pt, (static_cast<const BaseControl*>(p))->GetBorderRc());
+				return static_cast<const BaseControl*>(p)->IsMousePointerHitted(pt);
 			});
+	}
+
+	void BaseControl::SetControlManager(ControlManager * pControlMgr)
+	{
+		m_pControlMgr = pControlMgr;
+		for (auto pChild : m_lstpChildren)
+		{
+			pChild->SetControlManager(m_pControlMgr);
+		}
+	}
+
+	ControlManager * BaseControl::GetControlManager() const
+	{
+		return m_pControlMgr;
 	}
 
 	void BaseControl::OnPaint()
 	{
-		//TODO:
+		GetControlManager()->Paint(this);
 	}
 	void BaseControl::Validate()
 	{
