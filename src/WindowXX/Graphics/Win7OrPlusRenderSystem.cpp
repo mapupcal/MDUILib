@@ -118,7 +118,6 @@ namespace MDUILib
 				targetRc.height = GetRectHeight(rc);
 				targetRc.width = GetRectWidth(rc);
 				this->m_pHwndRenderTarget->Resize(targetRc);
-				this->Clear(MColor::RED);
 			}
 		};
 	}

@@ -1,11 +1,19 @@
 #include"BaseControl.hpp"
 #include<algorithm>
 #include "Framework/Common/Core/Controls/ControlManager.hpp"
+#include "Framework/Common/Core/Windows/IWindow.hpp"
+#include "Framework/Common/Core/Graphics/IRenderSystem.hpp"
 
 namespace MDUILib
 {
 	BaseControl::BaseControl(IControl * pParent)
 		:m_pParent(nullptr)
+		,m_bUpdateNeeded(false)
+		,m_bEnable(true)
+		,m_bVisible(true)
+		,m_bValidate(false)
+		,m_bUseContextMenu(false)
+		,m_bFocus(false)
 	{
 		if (pParent)
 		{
@@ -167,15 +175,11 @@ namespace MDUILib
 	}
 	void BaseControl::OnMouseEnter()
 	{
-		printf("MouseEnter!");
-		m_BorderColor = MColor::WHITE;
-		Update();
+		printf("Not Impl.BaseControl::OnMouseEnter()!");
 	}
 	void BaseControl::OnMouseLeave()
 	{
-		printf("MouseLeave!");
-		m_BorderColor = MColor::BLUE;
-		Update();
+		printf("Not Impl.BaseControl::OnMouseLeave()!");
 	}
 	BaseControl::IControlList BaseControl::__FindChildren_IF(const std::function<bool(IControl*)> &Preb)
 	{
@@ -361,9 +365,35 @@ namespace MDUILib
 		return m_pControlMgr;
 	}
 
-	void BaseControl::OnPaint()
+	void BaseControl::Paint()
 	{
 		GetControlManager()->Paint(this);
+	}
+
+	//@Remark:控件应该在自己绘制自身。
+	//		  e.g.auto pRender = GetControlManager()->GetRenderSystem();
+	//			  //Do some thing draw.
+	void BaseControl::OnPaint()
+	{
+		auto pRender = GetControlManager()->GetHostWindow()->GetRenderSystem();
+		pRender->DrawBegin();
+		//Draw MySelf
+		if (m_bVisible)
+		{
+			if (m_bEnable)
+			{
+				//TODO:Efficiency to improve.Using Draw.
+				pRender->FillRect(GetMarginRc(), GetMarginColor());
+				pRender->FillRect(GetBorderRc(), GetBorderColor());
+				pRender->FillRect(GetPaddingRc(), GetPaddingColor());
+				pRender->FillRect(GetContetnRc(), GetContentColor());
+			}
+		}
+		else
+		{
+			//DrawNothing.
+		}
+		pRender->DrawEnd();
 	}
 	void BaseControl::Validate()
 	{
@@ -394,8 +424,15 @@ namespace MDUILib
 	}
 	void BaseControl::Update()
 	{
-		OnPaint();
-		m_bUpdateNeeded = false;
-		Validate();
+		if (m_pParent && m_pParent->IsUpdateNeeded())
+		{
+			m_pParent->Update();
+		}
+		else
+		{
+			m_bUpdateNeeded = false;
+			Paint();
+			Validate();
+		}
 	}
 }

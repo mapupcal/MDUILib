@@ -13,6 +13,7 @@ namespace MDUILib
 	//@Commit:	暂定方案：Contorl若没定制绘制自身的函数，将由ControlManager调用默认的绘制流程。ControlManager会逐一调用控件树上所有空间的OnPaint函数。
 
 	m_interface IWindow;
+	class WindowCanvas;
 
 	class ControlManager : m_extends Object
 	{
@@ -37,7 +38,7 @@ namespace MDUILib
 		void TranslateEvent(MEvent* e);
 		virtual bool PreTranslateEvent(MEvent* e);
 	private:
-		IControl *m_pControlWindow;
+		WindowCanvas *m_pWindowCanvas;
 		IControl *m_pControlMouseCurrentHitted;
 		IWindow *m_pHostWindow;
 	};

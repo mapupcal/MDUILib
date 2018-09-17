@@ -19,20 +19,23 @@ namespace MDUILib
 	{
 		WinXXWindow *pWindow = new Win7OrPlusWindow();
 		pWindow->InitWindow("???", { 0,100,0,100 });
-		pWindow->Show();
 		pWindow->OnClose += [&](IWindow* pWindow, MEvent*e)
 		{
 			this->Quit();
 		};
 		BaseControl *pControl = new BaseControl(nullptr);
-		pControl->SetBorderRc(CreateRect(0, 100, 0, 100));
-		pControl->SetPaddingRc(CreateRect(20, 80, 20, 80));
-		pControl->SetContentRc(CreateRect(21, 79, 21, 79));
+		pControl->SetMarginRc(CreateRect(18, 62, 18, 82));
+		pControl->SetMarginColor(MColor::RED);
+		pControl->SetBorderRc(CreateRect(19, 61, 19, 81));
+		pControl->SetPaddingRc(CreateRect(20, 60, 20, 80));
+		pControl->SetContentRc(CreateRect(21, 59, 21, 79));
 		pControl->SetBorderColor(MColor::WHITE);
-		pControl->SetPaddingColor(MColor::BLUE);
-		pControl->SetContentColor(MColor::GREEN);
+		pControl->SetPaddingColor(MColor::GREEN);
+		pControl->SetContentColor(MColor::BLUE);
 		ControlManager* pManager =  pWindow->GetControlManager();
+		pControl->SetVisible(true);
 		pManager->SetControlRoot(pControl);
+		pWindow->Show();
 		return 0;
 	}
 

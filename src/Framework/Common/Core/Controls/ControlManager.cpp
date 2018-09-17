@@ -3,7 +3,7 @@
 #include"Framework\Common\Core\Windows\IWindow.hpp"
 #include"Framework\Common\Core\Windows\BaseWindow.hpp"
 #include"Framework\Common\Core\Graphics\IRenderSystem.hpp"
-
+#include"WindowCanvas.hpp"
 #include "ControlManager.hpp"
 
 namespace MDUILib
@@ -11,19 +11,19 @@ namespace MDUILib
 	ControlManager::ControlManager(IWindow * pWindow)
 		:	m_pHostWindow(pWindow),
 			m_pControlMouseCurrentHitted(nullptr),
-			m_pControlWindow(nullptr)
+			m_pWindowCanvas(nullptr)
 	{
-		m_pControlWindow = new BaseControl(nullptr);
-		m_pControlWindow->SetControlManager(this);
+		m_pWindowCanvas = new WindowCanvas(this);
+		m_pWindowCanvas->SetControlManager(this);
 		static_cast<BaseWindow*>(pWindow)->OnSize += [=](IWindow *pWindow, MEvent *e)
 		{
-			static_cast<BaseControl*>(this->m_pControlWindow)
+			static_cast<BaseControl*>(this->m_pWindowCanvas)
 				->SetBorderRc(static_cast<ControlNotifyEvent*>(e)->GetRect());
 		};
 	}
 	ControlManager::~ControlManager()
 	{
-		delete m_pControlWindow;
+		delete m_pWindowCanvas;
 	}
 	IWindow* ControlManager::GetHostWindow() const
 	{
@@ -31,32 +31,24 @@ namespace MDUILib
 	}
 	void ControlManager::SetControlRoot(IControl * pControlRoot)
 	{
-		m_pControlWindow->AddChild(pControlRoot);
-		m_pControlMouseCurrentHitted = m_pControlWindow;
+		m_pWindowCanvas->AddChild(pControlRoot);
+		m_pControlMouseCurrentHitted = m_pWindowCanvas;
 	}
 	IControl* ControlManager::GetControlRoot() const
 	{
-		return m_pControlWindow;
+		return m_pWindowCanvas;
 	}
 	void ControlManager::Paint()
 	{
-		for (auto pC : m_pControlWindow->GetChildren())
+		for (auto pC : m_pWindowCanvas->GetChildren())
 			Paint(pC);
 	}
 	void ControlManager::Paint(IControl * pControl)
 	{
-		//Step1.Draw pParent.
-		auto pBase = static_cast<BaseControl*>(pControl);
-		auto pRender = m_pHostWindow->GetRenderSystem();
-		pRender->DrawBegin();
-		pRender->FillRect(pBase->GetBorderRc(), pBase->GetBorderColor());
-		pRender->FillRect(pBase->GetPaddingRc(), pBase->GetPaddingColor());
-		pRender->FillRect(pBase->GetContetnRc(), pBase->GetContentColor());
-		pRender->DrawEnd();
-		//Step2.Draw Children.
+		pControl->OnPaint();
 		for (auto pChild : pControl->GetChildren())
 		{
-			pChild->OnPaint();
+			pChild->Update();
 		}
 	}
 	IControl* ControlManager::FindContorlByName(const String & controlName)
@@ -94,15 +86,15 @@ namespace MDUILib
 			if (pne->GetMouseEventType() == MouseEvent::MouseEventType::MET_LEAVE)
 			{
 				m_pControlMouseCurrentHitted->OnMouseLeave();
-				m_pControlMouseCurrentHitted = m_pControlWindow;
+				m_pControlMouseCurrentHitted = m_pWindowCanvas;
 			}
 			else if (pne->GetMouseEventType() == MouseEvent::MouseEventType::MET_ENTER)
 			{
-				if (m_pControlMouseCurrentHitted != m_pControlWindow)
+				if (m_pControlMouseCurrentHitted != m_pWindowCanvas)
 				{
 					m_pControlMouseCurrentHitted->OnMouseLeave();
 				}
-				IControl* pControl = m_pControlWindow;
+				IControl* pControl = m_pWindowCanvas;
 				while ((pControl = pControl->FindChild(ptMouse)) != nullptr)
 				{
 					m_pControlMouseCurrentHitted = pControl;
