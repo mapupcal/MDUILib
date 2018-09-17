@@ -138,8 +138,8 @@ namespace MDUILib
 						}
 					}
 				}
-				m_pControlMouseCurrentHitted->EventFilter(e);
-				m_pControlMouseCurrentHitted->DoAcceptEvent(e);
+				if (!m_pControlMouseCurrentHitted->EventFilter(e))
+					m_pControlMouseCurrentHitted->DoAcceptEvent(e);
 			}
 		}
 		//╪Эел

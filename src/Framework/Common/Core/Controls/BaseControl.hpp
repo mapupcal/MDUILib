@@ -40,7 +40,7 @@ namespace MDUILib
 		typedef DelegateNotifyers<IControl*,MEvent*> EventNotifyerType;
 		//Box Modal
 		void SetContentRc(const MRect &rcContent);
-		MRect GetContetnRc() const;
+		MRect GetContentRc() const;
 		void SetPaddingRc(const MRect &rcPadding);
 		MRect GetPaddingRc() const;
 		void SetBorderRc(const MRect &rcBorder);

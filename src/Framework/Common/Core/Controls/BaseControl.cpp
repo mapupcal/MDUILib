@@ -33,7 +33,7 @@ namespace MDUILib
 	{
 		m_rcContent = rcContent;
 	}
-	MRect BaseControl::GetContetnRc() const
+	MRect BaseControl::GetContentRc() const
 	{
 		return m_rcContent;
 	}
@@ -107,7 +107,7 @@ namespace MDUILib
 	}
 	MPoint BaseControl::GetPos() const
 	{
-		return MPoint(GetContetnRc().left, GetContetnRc().top);
+		return MPoint(GetContentRc().left, GetContentRc().top);
 	}
 	MPoint BaseControl::GetRelativePos() const
 	{
@@ -386,8 +386,8 @@ namespace MDUILib
 				pRender->FillRect(GetMarginRc(), GetMarginColor());
 				pRender->FillRect(GetBorderRc(), GetBorderColor());
 				pRender->FillRect(GetPaddingRc(), GetPaddingColor());
-				pRender->FillRect(GetContetnRc(), GetContentColor());
-				pRender->DrawTextString(GetContetnRc(), GetText(), MFont(), MColor::WHITE, 12, 0);
+				pRender->FillRect(GetContentRc(), GetContentColor());
+				pRender->DrawTextString(GetContentRc(), GetText(), MFont(), MColor::WHITE, 12, 0);
 			}
 		}
 		else

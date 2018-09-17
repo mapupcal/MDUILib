@@ -45,11 +45,13 @@ set(	COMMON_CORE_CONTROLS_HEADERS
 	Common/Core/Controls/BaseControl.hpp
 	Common/Core/Controls/ControlManager.hpp
 	Common/Core/Controls/WindowCanvas.hpp
+	Common/Core/Controls/Label.hpp
 )
 set(	COMMON_CORE_CONTROLS_SOURCES
 	Common/Core/Controls/BaseControl.cpp
 	Common/Core/Controls/ControlManager.cpp
 	Common/Core/Controls/WindowCanvas.cpp
+	Common/Core/Controls/Label.cpp
 )
 
 #	Common/Core/Geometries
