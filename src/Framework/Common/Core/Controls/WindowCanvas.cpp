@@ -1,6 +1,7 @@
 #include"WindowCanvas.hpp"
 #include"ControlManager.hpp"
-#include"Common\Core\Windows\BaseWindow.hpp"
+#include"Framework\Common\Core\Windows\BaseWindow.hpp"
+#include"Framework\Common\Core\Graphics\IRenderSystem.hpp"
 
 namespace MDUILib
 {
@@ -8,6 +9,7 @@ namespace MDUILib
 		:BaseControl(nullptr)
 	{
 		m_pControlMgr = pManager;
+		m_ContentColor = MColor::WHITE;
 		static_cast<BaseWindow*>(
 			m_pControlMgr->GetHostWindow())->OnSize +=
 			[&](IWindow *pWindow, MEvent*e)
@@ -27,5 +29,9 @@ namespace MDUILib
 	}
 	void WindowCanvas::OnPaint()
 	{
+		auto pRender = GetControlManager()->GetHostWindow()->GetRenderSystem();
+		pRender->DrawBegin();
+		pRender->FillRect(GetContentRc(), GetContentColor());
+		pRender->DrawEnd();
 	}
 }

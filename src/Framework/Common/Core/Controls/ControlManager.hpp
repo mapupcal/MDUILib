@@ -3,7 +3,7 @@
 
 #include"Framework\Common\Core\Controls\IControl.hpp"
 #include"Framework\Common\Core\Object.hpp"
-
+#include"Framework\Common\Core\Graphics\MColor.hpp"
 namespace MDUILib
 {
 	//@Remarks:与顶层窗口协助，解析顶层窗口送达的系统事件。
@@ -33,7 +33,8 @@ namespace MDUILib
 		IControl *FindContorlByName(const String &controlName);
 		IControlList FindAllControlsByName(const String &controlName);
 		IControl *GetControlMouseCurrentHitted() const;
-		
+		void SetBackgroundColor(MColor color);
+		MColor GetBackGroundColor() const;
 		//@Remarks:Translate the MEvent From IWindow.
 		void TranslateEvent(MEvent* e);
 		virtual bool PreTranslateEvent(MEvent* e);

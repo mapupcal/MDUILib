@@ -40,8 +40,7 @@ namespace MDUILib
 	}
 	void ControlManager::Paint()
 	{
-		for (auto pC : m_pWindowCanvas->GetChildren())
-			Paint(pC);
+		Paint(m_pWindowCanvas);
 	}
 	void ControlManager::Paint(IControl * pControl)
 	{
@@ -62,6 +61,14 @@ namespace MDUILib
 	IControl* ControlManager::GetControlMouseCurrentHitted() const
 	{
 		return nullptr;
+	}
+	void ControlManager::SetBackgroundColor(MColor color)
+	{
+		m_pWindowCanvas->SetContentColor(color);
+	}
+	MColor ControlManager::GetBackGroundColor() const
+	{
+		return m_pWindowCanvas->GetContentColor();
 	}
 	//@Commit:	对于鼠标事件（移动、点击），可考虑不必对UI树进行遍历，而靠树上移动的方式去定位。
 	//			1.记录当前停留的控件，m_pControlMouseCurrentHitted.
