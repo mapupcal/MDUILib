@@ -9,7 +9,7 @@ namespace MDUILib
 		:BaseControl(nullptr)
 	{
 		m_pControlMgr = pManager;
-		m_ContentColor = MColor::WHITE;
+		m_ContentColor = MColor::White;
 		static_cast<BaseWindow*>(
 			m_pControlMgr->GetHostWindow())->OnSize +=
 			[&](IWindow *pWindow, MEvent*e)

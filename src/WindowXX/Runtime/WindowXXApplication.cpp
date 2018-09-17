@@ -8,6 +8,7 @@
 #include "Framework\Common\Core\Controls\ControlManager.hpp"
 #include "Windows\Win7OrPlusWindow.hpp"
 #include "Framework\Common\Core\Controls\Label.hpp"
+#include "Framework\Common\Core\Controls\Button.hpp"
 namespace MDUILib
 {
     WindowXXApplication g_App;
@@ -28,22 +29,27 @@ namespace MDUILib
 		pLabel->SetText("Label");
 		pLabel->SetTextSize(12);
 		pLabel->SetContentRc(CreateRect(100, 150, 100, 150));
-		pLabel->SetTextColor(MColor::RED);
-		pLabel->SetBackGroundColor(MColor::BLUE);
-		BaseControl *pControl = new BaseControl(nullptr);
+		pLabel->SetTextColor(MColor::Red);
+		pLabel->SetBackGroundColor(MColor::Blue);
+		Button *pControl = new Button(nullptr);
+		pControl->OnClicked += [](IControl*p, MEvent *e)
+		{
+			MessageBoxW(NULL, L"这是一个按钮", L"这是一个按钮", 0);
+		};
 		pControl->SetText("Demo");
 		pControl->SetMarginRc(CreateRect(18, 62, 18, 82));
-		pControl->SetMarginColor(MColor::RED);
+		pControl->SetMarginColor(MColor::Red);
 		pControl->SetBorderRc(CreateRect(19, 61, 19, 81));
 		pControl->SetPaddingRc(CreateRect(20, 60, 20, 80));
 		pControl->SetContentRc(CreateRect(21, 59, 21, 79));
-		pControl->SetBorderColor(MColor::WHITE);
-		pControl->SetPaddingColor(MColor::GREEN);
-		pControl->SetContentColor(MColor::BLUE);
+		pControl->SetBorderColor(MColor::White);
+		pControl->SetPaddingColor(MColor::Green);
+		pControl->SetContentColor(MColor::Blue);
 		ControlManager* pManager =  pWindow->GetControlManager();
 		pControl->SetVisible(true);
 		pManager->SetControlRoot(pControl);
 		pManager->SetControlRoot(pLabel);
+		pManager->SetBackgroundColor(MColor::Green);
 		pWindow->Show();
 		return 0;
 	}

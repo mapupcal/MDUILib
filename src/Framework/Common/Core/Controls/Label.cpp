@@ -9,8 +9,8 @@ namespace MDUILib
 		:BaseControl(pParent)
 		,m_Tat(TextAlignmentType::TAT_LEFT)
 		,m_TextSize(9)
-		,m_BackGroundColor(MColor::FULL_TRANSPARENT)
-		,m_TextColor(MColor::WHITE)
+		,m_BackGroundColor(MColor::Transparent)
+		,m_TextColor(MColor::White)
 		,m_TextFont()
 	{
 	}
@@ -60,7 +60,7 @@ namespace MDUILib
 		pRender->DrawBegin();
 		if (GetVisible())
 		{
-			if (GetBackGroundColor() != MColor::FULL_TRANSPARENT)
+			if (GetBackGroundColor() != MColor::Transparent)
 			{
 				pRender->FillRect(GetContentRc(), GetBackGroundColor());
 			}
