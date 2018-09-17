@@ -39,7 +39,7 @@ namespace MDUILib
 			int lineWidth, MStrokeStyle wStrokeStyle) override;
 		virtual void FillRect(MRect rect, MColor color) override;
 		virtual void FillRoundedRect(MRect rect, short radiusX, short radiusY, MColor color) override;
-		virtual void DrawTextString(MRect rect, const String &text,const Font &font, \
+		virtual void DrawTextString(MRect rect, const String &text,const MFont &font, \
 			MColor color, short size, MWORD wStyle) override;
 		virtual void DrawImage(MRect rect, const String& imageFullPath) override;
 		virtual MHandleType GetNativeRenderHandle() const override;

@@ -3,7 +3,7 @@
 #include "Framework/Common/Core/Controls/ControlManager.hpp"
 #include "Framework/Common/Core/Windows/IWindow.hpp"
 #include "Framework/Common/Core/Graphics/IRenderSystem.hpp"
-
+#include "Framework\Common\Core\Graphics\MFont.hpp"
 namespace MDUILib
 {
 	BaseControl::BaseControl(IControl * pParent)
@@ -387,6 +387,7 @@ namespace MDUILib
 				pRender->FillRect(GetBorderRc(), GetBorderColor());
 				pRender->FillRect(GetPaddingRc(), GetPaddingColor());
 				pRender->FillRect(GetContetnRc(), GetContentColor());
+				pRender->DrawTextString(GetContetnRc(), GetText(), MFont(), MColor::WHITE, 12, 0);
 			}
 		}
 		else

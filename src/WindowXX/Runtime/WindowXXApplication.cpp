@@ -24,6 +24,7 @@ namespace MDUILib
 			this->Quit();
 		};
 		BaseControl *pControl = new BaseControl(nullptr);
+		pControl->SetText("Demo");
 		pControl->SetMarginRc(CreateRect(18, 62, 18, 82));
 		pControl->SetMarginColor(MColor::RED);
 		pControl->SetBorderRc(CreateRect(19, 61, 19, 81));

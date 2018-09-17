@@ -1,5 +1,6 @@
 #include "Win7OrPlusRenderSystem.hpp"
 #include"WindowXX\Windows\WinXXWindow.hpp"
+#include"Framework\Common\Core\Graphics\MFont.hpp"
 
 namespace MDUILib
 {
@@ -216,9 +217,39 @@ namespace MDUILib
 		}
 	}
 
-	void Win7OrPlusRenderSystem::DrawTextString(MRect rect, const String & text, const Font & font, MColor color, short size, MWORD wStyle)
+	void Win7OrPlusRenderSystem::DrawTextString(MRect rect, const String & text, const MFont & font, MColor color, short size, MWORD wStyle)
 	{
-		//TODO:
+		ComPtr<IDWriteTextFormat> pTextFormat;
+		auto pBrush = __CreateSolidColorBrush(color);
+		DWRITE_TRIMMING trim;
+		m_pDWriteFactory->CreateTextFormat(
+			L"Î¢ÈíÑÅºÚ",
+			NULL,
+			DWRITE_FONT_WEIGHT_REGULAR,
+			DWRITE_FONT_STYLE_NORMAL,
+			DWRITE_FONT_STRETCH_NORMAL,
+			size,
+			L"zh-cn",
+			&pTextFormat
+		);
+		ComPtr<IDWriteInlineObject> pIDWInlineObj;
+		m_pDWriteFactory->CreateEllipsisTrimmingSign(pTextFormat, &pIDWInlineObj);
+		pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+		pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+		pTextFormat->SetWordWrapping(DWRITE_WORD_WRAPPING_CHARACTER);
+		trim.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER;
+		trim.delimiter = 1;
+		trim.delimiterCount = 10;
+		pTextFormat->SetTrimming(&trim, pIDWInlineObj);
+		
+		auto wide_string = text.ToStdWString();
+		m_pHwndRenderTarget->DrawTextA(
+			wide_string.c_str(),
+			wide_string.length(),
+			pTextFormat,
+			D2DRectF_FromMRect(rect),
+			pBrush
+		);
 	}
 
 	void Win7OrPlusRenderSystem::DrawImage(MRect rect, const String & imageFullPath)

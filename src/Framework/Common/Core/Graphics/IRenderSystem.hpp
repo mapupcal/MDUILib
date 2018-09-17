@@ -10,7 +10,7 @@
 
 namespace MDUILib
 {
-	struct Font;
+	struct MFont;
 
 	enum class MStrokeStyle : MWORD
 	{
@@ -33,7 +33,7 @@ namespace MDUILib
 			int lineWidth , MStrokeStyle wStrokeStyle ) = 0;
 		virtual void FillRect(MRect rect, MColor color) = 0;
 		virtual void FillRoundedRect(MRect rect, short radiusX, short radiusY, MColor color) = 0;
-		virtual void DrawTextString(MRect rect, const String &text, const Font &font, MColor color, short size, MWORD wStyle) = 0;
+		virtual void DrawTextString(MRect rect, const String &text, const MFont &font, MColor color, short size, MWORD wStyle) = 0;
 		virtual void DrawImage(MRect rect, const String& imageFullPath) = 0; 
 		virtual MHandleType GetNativeRenderHandle() const = 0;
 		//Via IUnknow
