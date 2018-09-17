@@ -18,6 +18,14 @@ namespace MDUILib
 		STD_DASH
 	};
 
+	enum class TextAlignmentType
+	{
+		TAT_CENTER = 0,
+		TAT_LEFT,
+		TAT_RIGHT
+	};
+
+
 	m_interface IRenderSystem : m_extends IUnknown
 	{
 		virtual ~IRenderSystem(){}

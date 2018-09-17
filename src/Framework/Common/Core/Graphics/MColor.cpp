@@ -2,6 +2,17 @@
 
 namespace MDUILib
 {
+	bool operator==(const tagMColorARGB & lhs, const tagMColorARGB & rhs)
+	{
+		return (lhs.a == rhs.a) &&
+			(lhs.r == rhs.r) &&
+			(lhs.g == rhs.g) &&
+			(lhs.b == rhs.b);
+	}
+	bool operator!=(const tagMColorARGB & lhs, const tagMColorARGB & rhs)
+	{
+		return !(lhs == rhs);
+	}
 	MColor LineInterp(MColor start, MColor finish, float t)
 	{
 		MColor ret;
@@ -16,6 +27,7 @@ namespace MDUILib
 	MColor const MColor::RED = MColor{ 255,255,0,0 };
 	MColor const MColor::BLUE = MColor{ 255,0,0,255 };
 	MColor const MColor::GREEN = MColor{ 255,0,255,0 };
+	MColor const MColor::FULL_TRANSPARENT = MColor{ 0,0,0,0 };
 
 	tagMColorARGB::tagMColorARGB()
 		:a(0),r(0),g(0),b(0){}

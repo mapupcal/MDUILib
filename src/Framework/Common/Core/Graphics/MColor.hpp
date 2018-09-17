@@ -20,6 +20,9 @@ namespace MDUILib
 		const static tagMColorARGB RED;
 		const static tagMColorARGB BLUE;
 		const static tagMColorARGB GREEN;
+		const static tagMColorARGB FULL_TRANSPARENT;
+		friend bool operator==(const tagMColorARGB& lhs, const tagMColorARGB& rhs);
+		friend bool operator!=(const tagMColorARGB& lhs, const tagMColorARGB& rhs);
 	}MColor;
 	//@Remark:Line interpolate for color.t belong to float in [0,1].
 	MColor LineInterp(MColor start, MColor finish, float t);

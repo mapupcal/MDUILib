@@ -7,6 +7,7 @@
 #include "Framework\Common\Core\Controls\BaseControl.hpp"
 #include "Framework\Common\Core\Controls\ControlManager.hpp"
 #include "Windows\Win7OrPlusWindow.hpp"
+#include "Framework\Common\Core\Controls\Label.hpp"
 namespace MDUILib
 {
     WindowXXApplication g_App;
@@ -23,6 +24,12 @@ namespace MDUILib
 		{
 			this->Quit();
 		};
+		Label *pLabel = new Label(nullptr);
+		pLabel->SetText("Label");
+		pLabel->SetTextSize(12);
+		pLabel->SetContentRc(CreateRect(100, 150, 100, 150));
+		pLabel->SetTextColor(MColor::RED);
+		pLabel->SetBackGroundColor(MColor::BLUE);
 		BaseControl *pControl = new BaseControl(nullptr);
 		pControl->SetText("Demo");
 		pControl->SetMarginRc(CreateRect(18, 62, 18, 82));
@@ -36,6 +43,7 @@ namespace MDUILib
 		ControlManager* pManager =  pWindow->GetControlManager();
 		pControl->SetVisible(true);
 		pManager->SetControlRoot(pControl);
+		pManager->SetControlRoot(pLabel);
 		pWindow->Show();
 		return 0;
 	}
