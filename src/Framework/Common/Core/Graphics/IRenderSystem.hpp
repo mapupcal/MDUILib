@@ -25,6 +25,12 @@ namespace MDUILib
 		TAT_RIGHT
 	};
 
+	enum class LinearGradientRenderType
+	{
+		LGRT_VERTICAL = 0,
+		LGRT_HORIZONTAL,
+		LGRT_DIAGONAL
+	};
 
 	m_interface IRenderSystem : m_extends IUnknown
 	{
@@ -39,6 +45,16 @@ namespace MDUILib
 			int lineWidth , MStrokeStyle wStrokeStyle ) = 0;
 		virtual void FillRect(MRect rect, MColor color) = 0;
 		virtual void FillRoundedRect(MRect rect, short radiusX, short radiusY, MColor color) = 0;
+		//@Remark:梯度颜色的矩形。其中参数lgrt只有当bRadius为false时才使用。
+		//@Remark:bRadius暂取辐射颜色的半径取该矩形长宽的最大值。
+		virtual void DrawGradientRect(MRect rect, MColor colorBegin, MColor colorEnd, \
+			int lineWidth, MStrokeStyle wStrokeStyle, bool bRadius, LinearGradientRenderType lgrt) = 0;
+		virtual void FillGradientRect(MRect rect, MColor colorBegin, MColor colorEnd, \
+			bool bRadius, LinearGradientRenderType lgrt) = 0;
+		virtual void DrawGradientRoundedRect(MRect rect, short radiusX, short radiusY, \
+			MColor colorBegin, MColor colorEnd, int lineWidth, MStrokeStyle wStrokeStyle, bool bRadius, LinearGradientRenderType lgrt) = 0;
+		virtual void FillGradientRoundedRect(MRect rect, short radiusX, short radiusY, \
+			MColor colorBegin, MColor colorEnd, bool bRadius, LinearGradientRenderType lgrt) = 0;
 		virtual void DrawTextString(MRect rect, const String &text, const MFont &font, MColor color, short size, MWORD wStyle) = 0;
 		virtual void DrawImage(MRect rect, const String& imageFullPath) = 0; 
 		virtual MHandleType GetNativeRenderHandle() const = 0;

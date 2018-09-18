@@ -39,6 +39,14 @@ namespace MDUILib
 			int lineWidth, MStrokeStyle wStrokeStyle) override;
 		virtual void FillRect(MRect rect, MColor color) override;
 		virtual void FillRoundedRect(MRect rect, short radiusX, short radiusY, MColor color) override;
+		virtual void DrawGradientRect(MRect rect, MColor colorBegin, MColor colorEnd, \
+			int lineWidth, MStrokeStyle wStrokeStyle, bool bRadius, LinearGradientRenderType lgrt) override;
+		virtual void FillGradientRect(MRect rect, MColor colorBegin, MColor colorEnd, \
+			bool bRadius, LinearGradientRenderType lgrt) override;
+		virtual void DrawGradientRoundedRect(MRect rect, short radiusX, short radiusY, \
+			MColor colorBegin, MColor colorEnd, int lineWidth, MStrokeStyle wStrokeStyle, bool bRadius, LinearGradientRenderType lgrt) override;
+		virtual void FillGradientRoundedRect(MRect rect, short radiusX, short radiusY, \
+			MColor colorBegin, MColor colorEnd, bool bRadius, LinearGradientRenderType lgrt) override;
 		virtual void DrawTextString(MRect rect, const String &text,const MFont &font, \
 			MColor color, short size, MWORD wStyle) override;
 		virtual void DrawImage(MRect rect, const String& imageFullPath) override;
@@ -48,6 +56,8 @@ namespace MDUILib
 		HRESULT __CreateD2DDeviceResources();
 		ComPtr<ID2D1StrokeStyle> __CreateStrokeStyle(MStrokeStyle wStyle);
 		ComPtr<ID2D1SolidColorBrush> __CreateSolidColorBrush(MColor color);
+		ComPtr<ID2D1Brush> __CreateGradientColorBrush(MRect rect, MColor colorBegin, MColor colorEnd, \
+			bool bRadius, LinearGradientRenderType lgrt);
 	private:
 		IWindow* m_pRenderTargetWindow;
 		

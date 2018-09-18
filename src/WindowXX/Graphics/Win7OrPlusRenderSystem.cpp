@@ -21,7 +21,7 @@ namespace MDUILib
 		return D2D1::RectF(rect.left, rect.top, rect.right, rect.bottom);
 	}
 
-	inline D2D1_ROUNDED_RECT D2D1RoundedRect_FromMRect(MRect rect, int radiusX, int radiusY)
+	inline D2D1_ROUNDED_RECT D2DRoundedRect_FromMRect(MRect rect, int radiusX, int radiusY)
 	{
 		return D2D1::RoundedRect(
 			D2DRectF_FromMRect(rect),
@@ -96,9 +96,66 @@ namespace MDUILib
 		MDUILIB_ASSERT_MSG(SUCCEEDED(hr), "Failed to CreateSolidColorBrush");
 		return pSolidColorBrush;
 	}
+	ComPtr<ID2D1Brush> Win7OrPlusRenderSystem::__CreateGradientColorBrush(
+		MRect rect,
+		MColor colorBegin, MColor colorEnd, 
+		bool bRadius, LinearGradientRenderType lgrt)
+	{
+		ComPtr<ID2D1GradientStopCollection> pgsc;
+		D2D1_GRADIENT_STOP gs[2];
+		gs[0].color = D2DColorF_FromMColor(colorBegin);
+		gs[0].position = 0.0f;
+		gs[1].color = D2DColorF_FromMColor(colorEnd);
+		gs[1].position = 1.0f;
+		m_pHwndRenderTarget->CreateGradientStopCollection(
+			gs,
+			2,
+			&pgsc
+		);
+		if (!bRadius)
+		{
+			D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES props;
+			props.startPoint = D2DPoint2F_FromMPoint(rect.GetLeftTopPoint());
+			switch (lgrt)
+			{
+			case MDUILib::LinearGradientRenderType::LGRT_VERTICAL:
+				props.endPoint = D2DPoint2F_FromMPoint(rect.GetLeftBottomPoint());
+				break;
+			case MDUILib::LinearGradientRenderType::LGRT_HORIZONTAL:
+				props.endPoint = D2DPoint2F_FromMPoint(rect.GetRightTopPoint());
+				break;
+			case MDUILib::LinearGradientRenderType::LGRT_DIAGONAL:
+				props.endPoint = D2DPoint2F_FromMPoint(rect.GetRightBottomPoint());
+				break;
+			default:
+				break;
+			}
+			ComPtr<ID2D1LinearGradientBrush> brush;
+			m_pHwndRenderTarget->CreateLinearGradientBrush(
+				props,
+				pgsc,
+				&brush
+			);
+			return brush;
+		}
+		else
+		{
+			D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES props;
+			props.center = D2DPoint2F_FromMPoint(rect.GetCenterPoint());
+			props.gradientOriginOffset = D2D1::Point2F(0, 0);
+			props.radiusY = props.radiusX = MDUILIB_MAX(GetRectHeight(rect), GetRectWidth(rect));
+			ComPtr<ID2D1RadialGradientBrush> brush;
+			m_pHwndRenderTarget->CreateRadialGradientBrush(
+				props,
+				pgsc,
+				&brush
+			);
+			return brush;
+		}
+	}
 	Win7OrPlusRenderSystem::~Win7OrPlusRenderSystem()
 	{
-
+		
 	}
 	void Win7OrPlusRenderSystem::BindTargetWindow(IWindow * pWindow)
 	{
@@ -185,7 +242,7 @@ namespace MDUILib
 			auto pSolidColorBrush = __CreateSolidColorBrush(color);
 			auto pStyle = __CreateStrokeStyle(wStrokeStyle);
 			m_pHwndRenderTarget->DrawRoundedRectangle(
-				D2D1RoundedRect_FromMRect(rect, radiusX, radiusY),
+				D2DRoundedRect_FromMRect(rect, radiusX, radiusY),
 				pSolidColorBrush,
 				static_cast<float>(lineWidth),
 				pStyle
@@ -211,8 +268,66 @@ namespace MDUILib
 		{
 			auto pSolidColorBrush = __CreateSolidColorBrush(color);
 			m_pHwndRenderTarget->FillRoundedRectangle(
-				D2D1RoundedRect_FromMRect(rect, radiusX, radiusY),
+				D2DRoundedRect_FromMRect(rect, radiusX, radiusY),
 				pSolidColorBrush
+			);
+		}
+	}
+
+	void Win7OrPlusRenderSystem::DrawGradientRect(MRect rect, MColor colorBegin, MColor colorEnd, \
+		int lineWidth, MStrokeStyle wStrokeStyle, bool bRadius, LinearGradientRenderType lgrt)
+	{
+		if (m_pHwndRenderTarget.Get() && m_pD2d1Factory.Get())
+		{
+			auto pBrush = __CreateGradientColorBrush(rect, colorBegin, colorEnd, bRadius, lgrt);
+			auto pStokeStyle = __CreateStrokeStyle(wStrokeStyle);
+			m_pHwndRenderTarget->DrawRectangle(
+				D2DRectF_FromMRect(rect),
+				pBrush,
+				lineWidth,
+				pStokeStyle
+			);
+		}
+	}
+
+	void Win7OrPlusRenderSystem::FillGradientRect(MRect rect, MColor colorBegin, MColor colorEnd, \
+		bool bRadius, LinearGradientRenderType lgrt)
+	{
+		if (m_pHwndRenderTarget.Get() && m_pD2d1Factory.Get())
+		{
+			auto pBrush = __CreateGradientColorBrush(rect, colorBegin, colorEnd, bRadius, lgrt);
+			m_pHwndRenderTarget->FillRectangle(
+				D2DRectF_FromMRect(rect),
+				pBrush
+			);
+		}
+	}
+
+	void Win7OrPlusRenderSystem::DrawGradientRoundedRect(MRect rect, short radiusX, short radiusY, \
+		MColor colorBegin, MColor colorEnd, int lineWidth, MStrokeStyle wStrokeStyle, bool bRadius, LinearGradientRenderType lgrt)
+	{
+		if (m_pHwndRenderTarget.Get() && m_pD2d1Factory.Get())
+		{
+			auto pBrush = __CreateGradientColorBrush(rect, colorBegin, colorEnd, bRadius, lgrt);
+			auto pStokeStyle = __CreateStrokeStyle(wStrokeStyle);
+			m_pHwndRenderTarget->DrawRoundedRectangle(
+				D2DRoundedRect_FromMRect(rect,radiusX,radiusY),
+				pBrush,
+				lineWidth,
+				pStokeStyle
+			);
+		}
+	}
+
+	void Win7OrPlusRenderSystem::FillGradientRoundedRect(MRect rect, short radiusX, short radiusY, \
+		MColor colorBegin, MColor colorEnd, bool bRadius, LinearGradientRenderType lgrt)
+	{
+		if (m_pHwndRenderTarget.Get() && m_pD2d1Factory.Get())
+		{
+			auto pBrush = __CreateGradientColorBrush(rect, colorBegin, colorEnd, bRadius, lgrt);
+			m_pHwndRenderTarget->FillRoundedRectangle(
+				D2DRoundedRect_FromMRect(rect, radiusX, radiusY),
+				pBrush
 			);
 		}
 	}

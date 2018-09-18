@@ -2,8 +2,8 @@
 #define MDUILIB_FRAMEWORK_COMMON_UTILS_UTILS_H
 
 //	@MicroRemark:取最大或取最小值
-#define MDUILIB_MAX(LhsNumber,RhsNumber) (LhsNumber > RhsNumber) ? LhsNumber : RhsNumber;  
-#define MDUILIB_MIN(LhsNumber,RhsNumber) (LhsNumber < RhsNumber) ? LhsNumber : RhsNumber;
+#define MDUILIB_MAX(LhsNumber,RhsNumber) (LhsNumber > RhsNumber) ? LhsNumber : RhsNumber
+#define MDUILIB_MIN(LhsNumber,RhsNumber) (LhsNumber < RhsNumber) ? LhsNumber : RhsNumber
 #define MDUILIB_OUT_ERROR(ErrorMsg) \
 	do\
 	{\

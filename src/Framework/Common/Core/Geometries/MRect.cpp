@@ -115,6 +115,26 @@ namespace MDUILib
 		right = left + width;
 		bottom = top + height;
 	}
+	MPOINT MRECT::GetLeftTopPoint() const
+	{
+		return MPoint(left, top);
+	}
+	MPOINT MRECT::GetLeftBottomPoint() const
+	{
+		return MPoint(left,bottom);
+	}
+	MPOINT MRECT::GetRightTopPoint() const
+	{
+		return MPoint(right, top);
+	}
+	MPOINT MRECT::GetRightBottomPoint() const
+	{
+		return MPoint(right, bottom);
+	}
+	MPOINT MRECT::GetCenterPoint() const
+	{
+		return MPoint((left + right) / 2, (top + bottom) / 2);
+	}
 	MPOINT::MPOINT(data_type X, data_type Y)
 		:x(X),y(Y){}
 }

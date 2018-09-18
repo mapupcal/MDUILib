@@ -36,8 +36,6 @@ namespace MDUILib
 		{
 			auto pChild = pWindow->CreateSubWindow("Popup", CreateRect(0, 150, 0, 150), true);
 			pChild->Show();
-			pChild->Close();
-			delete pChild;
 		};
 		pControl->SetText("Demo");
 		pControl->SetMarginRc(CreateRect(18, 62, 18, 82));

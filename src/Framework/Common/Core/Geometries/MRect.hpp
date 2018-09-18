@@ -37,6 +37,11 @@ namespace MDUILib
 
 		void MoveToPos(MPOINT pt);
 		void Resize(data_type width, data_type height);
+		MPOINT GetLeftTopPoint() const;
+		MPOINT GetLeftBottomPoint() const;
+		MPOINT GetRightTopPoint() const;
+		MPOINT GetRightBottomPoint() const;
+		MPOINT GetCenterPoint() const;
 	} MRect;
 
 	const static MRect DEFAULT_RECT = { 0, 480, 0, 640 };
