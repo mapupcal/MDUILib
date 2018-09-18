@@ -47,6 +47,9 @@ namespace MDUILib
 		virtual void SetTimer(int timerID, MUINT uElapse) = 0;
 		virtual void KillTimer(int timerID) = 0;
 
+		//@Remark:提示用户某件事情发生，nCnt表示闪烁次数。
+		virtual void FlashWindow(int nCnt) = 0;
+
 		virtual ControlManager* GetControlManager() const = 0;
 		virtual IRenderSystem* GetRenderSystem() const = 0;
 		virtual AString GetInterfaceName() const override

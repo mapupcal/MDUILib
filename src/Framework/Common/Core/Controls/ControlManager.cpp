@@ -15,6 +15,7 @@ namespace MDUILib
 	{
 		m_pWindowCanvas = new WindowCanvas(this);
 		m_pWindowCanvas->SetControlManager(this);
+		m_pControlMouseCurrentHitted = m_pWindowCanvas;
 		static_cast<BaseWindow*>(pWindow)->OnSize += [=](IWindow *pWindow, MEvent *e)
 		{
 			static_cast<BaseControl*>(this->m_pWindowCanvas)

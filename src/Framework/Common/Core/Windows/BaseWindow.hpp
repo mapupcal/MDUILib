@@ -44,7 +44,7 @@ namespace MDUILib
 		virtual bool IsModal() const override;
 		virtual void SetTimer(int timerID, MUINT uElapse) override;
 		virtual void KillTimer(int timerID) override;
-
+		virtual void FlashWindow(int nCnt) override;
 		virtual ControlManager* GetControlManager() const override;
 		virtual IRenderSystem* GetRenderSystem() const override;
 		/*

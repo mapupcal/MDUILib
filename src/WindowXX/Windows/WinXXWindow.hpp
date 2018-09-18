@@ -27,7 +27,7 @@ namespace MDUILib
 		virtual bool PreNativeEventFilter(const MNativeEvent &e) override;
 		virtual void SetTimer(int timerID, MUINT uElapse) override;
 		virtual void KillTimer(int timerID) override;
-
+		virtual void FlashWindow(int nCnt) override;
 	private:
 		static LRESULT CALLBACK __WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 		virtual HRESULT __Initialize(HWND hParent, const String &owndTitleName,const MRect& positionRect);

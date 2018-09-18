@@ -32,9 +32,12 @@ namespace MDUILib
 		pLabel->SetTextColor(MColor::Red);
 		pLabel->SetBackGroundColor(MColor::Blue);
 		Button *pControl = new Button(nullptr);
-		pControl->OnClicked += [](IControl*p, MEvent *e)
+		pControl->OnClicked += [=](IControl*p, MEvent *e)
 		{
-			MessageBoxW(NULL, L"这是一个按钮", L"这是一个按钮", 0);
+			auto pChild = pWindow->CreateSubWindow("Popup", CreateRect(0, 150, 0, 150), true);
+			pChild->Show();
+			pChild->Close();
+			delete pChild;
 		};
 		pControl->SetText("Demo");
 		pControl->SetMarginRc(CreateRect(18, 62, 18, 82));

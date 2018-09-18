@@ -96,6 +96,11 @@ namespace MDUILib
 		MDUILIB_ASSERT_MSG(false, "Not Impl.");
 	}
 
+	void BaseWindow::FlashWindow(int nCnt)
+	{
+		MDUILIB_ASSERT_MSG(false, "Not Impl.");
+	}
+
 	ControlManager * BaseWindow::GetControlManager() const
 	{
 		return m_pControlManager;

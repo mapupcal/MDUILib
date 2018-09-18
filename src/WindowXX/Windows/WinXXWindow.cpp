@@ -140,6 +140,19 @@ namespace MDUILib
 			MDUILIB_OUT_ERROR("WARNNING:WinXXWindow has not been initialized.");
 		}
 	}
+	void WinXXWindow::FlashWindow(int nCnt)
+	{
+		if (m_hWnd && nCnt > 0)
+		{
+			FLASHWINFO info;
+			info.cbSize = sizeof(FLASHWINFO);
+			info.hwnd = m_hWnd;
+			info.dwFlags = FLASHW_ALL;
+			info.uCount = static_cast<MUINT>(nCnt);
+			info.dwTimeout = 500;
+			::FlashWindowEx(&info);
+		}
+	}
 	LRESULT WinXXWindow::__WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		LRESULT hr = 0;
@@ -346,8 +359,7 @@ namespace MDUILib
 					{
 						for (auto &w : pWindow->m_ModalSubWnds)
 						{
-							//w->Jitter();
-							//TODO:以何种方式通知用户？
+							w->FlashWindow(5);
 						}
 						wasHandled = true;
 					}

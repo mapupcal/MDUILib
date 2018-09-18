@@ -11,6 +11,7 @@ namespace MDUILib
 	public:
 		Win7OrPlusWindow();
 		~Win7OrPlusWindow();
+		virtual IWindow * CreateSubWindow(const String & subWndTittleName, const MRect & relativePositionRect, bool bModal = false) override;
 	};
 }
 
