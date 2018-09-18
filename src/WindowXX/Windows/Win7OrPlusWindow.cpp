@@ -14,7 +14,7 @@ namespace MDUILib
 	IWindow * Win7OrPlusWindow::CreateSubWindow(const String & subWndTittleName, const MRect & relativePositionRect, bool bModal)
 	{
 		Win7OrPlusWindow *pChildWindow = new Win7OrPlusWindow();
-		pChildWindow->InitWindow(subWndTittleName, Translate(relativePositionRect, GetClientX(), GetClientY()));
+		pChildWindow->InitWindow(subWndTittleName, Translate(relativePositionRect, GetX(), GetY()));
 		pChildWindow->m_bModal = bModal;
 		if (pChildWindow->IsModal())
 		{
