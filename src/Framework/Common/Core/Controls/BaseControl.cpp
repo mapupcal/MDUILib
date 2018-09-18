@@ -376,7 +376,6 @@ namespace MDUILib
 	void BaseControl::OnPaint()
 	{
 		auto pRender = GetControlManager()->GetHostWindow()->GetRenderSystem();
-		pRender->DrawBegin();
 		//Draw MySelf
 		if (m_bVisible)
 		{
@@ -394,7 +393,6 @@ namespace MDUILib
 		{
 			//DrawNothing.
 		}
-		pRender->DrawEnd();
 	}
 	void BaseControl::Validate()
 	{

@@ -57,7 +57,6 @@ namespace MDUILib
 	void Label::OnPaint()
 	{
 		auto pRender = GetControlManager()->GetHostWindow()->GetRenderSystem();
-		pRender->DrawBegin();
 		if (GetVisible())
 		{
 			if (GetBackGroundColor() != MColor::Transparent)
@@ -66,7 +65,6 @@ namespace MDUILib
 			}
 			pRender->DrawTextString(GetContentRc(), GetText(), GetFont(), GetTextColor(), GetTextSize(), 0);
 		}
-		pRender->DrawEnd();
 	}
 	bool Label::EventFilter(MEvent * e)
 	{

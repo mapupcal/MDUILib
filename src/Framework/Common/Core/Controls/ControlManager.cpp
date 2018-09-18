@@ -44,11 +44,15 @@ namespace MDUILib
 	}
 	void ControlManager::Paint(IControl * pControl)
 	{
+
+		auto pRender = GetHostWindow()->GetRenderSystem();
+		pRender->DrawBegin();
 		pControl->OnPaint();
 		for (auto pChild : pControl->GetChildren())
 		{
-			pChild->Update();
+			pChild->OnPaint();
 		}
+		pRender->DrawEnd();
 	}
 	IControl* ControlManager::FindContorlByName(const String & controlName)
 	{

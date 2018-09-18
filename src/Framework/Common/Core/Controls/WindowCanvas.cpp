@@ -30,8 +30,6 @@ namespace MDUILib
 	void WindowCanvas::OnPaint()
 	{
 		auto pRender = GetControlManager()->GetHostWindow()->GetRenderSystem();
-		pRender->DrawBegin();
 		pRender->FillRect(GetContentRc(), GetContentColor());
-		pRender->DrawEnd();
 	}
 }

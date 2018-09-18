@@ -43,7 +43,6 @@ namespace MDUILib
 	void Button::OnPaint()
 	{
 		auto pRender = GetControlManager()->GetHostWindow()->GetRenderSystem();
-		pRender->DrawBegin();
 		pRender->FillRect(GetMarginRc(), GetMarginColor());
 		pRender->FillRect(GetBorderRc(), GetBorderColor());
 		pRender->FillRect(GetPaddingRc(), GetBorderColor());
@@ -56,6 +55,5 @@ namespace MDUILib
 			pRender->FillRect(GetContentRc(), GetContentColor());
 		}
 		pRender->DrawTextString(GetContentRc(), GetText(), GetFont(), GetTextColor(), GetTextSize(), 0);
-		pRender->DrawEnd();
 	}
 }

@@ -30,8 +30,6 @@ namespace MDUILib
 	{
 		virtual ~IRenderSystem(){}
 		virtual void BindTargetWindow(IWindow *pWindow) = 0;
-		virtual void DrawBegin() = 0;
-		virtual void DrawEnd() = 0;
 		virtual void Clear(MColor color) = 0;
 		virtual void DrawLine(MPoint startPt, MPoint endPt, MColor color, \
 			int lineWidth,MStrokeStyle wStrokeStyle) = 0;
@@ -44,6 +42,11 @@ namespace MDUILib
 		virtual void DrawTextString(MRect rect, const String &text, const MFont &font, MColor color, short size, MWORD wStyle) = 0;
 		virtual void DrawImage(MRect rect, const String& imageFullPath) = 0; 
 		virtual MHandleType GetNativeRenderHandle() const = 0;
+	private:
+		friend class ControlManager;
+		virtual void DrawBegin() = 0;
+		virtual void DrawEnd() = 0;
+	public:
 		//Via IUnknow
 		String GetInterfaceName() const override
 		{
