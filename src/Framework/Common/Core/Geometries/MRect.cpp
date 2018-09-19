@@ -149,7 +149,7 @@ namespace MDUILib
 		r.left = static_cast<MRect::data_type>(rect.left);
 		r.right = static_cast<MRect::data_type>(rect.right);
 		r.top = static_cast<MRect::data_type>(rect.top);
-		r.right = static_cast<MRect::data_type>(rect.right);
+		r.bottom = static_cast<MRect::data_type>(rect.bottom);
 		return r;
 	}
 }
