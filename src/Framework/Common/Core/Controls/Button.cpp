@@ -56,4 +56,20 @@ namespace MDUILib
 		}
 		pRender->DrawTextString(GetContentRc(), GetText(), GetFont(), GetTextColor(), GetTextSize(), 0);
 	}
+	void Button::SetPushImage(const String & imgName)
+	{
+		m_szPushImageName = imgName;
+	}
+	String Button::GetPushImage() const
+	{
+		return m_szPushImageName;
+	}
+	void Button::SetForeImage(const String & imgName)
+	{
+		m_szForeImageName = imgName;
+	}
+	String Button::GetForImage() const
+	{
+		return m_szForeImageName;
+	}
 }

@@ -18,10 +18,15 @@ namespace MDUILib
 		virtual void OnMouseEnter() override;
 		virtual void OnMouseLeave() override;
 		virtual void OnPaint() override;
-
+		void SetPushImage(const String &imgName);
+		String GetPushImage() const;
+		void SetForeImage(const String &imgName);
+		String GetForImage() const;
 		CallbackType OnClicked;
 	private:
 		bool m_bButtonDownIn;
+		String m_szPushImageName;
+		String m_szForeImageName;
 	};
 }
 
