@@ -42,9 +42,10 @@ namespace MDUILib
 		MPOINT GetRightTopPoint() const;
 		MPOINT GetRightBottomPoint() const;
 		MPOINT GetCenterPoint() const;
-	} MRect;
 
-	const static MRect DEFAULT_RECT = { 0, 480, 0, 640 };
+		const static MRECT DEFAULT_RECT;
+		const static MRECT ZERO_RECT;
+	} MRect;
 	/*
 	*	@FunctionName:GetRectWidth
 	*	@ReturnType:MRect::data_type

@@ -7,13 +7,24 @@
 namespace MDUILib
 {
 	BaseControl::BaseControl(IControl * pParent)
-		:m_pParent(nullptr)
+		:m_rcContent(MRect::ZERO_RECT)
+		,m_rcPadding(MRect::ZERO_RECT)
+		,m_rcBorder(MRect::ZERO_RECT)
+		,m_rcMargin(MRect::ZERO_RECT)
+		,m_ContentColor(MColor::White)
+		,m_PaddingColor(MColor::White)
+		,m_BorderColor(MColor::White)
+		,m_MarginColor(MColor::White)
+		,m_FocusMaskColor(MColor::White)
+		,m_pControlMgr(nullptr)
+		,m_pParent(nullptr)
 		,m_bUpdateNeeded(false)
 		,m_bEnable(true)
 		,m_bVisible(true)
 		,m_bValidate(false)
 		,m_bUseContextMenu(false)
 		,m_bFocus(false)
+		,m_bFloating(false)
 	{
 		if (pParent)
 		{
@@ -60,6 +71,22 @@ namespace MDUILib
 	MRect BaseControl::GetMarginRc() const
 	{
 		return m_rcMargin;
+	}
+	void BaseControl::SetFloating(bool bFloat)
+	{
+		m_bFloating = bFloat;
+	}
+	bool BaseControl::GetFloating() const
+	{
+		return m_bFloating;
+	}
+	void BaseControl::SetFloatAlignment(ControlFloatAlignmentType cfat)
+	{
+		m_ControlFloatingAlignmentType = cfat;
+	}
+	ControlFloatAlignmentType BaseControl::GetFloatAlignment() const
+	{
+		return m_ControlFloatingAlignmentType;
 	}
 	void BaseControl::SetContentColor(MColor color)
 	{

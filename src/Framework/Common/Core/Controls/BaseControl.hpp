@@ -31,13 +31,21 @@ namespace MDUILib
 	*			C Content	内容，可以是图片，文本....
 	*	@Noted:	这些Rect都是位于Client区域当中的位置
 	*/
+	enum class ControlFloatAlignmentType
+	{
+		CFAT_INVALID = 0,
+		CFAT_LEFT,
+		CFAT_RIGHT,
+		CFAT_TOP,
+		CFAT_BOTTOM
+	};
 	class BaseControl : m_extends Object, m_implements IControl
 	{
 	public:
 		BaseControl(IControl *pParent);
 		virtual ~BaseControl();
 		typedef IControl::IControlList IControlList;
-		typedef DelegateNotifyers<IControl*,MEvent*> EventNotifyerType;
+		typedef DelegateNotifyers<IControl*, MEvent*> EventNotifyerType;
 		//Box Modal
 		void SetContentRc(const MRect &rcContent);
 		MRect GetContentRc() const;
@@ -47,7 +55,16 @@ namespace MDUILib
 		MRect GetBorderRc() const;
 		void SetMarginRc(const MRect &rcMargin);
 		MRect GetMarginRc() const;
-
+		//@Noted:	Floating 浮动，只有当控件被放入Layout中才会起作用。主要有四个方向的浮动：
+		//			1.CFAT_LEFT:向左对齐的的浮动，控件总是在Layout中向左对齐。
+		//			2.CFAT_RIGHT:向右对齐
+		//			3.CFAT_TOP:向上对齐
+		//			4.CFAT_BOTTOM:向下对齐
+		//@Remark:	浮动使得控件的位置由其所属的Layout负责控制，一般Layout不会对控件的显示区域进行更改。
+		void SetFloating(bool bFloat);
+		bool GetFloating() const;
+		void SetFloatAlignment(ControlFloatAlignmentType cfat);
+		ControlFloatAlignmentType GetFloatAlignment() const;
 		//Draw Color
 		void SetContentColor(MColor color);
 		MColor GetContentColor() const;
@@ -187,7 +204,8 @@ namespace MDUILib
 		bool m_bUpdateNeeded;
 		bool m_bFocus;
 		bool m_bUseContextMenu;
-
+		bool m_bFloating;
+		ControlFloatAlignmentType m_ControlFloatingAlignmentType;
 		ControlManager *m_pControlMgr;
 	};
 

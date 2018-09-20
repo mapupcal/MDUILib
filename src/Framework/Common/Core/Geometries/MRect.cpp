@@ -3,6 +3,9 @@
 
 namespace MDUILib
 {
+
+	MRECT const MRECT::DEFAULT_RECT = { 0, 480, 0, 640 };
+	MRECT const MRECT::ZERO_RECT = { 0,0,0,0 };
 	MRect::data_type GetRectWidth(const MRect & rect)
 	{
 		return rect.right - rect.left;
