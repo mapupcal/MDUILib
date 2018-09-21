@@ -35,14 +35,13 @@ namespace MDUILib
 		data_type left;
 		data_type right;
 
-		void MoveToPos(MPOINT pt);
-		void Resize(data_type width, data_type height);
 		MPOINT GetLeftTopPoint() const;
 		MPOINT GetLeftBottomPoint() const;
 		MPOINT GetRightTopPoint() const;
 		MPOINT GetRightBottomPoint() const;
 		MPOINT GetCenterPoint() const;
-
+		data_type GetWidth() const;
+		data_type GetHeight() const;
 		const static MRECT DEFAULT_RECT;
 		const static MRECT ZERO_RECT;
 	} MRect;
@@ -67,6 +66,9 @@ namespace MDUILib
 	MRect Translate(const MRect& rect, MRECT::data_type xOffset, MRect::data_type yOffset);
 	MRect TranslateX(const MRect& rect, MRect::data_type xOffset);
 	MRect TranslateY(const MRect& rect, MRect::data_type yOffset);
+	MRect TranslateToPos(const MRect& rect, MRect::data_type x, MRect::data_type y);
+	MRect TranslateToPos(const MRect& rect, MPOINT pt);
+	MRect ResizeRect(const MRect& rect, int width, int height);
 	/*
 	*	@ClassName:MPoint
 	*	@Remark:表示坐标点的数据结构。

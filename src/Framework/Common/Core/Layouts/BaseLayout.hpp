@@ -9,6 +9,7 @@ namespace MDUILib
 	m_interface BaseLayout : m_extends BaseControl
 	{
 	public:
+		BaseLayout();
 		virtual void AddControl(IControl* pControl);
 		virtual void RemoveControl(IControl* pControl);
 		virtual void OnPaint() override;

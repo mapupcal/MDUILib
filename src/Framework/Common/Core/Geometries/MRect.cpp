@@ -29,13 +29,35 @@ namespace MDUILib
 	{
 		return Translate(rect, 0, yOffset);
 	}
+	MRect TranslateToPos(const MRect & rect, MRect::data_type x, MRect::data_type y)
+	{
+		return TranslateToPos(rect,MPoint(x, y));
+	}
+	MRect TranslateToPos(const MRect & rect, MPOINT pt)
+	{
+		MRect rc;
+		auto h = GetRectHeight(rect);
+		auto w = GetRectWidth(rect);
+		rc.left = pt.x;
+		rc.top = pt.y;
+		rc.right = rc.left + w;
+		rc.bottom = rc.top + h;
+		return rc;
+	}
+	MRect ResizeRect(const MRect & rect, int width, int height)
+	{
+		MRect rc = rect;
+		rc.right = rc.left + width;
+		rc.bottom = rc.top + height;
+		return rc;
+	}
 	MPOINT operator-(const MPOINT & lhs, const MPOINT & rhs)
 	{
 		return MPOINT(lhs.x - rhs.x, lhs.y - rhs.y);
 	}
 	MPOINT operator+(const MPOINT & lhs, const MPOINT & rhs)
 	{
-		return MPOINT(lhs.x + rhs.x, lhs.y + lhs.y);
+		return MPOINT(lhs.x + rhs.x, lhs.y + rhs.y);
 	}
 	float operator*(const MPOINT & lhs, const MPOINT & rhs)
 	{
@@ -104,20 +126,7 @@ namespace MDUILib
 		:top(t),bottom(b),left(l),right(r)
 	{
 	}
-	void MRECT::MoveToPos(MPOINT pt)
-	{
-		auto w = GetRectWidth(*this);
-		auto h = GetRectHeight(*this);
-		left = pt.x;
-		top = pt.y;
-		right = w + left;
-		bottom = h + top;
-	}
-	void MRECT::Resize(data_type width, data_type height)
-	{
-		right = left + width;
-		bottom = top + height;
-	}
+
 	MPOINT MRECT::GetLeftTopPoint() const
 	{
 		return MPoint(left, top);
@@ -137,6 +146,14 @@ namespace MDUILib
 	MPOINT MRECT::GetCenterPoint() const
 	{
 		return MPoint((left + right) / 2, (top + bottom) / 2);
+	}
+	MRECT::data_type MRECT::GetWidth() const
+	{
+		return GetRectWidth(*this);
+	}
+	MRECT::data_type MRECT::GetHeight() const
+	{
+		return GetRectHeight(*this);
 	}
 	MPOINT::MPOINT(data_type X, data_type Y)
 		:x(X),y(Y){}

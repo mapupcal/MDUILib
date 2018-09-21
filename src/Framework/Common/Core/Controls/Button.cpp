@@ -45,7 +45,7 @@ namespace MDUILib
 		auto pRender = GetControlManager()->GetHostWindow()->GetRenderSystem();
 		pRender->FillRect(GetMarginRc(), GetMarginColor());
 		pRender->FillRect(GetBorderRc(), GetBorderColor());
-		pRender->FillRect(GetPaddingRc(), GetBorderColor());
+		pRender->FillRect(GetPaddingRc(), GetPaddingColor());
 		if (m_bButtonDownIn)
 		{
 			pRender->FillRect(GetContentRc(), GetFocusMaskColor());
