@@ -128,6 +128,7 @@ namespace MDUILib
 		virtual ControlManager* GetControlManager() const override;
 		//Draw
 		void Paint();
+		void PaintAll();
 		virtual void OnPaint() override;
 		virtual void Validate() override;
 		virtual void Invalidate() override;

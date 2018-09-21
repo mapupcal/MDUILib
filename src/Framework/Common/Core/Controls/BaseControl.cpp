@@ -397,6 +397,15 @@ namespace MDUILib
 		GetControlManager()->Paint(this);
 	}
 
+	void BaseControl::PaintAll()
+	{
+		OnPaint();
+		for (auto pC : GetChildren())
+		{
+			static_cast<BaseControl*>(pC)->PaintAll();
+		}
+	}
+
 	//@Remark:控件应该在自己绘制自身。
 	//		  e.g.auto pRender = GetControlManager()->GetRenderSystem();
 	//			  //Do some thing draw.
@@ -456,9 +465,9 @@ namespace MDUILib
 		}
 		else
 		{
-			m_bUpdateNeeded = false;
 			Paint();
 			Validate();
 		}
+		m_bUpdateNeeded = false;
 	}
 }

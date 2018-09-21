@@ -2,6 +2,10 @@
 
 namespace MDUILib
 {
+	BaseLayout::BaseLayout()
+		:BaseControl(nullptr)
+	{
+	}
 	void BaseLayout::AddControl(IControl* pControl)
 	{
 		AddChild(pControl);
@@ -16,6 +20,23 @@ namespace MDUILib
 	}
 	void BaseLayout::Update()
 	{
-		//Calculate the pChild's Pos and Size.
+		auto pBaseParent = static_cast<BaseControl*>(GetParent());
+		SetMarginRc(pBaseParent->GetMarginRc());
+		SetBorderRc(pBaseParent->GetBorderRc());
+		SetPaddingRc(pBaseParent->GetPaddingRc());
+		SetContentRc(pBaseParent->GetContentRc());
+		CalculateElemsPos();
+	}
+	void BaseLayout::SetStrech(MUINT pix)
+	{
+		m_uStrechPix = pix;
+	}
+	int BaseLayout::GetStrech() const
+	{
+		return m_uStrechPix;
+	}
+	void BaseLayout::CalculateElemsPos()
+	{
+		//empty impl.
 	}
 }

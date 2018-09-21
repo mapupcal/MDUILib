@@ -93,9 +93,11 @@ set(	COMMON_CORE_RESOURCES_SOURCES
 #	Common/Core/Layouts
 set(	COMMON_CORE_LAYOUTS_HEADERS
 	Common/Core/Layouts/BaseLayout.hpp
+	Common/Core/Layouts/HorizontalLayout.hpp
 )
 set(	COMMON_CORE_LAYOUTS_SOURCES
 	Common/Core/Layouts/BaseLayout.cpp
+		Common/Core/Layouts/HorizontalLayout.cpp
 )
 
 #	Interface
