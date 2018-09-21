@@ -132,9 +132,24 @@ namespace MDUILib
 	{
 		return IsPointInRect(pt, GetBorderRc());
 	}
+	void BaseControl::SetPos(MPoint pt)
+	{
+		auto deltaMB = GetMarginRc().GetLeftTopPoint() - GetBorderRc().GetLeftTopPoint();
+		auto deltaBP = GetBorderRc().GetLeftTopPoint() - GetPaddingRc().GetLeftTopPoint();
+		auto deltaPC = GetPaddingRc().GetLeftTopPoint() - GetContentRc().GetLeftTopPoint();
+		SetContentRc(TranslateToPos(GetContentRc(), pt));
+		SetPaddingRc(TranslateToPos(GetPaddingRc(), pt + deltaPC));
+		SetBorderRc(TranslateToPos(GetBorderRc(), pt + deltaPC + deltaBP));
+		SetMarginRc(TranslateToPos(GetMarginRc(), pt + deltaPC + deltaBP + deltaMB));
+	}
 	MPoint BaseControl::GetPos() const
 	{
 		return MPoint(GetContentRc().left, GetContentRc().top);
+	}
+	void BaseControl::SetRelativePos(MPoint pt)
+	{
+		auto destPos = static_cast<BaseControl*>(m_pParent)->GetPos() + pt;
+		SetPos(destPos);
 	}
 	MPoint BaseControl::GetRelativePos() const
 	{
@@ -325,7 +340,7 @@ namespace MDUILib
 	void BaseControl::RemoveChild(IControl * pChild)
 	{
 		auto iter = std::find(m_lstpChildren.cbegin(), m_lstpChildren.cend(), pChild);
-		if (iter == m_lstpChildren.cend())
+		if (iter != m_lstpChildren.cend())
 		{
 			m_lstpChildren.erase(iter);
 		}

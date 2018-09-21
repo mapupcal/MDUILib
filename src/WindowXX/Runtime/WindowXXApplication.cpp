@@ -53,8 +53,11 @@ namespace MDUILib
 		HorizontalLayout *pLayout = new HorizontalLayout();
 		pLayout->AddControl(pControl);
 		pLayout->AddControl(pLabel);
+		pLayout->SetFixedSize(480, 600);
 		pControl->SetFloating(true);
 		pControl->SetFloatAlignment(ControlFloatAlignmentType::CFAT_RIGHT);
+		pLabel->SetFloating(true);
+		pLabel->SetFloatAlignment(ControlFloatAlignmentType::CFAT_RIGHT);
 		ControlManager* pManager =  pWindow->GetControlManager();
 		pControl->SetVisible(true);
 		pManager->SetControlRoot(pLayout);

@@ -80,8 +80,10 @@ namespace MDUILib
 		bool IsMousePointerHitted(MPoint pt) const;
 		
 		//@Remark:获取相对于主窗口的相对位置，坐标轴为主窗口的左上角。
+		void SetPos(MPoint pt);
 		MPoint GetPos() const;
 		//@Remark:获取相对与父控件的相对位置,坐标轴为父控件盒子Content的左上角（ContentRc.left,ContentRc.top）.
+		void SetRelativePos(MPoint pt);
 		MPoint GetRelativePos() const;
 
 		MRect::data_type GetWidth() const;

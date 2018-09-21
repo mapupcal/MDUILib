@@ -86,6 +86,7 @@ namespace MDUILib
 				pLastRightControl = pBaseControl;
 				iter++;
 			}
+			iter_left = iter;
 		}
 	}
 }

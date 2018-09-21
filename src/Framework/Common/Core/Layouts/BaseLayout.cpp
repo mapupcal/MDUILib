@@ -21,14 +21,15 @@ namespace MDUILib
 	void BaseLayout::Update()
 	{
 		auto pBaseParent = static_cast<BaseControl*>(GetParent());
-		//TODO:BUG TO FIXED.这里没有考虑周全，导致长和宽只要一个大于父控件，就会触发Fixed布局。
-		//if (pBaseParent->GetWidth() < GetFixedWidth() || pBaseParent->GetHeight() < GetFixedHeight())
-		{
-			SetMarginRc(pBaseParent->GetContentRc());
-			SetBorderRc(pBaseParent->GetContentRc());
-			SetPaddingRc(pBaseParent->GetContentRc());
-			SetContentRc(pBaseParent->GetContentRc());
-		}
+		auto pheight = pBaseParent->GetHeight();
+		auto pwidth = pBaseParent->GetWidth();
+		auto nheight = MDUILIB_MAX(GetFixedHeight(), pheight);
+		auto nwidth = MDUILIB_MAX(GetFixedWidth(), pwidth);
+		SetPos(pBaseParent->GetPos());
+		SetMarginRc(ResizeRect(GetMarginRc(), nwidth, nheight));
+		SetBorderRc(ResizeRect(GetBorderRc(), nwidth, nheight));
+		SetPaddingRc(ResizeRect(GetPaddingRc(), nwidth, nheight));
+		SetContentRc(ResizeRect(GetContentRc(), nwidth, nheight));
 		CalculateElemsPos();
 	}
 	void BaseLayout::SetStrech(MUINT pix)
