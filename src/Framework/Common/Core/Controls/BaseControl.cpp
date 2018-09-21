@@ -413,7 +413,7 @@ namespace MDUILib
 				pRender->FillRect(GetBorderRc(), GetBorderColor());
 				pRender->FillRect(GetPaddingRc(), GetPaddingColor());
 				pRender->FillRect(GetContentRc(), GetContentColor());
-				pRender->DrawTextString(GetContentRc(), GetText(), MFont(), MColor::White, 12, 0);
+				pRender->DrawTextString(GetContentRc(), GetText(), MFont(), MColor::White, 12);
 			}
 		}
 		else

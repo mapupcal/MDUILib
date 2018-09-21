@@ -48,7 +48,7 @@ namespace MDUILib
 		virtual void FillGradientRoundedRect(MRect rect, short radiusX, short radiusY, \
 			MColor colorBegin, MColor colorEnd, bool bRadius, LinearGradientRenderType lgrt) override;
 		virtual void DrawTextString(MRect rect, const String &text,const MFont &font, \
-			MColor color, short size, MWORD wStyle) override;
+			MColor color, short size, TextAlignmentType tat) override;
 		virtual void DrawImage(MRect rect, const String& imageFullPath) override;
 		virtual MHandleType GetNativeRenderHandle() const override;
 	private:

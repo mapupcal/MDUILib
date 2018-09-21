@@ -7,7 +7,7 @@ namespace MDUILib
 {
 	Label::Label(IControl * pParent)
 		:BaseControl(pParent)
-		,m_Tat(TextAlignmentType::TAT_LEFT)
+		,m_Tat(TextAlignmentType::TAT_CENTER)
 		,m_TextSize(9)
 		,m_BackGroundColor(MColor::Transparent)
 		,m_TextColor(MColor::White)
@@ -63,7 +63,7 @@ namespace MDUILib
 			{
 				pRender->FillRect(GetContentRc(), GetBackGroundColor());
 			}
-			pRender->DrawTextString(GetContentRc(), GetText(), GetFont(), GetTextColor(), GetTextSize(), 0);
+			pRender->DrawTextString(GetContentRc(), GetText(), GetFont(), GetTextColor(), GetTextSize(), GetTextAlignment());
 		}
 	}
 	bool Label::EventFilter(MEvent * e)

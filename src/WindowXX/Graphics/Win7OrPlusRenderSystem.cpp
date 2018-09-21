@@ -30,6 +30,26 @@ namespace MDUILib
 		);
 	}
 
+	inline DWRITE_TEXT_ALIGNMENT D2DTextAlignment_FromTAT(TextAlignmentType tat)
+	{
+		DWRITE_TEXT_ALIGNMENT dtat;
+		switch (tat)
+		{
+		case MDUILib::TextAlignmentType::TAT_CENTER:
+			dtat = DWRITE_TEXT_ALIGNMENT_CENTER;
+			break;
+		case MDUILib::TextAlignmentType::TAT_LEFT:
+			dtat = DWRITE_TEXT_ALIGNMENT_LEADING;
+			break;
+		case MDUILib::TextAlignmentType::TAT_RIGHT:
+			dtat = DWRITE_TEXT_ALIGNMENT_TRAILING;
+			break;
+		default:
+			break;
+		}
+		return dtat;
+	}
+
 	HRESULT Win7OrPlusRenderSystem::__CreateD2DDeviceIndependentResources()
 	{
 		HRESULT hr = S_OK;
@@ -332,7 +352,7 @@ namespace MDUILib
 		}
 	}
 
-	void Win7OrPlusRenderSystem::DrawTextString(MRect rect, const String & text, const MFont & font, MColor color, short size, MWORD wStyle)
+	void Win7OrPlusRenderSystem::DrawTextString(MRect rect, const String & text, const MFont & font, MColor color, short size, TextAlignmentType tat)
 	{
 		ComPtr<IDWriteTextFormat> pTextFormat;
 		auto pBrush = __CreateSolidColorBrush(color);
@@ -349,7 +369,7 @@ namespace MDUILib
 		);
 		ComPtr<IDWriteInlineObject> pIDWInlineObj;
 		m_pDWriteFactory->CreateEllipsisTrimmingSign(pTextFormat, &pIDWInlineObj);
-		pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+		pTextFormat->SetTextAlignment(D2DTextAlignment_FromTAT(tat));
 		pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 		pTextFormat->SetWordWrapping(DWRITE_WORD_WRAPPING_CHARACTER);
 		trim.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER;

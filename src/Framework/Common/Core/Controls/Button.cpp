@@ -54,7 +54,7 @@ namespace MDUILib
 		{
 			pRender->FillRect(GetContentRc(), GetContentColor());
 		}
-		pRender->DrawTextString(GetContentRc(), GetText(), GetFont(), GetTextColor(), GetTextSize(), 0);
+		pRender->DrawTextString(GetContentRc(), GetText(), GetFont(), GetTextColor(), GetTextSize(), GetTextAlignment());
 	}
 	void Button::SetPushImage(const String & imgName)
 	{

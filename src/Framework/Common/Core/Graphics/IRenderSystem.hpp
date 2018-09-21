@@ -55,7 +55,7 @@ namespace MDUILib
 			MColor colorBegin, MColor colorEnd, int lineWidth, MStrokeStyle wStrokeStyle, bool bRadius, LinearGradientRenderType lgrt) = 0;
 		virtual void FillGradientRoundedRect(MRect rect, short radiusX, short radiusY, \
 			MColor colorBegin, MColor colorEnd, bool bRadius, LinearGradientRenderType lgrt) = 0;
-		virtual void DrawTextString(MRect rect, const String &text, const MFont &font, MColor color, short size, MWORD wStyle) = 0;
+		virtual void DrawTextString(MRect rect, const String &text, const MFont &font, MColor color, short size, TextAlignmentType tat = TextAlignmentType::TAT_CENTER) = 0;
 		virtual void DrawImage(MRect rect, const String& imageFullPath) = 0; 
 		virtual MHandleType GetNativeRenderHandle() const = 0;
 	private:
