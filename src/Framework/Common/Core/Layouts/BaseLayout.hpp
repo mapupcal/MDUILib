@@ -20,6 +20,9 @@ namespace MDUILib
 		//@Rmarks:设置两个元素外边距之间应有的距离。
 		void SetStrech(MUINT pix = 0);
 		int GetStrech() const;
+		void SetFixedSize(int width, int height);
+		int GetFixedWidth() const;
+		int GetFixedHeight() const;
 	private:
 		virtual void CalculateElemsPos();
 		//Via IUnknown
@@ -37,6 +40,8 @@ namespace MDUILib
 		//@Commit:Hide Some useless BaseControl Method.
 	private:
 		MUINT m_uStrechPix;
+		int m_FixedWidth;
+		int m_FixedHeight;
 	};
 }
 

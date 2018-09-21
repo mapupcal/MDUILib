@@ -9,6 +9,7 @@
 #include "Windows\Win7OrPlusWindow.hpp"
 #include "Framework\Common\Core\Controls\Label.hpp"
 #include "Framework\Common\Core\Controls\Button.hpp"
+#include "Framework\Common\Core\Layouts\HorizontalLayout.hpp"
 namespace MDUILib
 {
     WindowXXApplication g_App;
@@ -29,6 +30,9 @@ namespace MDUILib
 		pLabel->SetText("Label");
 		pLabel->SetTextSize(12);
 		pLabel->SetContentRc(CreateRect(100, 150, 100, 150));
+		pLabel->SetMarginRc(pLabel->GetContentRc());
+		pLabel->SetPaddingRc(pLabel->GetContentRc());
+		pLabel->SetBorderRc(pLabel->GetContentRc());
 		pLabel->SetTextColor(MColor::Red);
 		pLabel->SetBackGroundColor(MColor::Blue);
 		Button *pControl = new Button(nullptr);
@@ -46,10 +50,14 @@ namespace MDUILib
 		pControl->SetBorderColor(MColor::White);
 		pControl->SetPaddingColor(MColor::Green);
 		pControl->SetContentColor(MColor::Blue);
+		HorizontalLayout *pLayout = new HorizontalLayout();
+		pLayout->AddControl(pControl);
+		pLayout->AddControl(pLabel);
+		pControl->SetFloating(true);
+		pControl->SetFloatAlignment(ControlFloatAlignmentType::CFAT_RIGHT);
 		ControlManager* pManager =  pWindow->GetControlManager();
 		pControl->SetVisible(true);
-		pManager->SetControlRoot(pControl);
-		pManager->SetControlRoot(pLabel);
+		pManager->SetControlRoot(pLayout);
 		pManager->SetBackgroundColor(MColor::Green);
 		pWindow->Show();
 		return 0;
