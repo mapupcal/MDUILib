@@ -9,6 +9,8 @@ namespace MDUILib
 		BaseControl* pLastLeftControl = nullptr;
 		auto iter = m_lstpChildren.cbegin();
 		auto iter_left = m_lstpChildren.cbegin();
+		MPoint destPt(0, 0);
+
 		while (iter != m_lstpChildren.cend())
 		{
 			iter = std::find_if(iter,m_lstpChildren.cend(),
@@ -19,70 +21,34 @@ namespace MDUILib
 			while (iter_left != iter)
 			{
 				auto pBaseControl = static_cast<BaseControl*>(*iter_left);
-				auto detalMB = pBaseControl->GetMarginRc().GetLeftTopPoint()
-					- pBaseControl->GetBorderRc().GetLeftTopPoint();
-				auto deltaBP = pBaseControl->GetBorderRc().GetLeftTopPoint()
-					- pBaseControl->GetPaddingRc().GetLeftTopPoint();
-				auto deltaPC = pBaseControl->GetPaddingRc().GetLeftTopPoint()
-					- pBaseControl->GetContentRc().GetLeftTopPoint();
-				MRect baseContentRc;
 				auto rc = pBaseControl->GetMarginRc();
-				//左边还没有排列控件
 				if (!pLastLeftControl)
 				{
-					baseContentRc = GetContentRc();
-					rc = TranslateToPos(rc, baseContentRc.left, baseContentRc.top);
+					destPt = MPoint(GetContentRc().left, GetContentRc().top);
 				}
 				else
 				{
-					baseContentRc = static_cast<BaseControl*>(pLastLeftControl)->GetMarginRc();
-					rc = TranslateToPos(rc, baseContentRc.right + GetStrech(), baseContentRc.top);
+					destPt = MPoint(pLastLeftControl->GetMarginRc().right + GetStrech(),
+						GetContentRc().top);
 				}
-				pBaseControl->SetMarginRc(rc);
-				rc = pBaseControl->GetBorderRc();
-				rc = TranslateToPos(rc, pBaseControl->GetMarginRc().GetLeftTopPoint() - detalMB);
-				pBaseControl->SetBorderRc(rc);
-				rc = pBaseControl->GetPaddingRc();
-				rc = TranslateToPos(rc, pBaseControl->GetBorderRc().GetLeftTopPoint() - deltaBP);
-				pBaseControl->SetPaddingRc(rc);
-				rc = pBaseControl->GetContentRc();
-				rc = TranslateToPos(rc, pBaseControl->GetPaddingRc().GetLeftTopPoint() - deltaPC);
-				pBaseControl->SetContentRc(rc);
+				pBaseControl->SetPos(destPt);
 				pLastLeftControl = pBaseControl;
 				iter_left++;
 			}
 			if (iter != m_lstpChildren.cend())
 			{
 				auto pBaseControl = static_cast<BaseControl*>(*iter);
-				auto detalMB = pBaseControl->GetMarginRc().GetLeftTopPoint()
-					- pBaseControl->GetBorderRc().GetLeftTopPoint();
-				auto deltaBP = pBaseControl->GetBorderRc().GetLeftTopPoint()
-					- pBaseControl->GetPaddingRc().GetLeftTopPoint();
-				auto deltaPC = pBaseControl->GetPaddingRc().GetLeftTopPoint()
-					- pBaseControl->GetContentRc().GetLeftTopPoint();
-				MRect baseContentRc;
 				auto rc = pBaseControl->GetMarginRc();
-				//左边还没有排列控件
 				if (!pLastRightControl)
 				{
-					baseContentRc = GetContentRc();
-					rc = TranslateToPos(rc, baseContentRc.right - rc.GetWidth(), baseContentRc.top);
+					destPt = MPoint(GetContentRc().right - pBaseControl->GetWidth(), GetContentRc().top);
 				}
 				else
 				{
-					baseContentRc = static_cast<BaseControl*>(pLastRightControl)->GetMarginRc();
-					rc = TranslateToPos(rc, baseContentRc.left - rc.GetWidth() - GetStrech(), baseContentRc.top);
+					destPt = MPoint(pLastRightControl->GetMarginRc().left - pBaseControl->GetWidth() - GetStrech(),
+						GetContentRc().top);
 				}
-				pBaseControl->SetMarginRc(rc);
-				rc = pBaseControl->GetBorderRc();
-				rc = TranslateToPos(rc, pBaseControl->GetMarginRc().GetLeftTopPoint() - detalMB);
-				pBaseControl->SetBorderRc(rc);
-				rc = pBaseControl->GetPaddingRc();
-				rc = TranslateToPos(rc, pBaseControl->GetBorderRc().GetLeftTopPoint() - deltaBP);
-				pBaseControl->SetPaddingRc(rc);
-				rc = pBaseControl->GetContentRc();
-				rc = TranslateToPos(rc, pBaseControl->GetPaddingRc().GetLeftTopPoint() - deltaPC);
-				pBaseControl->SetContentRc(rc);
+				pBaseControl->SetPos(destPt);
 				pLastRightControl = pBaseControl;
 				iter++;
 			}
