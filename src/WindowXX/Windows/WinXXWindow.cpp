@@ -223,6 +223,9 @@ namespace MDUILib
 					auto width = LOWORD(lParam);
 					auto height = HIWORD(lParam);
 					pWindow->m_ClientRect = ResizeRect(pWindow->m_ClientRect, width, height);
+					RECT rc;
+					::GetWindowRect(pWindow->m_hWnd, &rc);
+					pWindow->m_WindowRect = FromWinRect(rc);
 					//	@Commit:Í¨ÖªOnSize×¢²áµÄNotifyers
 					ControlNotifyEvent e(ControlNotifyEvent::ControlNotifyEventType::CNET_SIZE,
 						pWindow->GetClientRect());

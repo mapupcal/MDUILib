@@ -60,7 +60,7 @@ namespace MDUILib
 		const MRect GetWndRect() const;
 		const MRect GetClientRect() const;
 		MRect::data_type GetWidth() const;
-		MRect::data_type GetHeigth() const;
+		MRect::data_type GetHeight() const;
 		MRect::data_type GetClientWidth()  const;
 		MRect::data_type GetClientHeight()  const;
 		//	@Remark:WindowNotifyers

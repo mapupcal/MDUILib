@@ -85,7 +85,9 @@ namespace MDUILib
 		//@Remark:获取相对与父控件的相对位置,坐标轴为父控件盒子Content的左上角（ContentRc.left,ContentRc.top）.
 		void SetRelativePos(MPoint pt);
 		MPoint GetRelativePos() const;
-
+		//@Remark:Resize
+		void SetWidth(int width);
+		void SetHeight(int height);
 		MRect::data_type GetWidth() const;
 		MRect::data_type GetHeight() const;
 

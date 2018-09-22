@@ -1,24 +1,23 @@
-#include"HorizontalLayout.hpp"
-#include<algorithm>
+#include"VerticalLayout.hpp"
 
 namespace MDUILib
 {
-	void HorizontalLayout::CalculateElemsPos()
+	void VerticalLayout::CalculateElemsPos()
 	{
-		BaseControl* pLastRightControl = nullptr;
-		BaseControl* pLastLeftControl = nullptr;
+		BaseControl* pLastBottomControl = nullptr;
+		BaseControl* pLastTopControl = nullptr;
 		auto iter = m_lstpChildren.cbegin();
-		auto iter_left = m_lstpChildren.cbegin();
+		auto iter_top = m_lstpChildren.cbegin();
 		while (iter != m_lstpChildren.cend())
 		{
-			iter = std::find_if(iter,m_lstpChildren.cend(),
-				[](IControl* pC) -> bool{
+			iter = std::find_if(iter, m_lstpChildren.cend(),
+				[](IControl* pC) -> bool {
 				return static_cast<BaseControl*>(pC)->GetFloating()
-					&& (static_cast<BaseControl*>(pC)->GetFloatAlignment() == ControlFloatAlignmentType::CFAT_RIGHT);
+					&& (static_cast<BaseControl*>(pC)->GetFloatAlignment() == ControlFloatAlignmentType::CFAT_BOTTOM);
 			});
-			while (iter_left != iter)
+			while (iter_top != iter)
 			{
-				auto pBaseControl = static_cast<BaseControl*>(*iter_left);
+				auto pBaseControl = static_cast<BaseControl*>(*iter_top);
 				auto detalMB = pBaseControl->GetMarginRc().GetLeftTopPoint()
 					- pBaseControl->GetBorderRc().GetLeftTopPoint();
 				auto deltaBP = pBaseControl->GetBorderRc().GetLeftTopPoint()
@@ -27,16 +26,16 @@ namespace MDUILib
 					- pBaseControl->GetContentRc().GetLeftTopPoint();
 				MRect baseContentRc;
 				auto rc = pBaseControl->GetMarginRc();
-				//左边还没有排列控件
-				if (!pLastLeftControl)
+				//上边边还没有排列控件
+				if (!pLastTopControl)
 				{
 					baseContentRc = GetContentRc();
 					rc = TranslateToPos(rc, baseContentRc.left, baseContentRc.top);
 				}
 				else
 				{
-					baseContentRc = static_cast<BaseControl*>(pLastLeftControl)->GetMarginRc();
-					rc = TranslateToPos(rc, baseContentRc.right + GetStrech(), baseContentRc.top);
+					baseContentRc = static_cast<BaseControl*>(pLastTopControl)->GetMarginRc();
+					rc = TranslateToPos(rc, baseContentRc.left, baseContentRc.bottom + GetStrech());
 				}
 				pBaseControl->SetMarginRc(rc);
 				rc = pBaseControl->GetBorderRc();
@@ -48,8 +47,8 @@ namespace MDUILib
 				rc = pBaseControl->GetContentRc();
 				rc = TranslateToPos(rc, pBaseControl->GetPaddingRc().GetLeftTopPoint() - deltaPC);
 				pBaseControl->SetContentRc(rc);
-				pLastLeftControl = pBaseControl;
-				iter_left++;
+				pLastTopControl = pBaseControl;
+				iter_top++;
 			}
 			if (iter != m_lstpChildren.cend())
 			{
@@ -62,16 +61,16 @@ namespace MDUILib
 					- pBaseControl->GetContentRc().GetLeftTopPoint();
 				MRect baseContentRc;
 				auto rc = pBaseControl->GetMarginRc();
-				//左边还没有排列控件
-				if (!pLastRightControl)
+				//下边还没有排列控件
+				if (!pLastBottomControl)
 				{
 					baseContentRc = GetContentRc();
-					rc = TranslateToPos(rc, baseContentRc.right - rc.GetWidth(), baseContentRc.top);
+					rc = TranslateToPos(rc, baseContentRc.left, baseContentRc.bottom - pBaseControl->GetHeight());
 				}
 				else
 				{
-					baseContentRc = static_cast<BaseControl*>(pLastRightControl)->GetMarginRc();
-					rc = TranslateToPos(rc, baseContentRc.left - rc.GetWidth() - GetStrech(), baseContentRc.top);
+					baseContentRc = static_cast<BaseControl*>(pLastBottomControl)->GetMarginRc();
+					rc = TranslateToPos(rc, baseContentRc.left, baseContentRc.top - pBaseControl->GetHeight() - GetStrech());
 				}
 				pBaseControl->SetMarginRc(rc);
 				rc = pBaseControl->GetBorderRc();
@@ -83,10 +82,10 @@ namespace MDUILib
 				rc = pBaseControl->GetContentRc();
 				rc = TranslateToPos(rc, pBaseControl->GetPaddingRc().GetLeftTopPoint() - deltaPC);
 				pBaseControl->SetContentRc(rc);
-				pLastRightControl = pBaseControl;
+				pLastBottomControl = pBaseControl;
 				iter++;
 			}
-			iter_left = iter;
+			iter_top = iter;
 		}
 	}
 }

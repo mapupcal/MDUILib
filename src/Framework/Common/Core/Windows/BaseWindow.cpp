@@ -140,7 +140,7 @@ namespace MDUILib
 	{
 		return GetRectWidth(GetWndRect());
 	}
-	MRect::data_type BaseWindow::GetHeigth() const
+	MRect::data_type BaseWindow::GetHeight() const
 	{
 		return GetRectHeight(GetWndRect());
 	}

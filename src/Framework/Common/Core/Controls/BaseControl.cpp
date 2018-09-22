@@ -160,6 +160,22 @@ namespace MDUILib
 		}
 		return { 0,0 };
 	}
+	void BaseControl::SetWidth(int width)
+	{
+		auto deltaW = width - GetWidth();
+		m_rcMargin.right += deltaW;
+		m_rcBorder.right += deltaW;
+		m_rcPadding.right += deltaW;
+		m_rcContent.right += deltaW;
+	}
+	void BaseControl::SetHeight(int height)
+	{
+		auto deltaH = GetHeight() - height;
+		m_rcMargin.bottom += deltaH;
+		m_rcBorder.bottom += deltaH;
+		m_rcPadding.bottom += deltaH;
+		m_rcContent.bottom += deltaH;
+	}
 	MRect::data_type BaseControl::GetWidth() const
 	{
 		return GetRectWidth(m_rcContent);
@@ -374,11 +390,11 @@ namespace MDUILib
 
 	IControl * BaseControl::FindChild(const MPoint & pt)
 	{
-		for (auto p : m_lstpChildren)
+		for(auto p = m_lstpChildren.crbegin();p != m_lstpChildren.crend();p++)
 		{
-			if (static_cast<const BaseControl*>(p)->IsMousePointerHitted(pt))
+			if (static_cast<const BaseControl*>(*p)->IsMousePointerHitted(pt))
 			{
-				return p;
+				return *p;
 			}
 		}
 		return nullptr;

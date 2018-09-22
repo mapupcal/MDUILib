@@ -12,8 +12,8 @@
 #include "Framework\Common\Core\Layouts\HorizontalLayout.hpp"
 namespace MDUILib
 {
-    WindowXXApplication g_App;
-    BaseApplication* g_pApp = &g_App;
+	WindowXXApplication g_App;
+	BaseApplication* g_pApp = &g_App;
 }
 
 namespace MDUILib
@@ -26,42 +26,68 @@ namespace MDUILib
 		{
 			this->Quit();
 		};
-		Label *pLabel = new Label(nullptr);
-		pLabel->SetText("Label");
-		pLabel->SetTextSize(12);
-		pLabel->SetContentRc(CreateRect(100, 150, 100, 150));
-		pLabel->SetMarginRc(pLabel->GetContentRc());
-		pLabel->SetPaddingRc(pLabel->GetContentRc());
-		pLabel->SetBorderRc(pLabel->GetContentRc());
-		pLabel->SetTextColor(MColor::Red);
-		pLabel->SetBackGroundColor(MColor::Blue);
-		Button *pControl = new Button(nullptr);
-		pControl->OnClicked += [=](IControl*p, MEvent *e)
+		auto pWndTitle = new Label(nullptr);
+		pWndTitle->SetText("DemoAppBlahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblah");
+		pWndTitle->SetTextAlignment(TextAlignmentType::TAT_LEFT);
+		auto pCloseButton = new Button(nullptr);
+		auto pMaximizeButton = new Button(nullptr);
+		auto pMinimizeButton = new Button(nullptr);
+		pCloseButton->SetText("x");
+		pMaximizeButton->SetText("+");
+		pMinimizeButton->SetText("-");
+		auto InitRectSize = [](Label *pb, int width, int height)
 		{
-			auto pChild = pWindow->CreateSubWindow("Popup", CreateRect(0, 150, 0, 150), true);
-			pChild->Show();
+			pb->SetMarginRc(CreateRect(0, height, 0, width));
+			pb->SetBorderRc(CreateRect(0, height, 0, width));
+			pb->SetPaddingRc(CreateRect(0, height, 0, width));
+			pb->SetContentRc(CreateRect(0, height, 0, width));
+			pb->SetContentColor(MColor::Blue);
+			pb->SetFocusMaskColor(MColor::Red);
+			pb->SetTextSize(16);
+			pb->SetBackGroundColor(MColor::Purple);
 		};
-		pControl->SetText("Demo");
-		pControl->SetMarginRc(CreateRect(18, 62, 18, 82));
-		pControl->SetMarginColor(MColor::Red);
-		pControl->SetBorderRc(CreateRect(19, 61, 19, 81));
-		pControl->SetPaddingRc(CreateRect(20, 60, 20, 80));
-		pControl->SetContentRc(CreateRect(21, 59, 21, 79));
-		pControl->SetBorderColor(MColor::White);
-		pControl->SetPaddingColor(MColor::Green);
-		pControl->SetContentColor(MColor::Blue);
-		HorizontalLayout *pLayout = new HorizontalLayout();
-		pLayout->AddControl(pControl);
-		pLayout->AddControl(pLabel);
-		pLayout->SetFixedSize(480, 600);
-		pControl->SetFloating(true);
-		pControl->SetFloatAlignment(ControlFloatAlignmentType::CFAT_RIGHT);
-		pLabel->SetFloating(true);
-		pLabel->SetFloatAlignment(ControlFloatAlignmentType::CFAT_RIGHT);
-		ControlManager* pManager =  pWindow->GetControlManager();
-		pControl->SetVisible(true);
-		pManager->SetControlRoot(pLayout);
-		pManager->SetBackgroundColor(MColor::Green);
+		InitRectSize(pWndTitle, 400, 20);
+		InitRectSize(pMaximizeButton, 20, 20);
+		InitRectSize(pMinimizeButton, 20, 20);
+		InitRectSize(pCloseButton, 20, 20);
+		pWndTitle->SetFloating(true);
+		pWndTitle->SetFloatAlignment(ControlFloatAlignmentType::CFAT_LEFT);
+		pMaximizeButton->SetFloating(true);
+		pMaximizeButton->SetFloatAlignment(ControlFloatAlignmentType::CFAT_RIGHT);
+		pCloseButton->SetFloating(true);
+		pCloseButton->SetFloatAlignment(ControlFloatAlignmentType::CFAT_RIGHT);
+		pMinimizeButton->SetFloating(true);
+		pMinimizeButton->SetFloatAlignment(ControlFloatAlignmentType::CFAT_RIGHT);
+
+		//Bind Callback
+		pCloseButton->OnClicked +=
+			[=](IControl* pSelf, MEvent *e)
+		{
+			pWindow->Close();
+		};
+		pMaximizeButton->OnClicked +=
+			[=](IControl* pSelf, MEvent *e)
+		{
+			pWindow->Maximize();
+		};
+		pMinimizeButton->OnClicked +=
+			[=](IControl*pSelf, MEvent *e)
+		{
+			pWindow->Minimize();
+		};
+		auto *pHL = new HorizontalLayout();
+		pHL->AddControl(pWndTitle);
+		pHL->AddControl(pCloseButton);
+		pHL->AddControl(pMaximizeButton);
+		pHL->AddControl(pMinimizeButton);
+		//pHL->SetFixedSize(pWndTitle->GetWidth() + pCloseButton->GetWidth() * 3, pWndTitle->GetHeight());
+		pWindow->OnSize += [=](IWindow *p, MEvent *e)
+		{
+			pWndTitle->SetWidth(static_cast<BaseWindow*>(p)->GetClientWidth() - 3 * pCloseButton->GetWidth());
+		};
+		//pHL->SetStrech(5);
+		pWindow->GetControlManager()->SetControlRoot(pHL);
+		pWindow->GetControlManager()->SetBackgroundColor(MColor::Black);
 		pWindow->Show();
 		return 0;
 	}
